@@ -75,94 +75,101 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-12 md:gap-8 items-center">
             {/* Left — Copy */}
             <div className="max-w-[600px]">
-              <div className="animate-fade-up">
+              <Reveal delay={0}>
                 <span className="label">AI NUTRITION TRACKING</span>
-              </div>
+              </Reveal>
 
-              <h1 className="mt-6 mb-0 animate-fade-up delay-100">
-                <span className="block text-[clamp(40px,7vw,72px)] font-bold leading-tight tracking-[-1px] text-fg font-body">
-                  Your health,
-                </span>
-                <span className="flex items-center gap-4 mt-1">
-                  <span className="text-[clamp(40px,7vw,72px)] leading-tight tracking-tight text-fg font-display">
-                    simplified.
+              <Reveal delay={100}>
+                <h1 className="mt-6 mb-0">
+                  <span className="block text-[clamp(40px,7vw,72px)] font-bold leading-tight tracking-[-1px] text-fg font-body">
+                    Your health,
                   </span>
-                  <span className="w-3 h-3 rounded-full bg-accent animate-pulse-dot shrink-0" />
-                </span>
-              </h1>
+                  <span className="flex items-center gap-4 mt-1">
+                    <span className="text-[clamp(40px,7vw,72px)] leading-tight tracking-tight text-fg font-display">
+                      simplified.
+                    </span>
+                    <span className="w-3 h-3 rounded-full bg-accent animate-pulse-dot shrink-0" />
+                  </span>
+                </h1>
+              </Reveal>
 
-              <p className="mt-8 text-[16px] md:text-[18px] leading-relaxed text-muted max-w-[480px] animate-fade-up delay-300">
-                AI-powered food recognition. An agentic coach that actually
-                remembers you. Smart workout tracking. Voice-first logging.
-                <span className="text-fg font-semibold">
-                  {" "}
-                  Your health, upgraded.
-                </span>
-              </p>
+              <Reveal delay={300}>
+                <p className="mt-8 text-[16px] md:text-[18px] leading-relaxed text-muted max-w-[480px]">
+                  AI-powered food recognition. An agentic coach that actually
+                  remembers you. Smart workout tracking. Voice-first logging.
+                  <span className="text-fg font-semibold">
+                    {" "}
+                    Your health, upgraded.
+                  </span>
+                </p>
+              </Reveal>
 
-              <div className="mt-10 flex flex-wrap gap-4 animate-fade-up delay-400">
-                <a
-                  href="#download"
-                  className="inline-flex items-center gap-2 px-8 py-3.5 bg-accent text-accent-ink text-[12px] font-bold tracking-[1.6px] rounded-full hover:shadow-[0_0_32px_rgba(74,222,128,0.3)] transition-all duration-300"
-                >
-                  GET DIETLY FREE
-                  <span className="text-[18px]">→</span>
-                </a>
-                <a
-                  href="#how-it-works"
-                  className="inline-flex items-center gap-2 px-8 py-3.5 border border-border-strong text-fg text-[12px] font-bold tracking-[1.6px] rounded-full hover:bg-surface transition-all duration-300"
-                >
-                  SEE HOW IT WORKS
-                </a>
-              </div>
+              <Reveal delay={400}>
+                <div className="mt-10 flex flex-wrap gap-4">
+                  <a
+                    href="#download"
+                    className="inline-flex items-center gap-2 px-8 py-3.5 bg-accent text-accent-ink text-[12px] font-bold tracking-[1.6px] rounded-full hover:shadow-[0_0_32px_rgba(15,118,110,0.3)] transition-all duration-300"
+                  >
+                    GET DIETLY FREE
+                    <span className="text-[18px]">→</span>
+                  </a>
+                  <a
+                    href="#how-it-works"
+                    className="inline-flex items-center gap-2 px-8 py-3.5 border border-border-strong text-fg text-[12px] font-bold tracking-[1.6px] rounded-full hover:bg-surface transition-all duration-300"
+                  >
+                    SEE HOW IT WORKS
+                  </a>
+                </div>
+              </Reveal>
 
               {/* Trust micro-stats */}
-              <div className="mt-12 flex items-center gap-6 animate-fade-up delay-600">
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-bold text-accent font-mono">
-                    50K+
-                  </span>
-                  <span className="text-[10px] tracking-[1.6px] text-faint font-bold">
-                    USERS
-                  </span>
+              <Reveal delay={600}>
+                <div className="mt-12 flex items-center gap-6">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-bold text-accent font-mono">
+                      50K+
+                    </span>
+                    <span className="text-[10px] tracking-[1.6px] text-faint font-bold">
+                      USERS
+                    </span>
+                  </div>
+                  <span className="w-px h-3 bg-border-strong" />
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-bold text-accent font-mono">
+                      4.9★
+                    </span>
+                    <span className="text-[10px] tracking-[1.6px] text-faint font-bold">
+                      RATING
+                    </span>
+                  </div>
+                  <span className="w-px h-3 bg-border-strong" />
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-bold text-accent font-mono">
+                      98%
+                    </span>
+                    <span className="text-[10px] tracking-[1.6px] text-faint font-bold">
+                      ACCURACY
+                    </span>
+                  </div>
                 </div>
-                <span className="w-px h-3 bg-border-strong" />
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-bold text-accent font-mono">
-                    4.9★
-                  </span>
-                  <span className="text-[10px] tracking-[1.6px] text-faint font-bold">
-                    RATING
-                  </span>
-                </div>
-                <span className="w-px h-3 bg-border-strong" />
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-bold text-accent font-mono">
-                    98%
-                  </span>
-                  <span className="text-[10px] tracking-[1.6px] text-faint font-bold">
-                    ACCURACY
-                  </span>
-                </div>
-              </div>
+              </Reveal>
             </div>
 
             {/* Right — App Mockup */}
-            <div className="relative flex justify-center md:justify-end animate-fade-up delay-300">
-              <div className="relative w-[280px] md:w-[320px] animate-float">
+            <Reveal delay={300} className="relative flex justify-center md:justify-end">
+              <div className="relative w-[320px] md:w-[400px] animate-float">
                 <div className="absolute -inset-8 bg-accent/[0.06] rounded-[40px] blur-[60px]" />
-                <div className="relative rounded-[32px] overflow-hidden border border-border-strong shadow-2xl">
+                <div className="relative rounded-[32px] overflow-hidden border border-border-strong shadow-2xl aspect-[4/5]">
                   <Image
-                    src="/images/dashboard.png"
-                    alt="Dietly Dashboard — calorie tracking, macros, and hydration"
-                    width={640}
-                    height={1280}
-                    className="w-full h-auto"
+                    src="/images/hero.png"
+                    alt="Dietly Lifestyle — beautifully arranged fresh salad bowl and green smoothie"
+                    fill
+                    className="object-cover"
                     priority
                   />
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -228,6 +235,31 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ═══════════ LIFESTYLE BANNER ═══════════ */}
+      <section className="py-12 md:py-24">
+        <div className="max-w-[1320px] mx-auto px-6 md:px-10">
+          <Reveal>
+            <div className="w-full h-[400px] md:h-[600px] rounded-[32px] overflow-hidden relative shadow-2xl border border-border-strong group">
+              <Image 
+                src="/images/feature_food.png" 
+                alt="Healthy aesthetic food bowl" 
+                fill 
+                className="object-cover group-hover:scale-105 transition-transform duration-[1.5s] ease-out" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+              <div className="absolute bottom-8 left-8 md:bottom-16 md:left-16 text-white max-w-[600px]">
+                <h3 className="text-[clamp(28px,4vw,48px)] font-bold font-display leading-tight tracking-tight mb-4 drop-shadow-md">
+                  Nutrition tracking that<br />doesn't feel like work.
+                </h3>
+                <p className="text-[16px] md:text-[18px] opacity-90 drop-shadow-md">
+                  A premium experience blending AI precision with stunning aesthetics.
+                </p>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -430,7 +462,7 @@ export default function Home() {
                 </ul>
                 <a
                   href="#download"
-                  className="mt-8 block text-center py-3.5 bg-accent text-accent-ink text-[12px] font-bold tracking-[1.6px] rounded-full hover:shadow-[0_0_32px_rgba(74,222,128,0.3)] transition-all duration-300"
+                  className="mt-8 block text-center py-3.5 bg-accent text-accent-ink text-[12px] font-bold tracking-[1.6px] rounded-full hover:shadow-[0_0_32px_rgba(15,118,110,0.3)] transition-all duration-300"
                 >
                   START PRO TRIAL →
                 </a>
@@ -490,7 +522,7 @@ export default function Home() {
                 <div className="mt-10 flex flex-wrap gap-4">
                   <a
                     href="/influencer/login"
-                    className="inline-flex items-center gap-2 px-8 py-3.5 bg-accent text-accent-ink text-[12px] font-bold tracking-[1.6px] rounded-full hover:shadow-[0_0_32px_rgba(74,222,128,0.3)] transition-all duration-300"
+                    className="inline-flex items-center gap-2 px-8 py-3.5 bg-accent text-accent-ink text-[12px] font-bold tracking-[1.6px] rounded-full hover:shadow-[0_0_32px_rgba(15,118,110,0.3)] transition-all duration-300"
                   >
                     BECOME A CREATOR →
                   </a>

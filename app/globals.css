@@ -2,18 +2,18 @@
 
 /* ─── Design Tokens ─── */
 :root {
-  --bg: #050505;
-  --bg-elevated: #0C0C0C;
-  --bg-surface: #161616;
-  --fg: #FFFFFF;
-  --fg-muted: rgba(255, 255, 255, 0.55);
-  --fg-faint: rgba(255, 255, 255, 0.30);
-  --fg-ghost: rgba(255, 255, 255, 0.08);
-  --accent: #4ADE80;
-  --accent-soft: rgba(74, 222, 128, 0.14);
-  --accent-ink: #050505;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.18);
+  --bg: #FAFAF9;
+  --bg-elevated: #FFFFFF;
+  --bg-surface: #F5F5F4;
+  --fg: #1C1917;
+  --fg-muted: rgba(28, 25, 23, 0.65);
+  --fg-faint: rgba(28, 25, 23, 0.40);
+  --fg-ghost: rgba(28, 25, 23, 0.08);
+  --accent: #0F766E;
+  --accent-soft: rgba(15, 118, 110, 0.12);
+  --accent-ink: #FFFFFF;
+  --border: rgba(28, 25, 23, 0.10);
+  --border-strong: rgba(28, 25, 23, 0.20);
 }
 
 @theme inline {
@@ -60,7 +60,7 @@ body::after {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.025;
+  opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
@@ -131,14 +131,15 @@ body::after {
 
 /* ─── Custom Components ─── */
 .glass-card {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.6);
   border: 1px solid var(--border);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 4px 24px -4px rgba(0,0,0,0.03);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #FFFFFF 0%, #4ADE80 50%, #FFFFFF 100%);
+  background: linear-gradient(135deg, #0F766E 0%, #14B8A6 50%, #0F766E 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

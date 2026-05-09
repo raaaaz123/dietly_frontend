@@ -25,7 +25,7 @@ export default function Navbar() {
       <div className="max-w-[1320px] mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <Image src="/logo.svg" alt="Dietly Logo" width={24} height={24} className="group-hover:opacity-80 transition-opacity" />
+          <Image src="/logo.png" alt="Dietly Logo" width={24} height={24} className="group-hover:opacity-80 transition-opacity" />
           <span className="text-[16px] font-bold tracking-[2px] text-fg font-body uppercase mt-0.5">
             Dietly
           </span>

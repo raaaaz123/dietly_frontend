@@ -14,8 +14,8 @@ const footerLinks = {
     { label: "Press", href: "#" },
   ],
   Legal: [
-    { label: "Privacy", href: "#" },
-    { label: "Terms", href: "#" },
+    { label: "Privacy", href: "/privacy" },
+    { label: "Terms", href: "/terms" },
     { label: "Security", href: "#" },
   ],
 };
@@ -29,7 +29,7 @@ export default function Footer() {
           {/* Brand col */}
           <div className="col-span-2">
             <div className="flex items-center gap-2.5 mb-6">
-              <Image src="/logo.svg" alt="Dietly Logo" width={24} height={24} />
+              <Image src="/logo.png" alt="Dietly Logo" width={24} height={24} />
               <span className="text-[16px] font-bold tracking-[2px] text-fg font-body uppercase mt-0.5">
                 Dietly
               </span>
