@@ -252,7 +252,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
               <div className="absolute bottom-8 left-8 md:bottom-16 md:left-16 text-white max-w-[600px]">
                 <h3 className="text-[clamp(28px,4vw,48px)] font-bold font-display leading-tight tracking-tight mb-4 drop-shadow-md">
-                  Nutrition tracking that<br />doesn't feel like work.
+                  Nutrition tracking that<br />doesn&apos;t feel like work.
                 </h3>
                 <p className="text-[16px] md:text-[18px] opacity-90 drop-shadow-md">
                   A premium experience blending AI precision with stunning aesthetics.

@@ -40,7 +40,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold text-fg">4. Subscriptions and Billing</h2>
             <p>
-              Some parts of the Service are billed on a subscription basis ("Pro"). You will be billed in advance on a recurring and periodic basis. Your subscription will automatically renew under the exact same conditions unless you cancel it or Dietly cancels it.
+              Some parts of the Service are billed on a subscription basis (&quot;Pro&quot;). You will be billed in advance on a recurring and periodic basis. Your subscription will automatically renew under the exact same conditions unless you cancel it or Dietly cancels it.
             </p>
           </section>
 
