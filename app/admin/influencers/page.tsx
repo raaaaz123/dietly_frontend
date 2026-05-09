@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { api } from "../../lib/api";
 
@@ -40,14 +40,13 @@ export default function InfluencersPage() {
   const [approveModal, setApproveModal] = useState<{ uid: string; name: string } | null>(null);
   const [commissionRate, setCommissionRate] = useState(0.20);
 
-  const load = () => {
-    setLoading(true);
+  const load = useCallback(() => {
     api.get<{ influencers: Influencer[] }>("/admin/influencers")
       .then((r) => setList(r.influencers))
       .finally(() => setLoading(false));
-  };
+  }, []);
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [load]);
 
   const pending = list.filter((i) => i.status === "pending");
   const active = list.filter((i) => i.status !== "pending");

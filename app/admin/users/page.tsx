@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { api } from "../../lib/api";
 
@@ -27,8 +27,7 @@ export default function UsersPage() {
   const [tierFilter, setTierFilter] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const load = async () => {
-    setLoading(true);
+  const load = useCallback(async () => {
     try {
       const params = new URLSearchParams({ limit: "100" });
       if (tierFilter) params.set("tier", tierFilter);
@@ -40,9 +39,9 @@ export default function UsersPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [tierFilter]);
 
-  useEffect(() => { load(); }, [tierFilter]);
+  useEffect(() => { load(); }, [load]);
 
   const filtered = filter
     ? users.filter(
@@ -72,7 +71,10 @@ export default function UsersPage() {
         />
         <select
           value={tierFilter}
-          onChange={(e) => setTierFilter(e.target.value)}
+          onChange={(e) => {
+            setLoading(true);
+            setTierFilter(e.target.value);
+          }}
           className="bg-elevated border border-border rounded-xl px-4 py-2.5 text-sm text-fg outline-none focus:border-accent"
         >
           <option value="">All tiers</option>

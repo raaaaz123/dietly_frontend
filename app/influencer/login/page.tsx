@@ -36,14 +36,19 @@ export default function InfluencerLogin() {
   // Pre-fill name from Google profile
   useEffect(() => {
     if (firebaseUser && firebaseUser.displayName && !form.name) {
-      setForm((f) => ({ ...f, name: firebaseUser.displayName ?? "" }));
+      setTimeout(() => {
+        setForm((f) => ({ ...f, name: firebaseUser.displayName ?? "" }));
+      }, 0);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firebaseUser]);
 
   // After Google sign-in, decide what to show
   useEffect(() => {
     if (!loading && firebaseUser) {
-      if (appStatus === "none") setStep("apply");
+      if (appStatus === "none") {
+        setTimeout(() => setStep("apply"), 0);
+      }
       // active is handled by the redirect above
       // pending/rejected/suspended stay on landing with status message
     }
@@ -111,7 +116,7 @@ export default function InfluencerLogin() {
               </div>
               <h1 className="text-2xl font-black text-fg mb-2">Application under review</h1>
               <p className="text-sm text-muted mb-6">
-                We received your application and will review it shortly. We'll reach out to <span className="text-fg">{firebaseUser.email}</span> once a decision is made.
+                We received your application and will review it shortly. We&apos;ll reach out to <span className="text-fg">{firebaseUser.email}</span> once a decision is made.
               </p>
             </>
           )}
@@ -124,7 +129,7 @@ export default function InfluencerLogin() {
               </div>
               <h1 className="text-2xl font-black text-fg mb-2">Application not approved</h1>
               <p className="text-sm text-muted mb-6">
-                Unfortunately, your application wasn't approved at this time. Contact us if you have questions.
+                Unfortunately, your application wasn&apos;t approved at this time. Contact us if you have questions.
               </p>
             </>
           )}
@@ -163,7 +168,7 @@ export default function InfluencerLogin() {
           </div>
           <h1 className="text-2xl font-black text-fg mb-2">Application submitted!</h1>
           <p className="text-sm text-muted">
-            We'll review your application and reach out to <span className="text-fg">{firebaseUser?.email}</span> within a few days.
+            We&apos;ll review your application and reach out to <span className="text-fg">{firebaseUser?.email}</span> within a few days.
           </p>
         </div>
       </div>

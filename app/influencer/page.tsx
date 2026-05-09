@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useInfluencerAuth } from "../lib/influencer-auth";
 
@@ -54,7 +54,7 @@ export default function InfluencerDashboard() {
     }
   }, [loading, firebaseUser, appStatus, router]);
 
-  const load = async () => {
+  const load = useCallback(async () => {
     try {
       const [c, w] = await Promise.all([
         apiFetch<{ conversions: Conv[] }>("GET", "/referrals/conversions"),
@@ -67,11 +67,14 @@ export default function InfluencerDashboard() {
     } finally {
       setDataLoading(false);
     }
-  };
+  }, [apiFetch]);
 
   useEffect(() => {
-    if (appStatus === "active") load();
-  }, [appStatus]);
+    if (appStatus === "active") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      load();
+    }
+  }, [appStatus, load]);
 
   const requestWithdrawal = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -153,7 +156,7 @@ export default function InfluencerDashboard() {
         <div className="bg-elevated border border-border rounded-2xl p-5 mb-5">
           <p className="text-xs font-bold text-muted tracking-widest mb-1">YOUR COMMISSION</p>
           <p className="text-3xl font-black text-fg">{Math.round(influencerData.commission_rate * 100)}%</p>
-          <p className="text-xs text-muted mt-1">of each subscriber's first payment — paid after confirmed revenue</p>
+          <p className="text-xs text-muted mt-1">of each subscriber&apos;s first payment — paid after confirmed revenue</p>
         </div>
 
         {/* Referral link */}

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { api } from "../../lib/api";
 
 type Withdrawal = {
@@ -29,15 +29,14 @@ export default function WithdrawalsPage() {
   const [actionId, setActionId] = useState<string | null>(null);
   const [notes, setNotes] = useState("");
 
-  const load = () => {
-    setLoading(true);
+  const load = useCallback(() => {
     const params = statusFilter ? `?status_filter=${statusFilter}` : "";
     api.get<{ withdrawals: Withdrawal[] }>(`/admin/withdrawals${params}`)
       .then((r) => setItems(r.withdrawals))
       .finally(() => setLoading(false));
-  };
+  }, [statusFilter]);
 
-  useEffect(() => { load(); }, [statusFilter]);
+  useEffect(() => { load(); }, [load]);
 
   const act = async (id: string, action: "approve" | "reject" | "paid") => {
     setActionId(id);
@@ -66,7 +65,10 @@ export default function WithdrawalsPage() {
         </div>
         <select
           value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
+          onChange={(e) => {
+            setLoading(true);
+            setStatusFilter(e.target.value);
+          }}
           className="bg-elevated border border-border rounded-xl px-4 py-2.5 text-sm text-fg outline-none focus:border-accent"
         >
           <option value="">All</option>

@@ -25,8 +25,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const stored = sessionStorage.getItem(SESSION_KEY);
-    setIsAdmin(stored === "1");
-    setLoading(false);
+    setTimeout(() => {
+      setIsAdmin(stored === "1");
+      setLoading(false);
+    }, 0);
   }, []);
 
   const signIn = async (username: string, password: string) => {
