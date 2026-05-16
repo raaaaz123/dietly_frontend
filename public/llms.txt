@@ -1,0 +1,49 @@
+# Dietly
+
+> Dietly is an AI-powered nutrition and fitness tracking app available free on iOS and Android. It lets users log meals by taking a photo, get personalized coaching from an AI coach, track workouts, monitor hydration, and build healthy streaks.
+
+Dietly is built by Rexatech. The app brand is Dietly. The AI coach persona inside the app is named Rexa.
+
+## Core Features
+
+- **AI Meal Logging**: Take a photo of any meal. The AI identifies every ingredient, estimates portion size, and calculates calories, protein, carbs, and fat instantly.
+- **AI Coach (Rexa)**: A persistent personal coach that remembers your habits, goals, and history — giving personalized nutrition and fitness advice.
+- **Voice Logging**: Log meals, workouts, and water intake using natural voice commands, hands-free.
+- **Workout Tracking**: Describe workouts naturally; the app tracks sets, reps, and weights and adapts your plan as you get stronger.
+- **Hydration Tracking**: Personalized daily water targets with smart reminders.
+- **Gamification**: Daily challenges, XP, level progression, and achievement badges.
+
+## Pricing
+
+- **Free tier**: Up to 5 meals/day logging, basic macro tracking, water tracking, 3 AI coach messages/day.
+- **Pro tier**: $9.99/month — unlimited everything, voice logging, workout tracking, wearable sync, priority support.
+
+## Key Facts
+
+- App name: Dietly (also published as Dietly AI)
+- Bundle ID: com.dietlyai.app
+- Platforms: iOS (App Store) and Android (Google Play)
+- Developer: Rexatech
+- Support email: rexatechin@gmail.com
+- Website: https://dietly.life
+
+## Free Tools (Web)
+
+- [Macro & TDEE Calculator](https://dietly.life/macro-calculator) — Calculate daily calorie needs and macronutrient split using the Mifflin-St Jeor equation. Free, no signup required.
+- [Body Fat Calculator](https://dietly.life/body-fat-calculator) — Estimate body fat percentage using the US Navy tape measure method. Free, no signup required.
+
+## Pages
+
+- [Home](https://dietly.life) — Product overview, features, how it works, creator program, FAQ, download links.
+- [Support](https://dietly.life/support) — Customer support, FAQ, contact.
+- [Privacy Policy](https://dietly.life/privacy) — How user data is collected and used. Dietly does not sell or share personal data with third parties.
+- [Terms of Service](https://dietly.life/terms) — Usage terms, subscription and billing details, medical disclaimer.
+- [Delete Account](https://dietly.life/delete-account) — Instructions and form to permanently delete account and all data.
+
+## Privacy Summary
+
+Dietly does not sell, rent, or share personal data with any third party for commercial purposes. Health and nutritional data is encrypted in transit and at rest. Users can delete all their data at any time.
+
+## Creator / Affiliate Program
+
+Dietly has a creator referral program. Creators earn a commission on every subscriber they refer. Up to 30% commission rate, $10 minimum withdrawal, real-time earnings tracking.

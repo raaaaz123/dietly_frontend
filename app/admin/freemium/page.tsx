@@ -7,9 +7,8 @@ type Config = {
   free_voice_minutes_per_day: number;
   free_coach_messages_per_day: number;
   free_text_logs_per_day: number;
-  trial_days: number;
-  pro_price_monthly_usd: number;
-  pro_price_yearly_usd: number;
+  free_workout_logs_per_day: number;
+  free_workout_plans_per_week: number;
 };
 
 const FIELDS: { key: keyof Config; label: string; desc: string; unit?: string }[] = [
@@ -17,9 +16,8 @@ const FIELDS: { key: keyof Config; label: string; desc: string; unit?: string }[
   { key: "free_voice_minutes_per_day", label: "Voice Minutes / Day", desc: "Max live voice coach minutes for free users per day", unit: "min" },
   { key: "free_coach_messages_per_day", label: "Coach Messages / Day", desc: "Max text coach messages for free users per day", unit: "msgs" },
   { key: "free_text_logs_per_day", label: "Text Logs / Day", desc: "Max text meal entries for free users per day", unit: "logs" },
-  { key: "trial_days", label: "Trial Period", desc: "Pro trial length in days for new signups", unit: "days" },
-  { key: "pro_price_monthly_usd", label: "Pro Monthly Price", desc: "USD price for monthly Pro subscription", unit: "USD" },
-  { key: "pro_price_yearly_usd", label: "Pro Yearly Price", desc: "USD price for annual Pro subscription", unit: "USD" },
+  { key: "free_workout_logs_per_day", label: "Workout Logs / Day", desc: "Max manual or completed workouts for free users per day", unit: "logs" },
+  { key: "free_workout_plans_per_week", label: "Workout Plans / Wk", desc: "Max AI generated workout plans for free users per week", unit: "plans" },
 ];
 
 export default function FreemiumPage() {
@@ -79,7 +77,7 @@ export default function FreemiumPage() {
                 <input
                   type="number"
                   min={0}
-                  step={key.includes("price") ? 0.01 : 1}
+                  step={1}
                   value={(draft[key] as number) ?? ""}
                   onChange={(e) => setDraft({ ...draft, [key]: Number(e.target.value) })}
                   className="w-24 bg-bg border border-border rounded-xl px-3 py-2 text-sm text-fg outline-none focus:border-accent text-right"
@@ -89,16 +87,14 @@ export default function FreemiumPage() {
             </div>
 
             {/* Visual indicator */}
-            {!key.includes("price") && !key.includes("trial") && (
-              <div className="mt-3">
-                <div className="h-1.5 bg-ghost rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-accent/60 rounded-full"
-                    style={{ width: `${Math.min(((draft[key] as number) / 20) * 100, 100)}%` }}
-                  />
-                </div>
+            <div className="mt-3">
+              <div className="h-1.5 bg-ghost rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-accent/60 rounded-full"
+                  style={{ width: `${Math.min(((draft[key] as number) / 20) * 100, 100)}%` }}
+                />
               </div>
-            )}
+            </div>
           </div>
         ))}
       </div>

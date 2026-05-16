@@ -2,22 +2,20 @@ import Image from "next/image";
 
 const footerLinks = {
   Product: [
-    { label: "Features", href: "#features" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "Download", href: "#download" },
+    { label: "Features", href: "/#features" },
+    { label: "Download", href: "/#download" },
     { label: "Changelog", href: "#" },
   ],
-  Company: [
-    { label: "About", href: "#" },
-    { label: "Blog", href: "#" },
-    { label: "Careers", href: "#" },
-    { label: "Press", href: "#" },
+  "Free Tools": [
+    { label: "Macro Calculator", href: "/macro-calculator" },
+    { label: "Body Fat Calculator", href: "/body-fat-calculator" },
+    { label: "AI Coach", href: "/#features" },
   ],
   Legal: [
     { label: "Privacy", href: "/privacy" },
     { label: "Terms", href: "/terms" },
+    { label: "Support", href: "/support" },
     { label: "Data Deletion", href: "/delete-account" },
-    { label: "Security", href: "#" },
   ],
 };
 
@@ -29,9 +27,9 @@ export default function Footer() {
         <div className="py-16 md:py-24 grid grid-cols-2 md:grid-cols-5 gap-12 md:gap-8">
           {/* Brand col */}
           <div className="col-span-2">
-            <div className="flex items-center gap-2.5 mb-6">
-              <Image src="/logo.png" alt="Dietly Logo" width={24} height={24} />
-              <span className="text-[16px] font-bold tracking-[2px] text-fg font-body uppercase mt-0.5">
+            <div className="flex items-center gap-3 mb-6">
+              <Image src="/images/logo.png" alt="Dietly Logo" width={40} height={40} className="rounded-xl drop-shadow-sm" />
+              <span className="text-[24px] font-bold tracking-[0px] text-fg font-display mt-0.5 italic">
                 Dietly
               </span>
             </div>

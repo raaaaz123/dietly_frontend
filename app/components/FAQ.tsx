@@ -5,27 +5,27 @@ import { useState } from "react";
 const faqs = [
   {
     q: "How accurate is the AI food recognition?",
-    a: "Our GPT-4o vision model achieves ~98% accuracy on common meals. It identifies individual ingredients, estimates portions, and calculates macros in under 2 seconds. You can always adjust the AI's estimates before confirming.",
+    a: "Dietly's AI achieves ~98% accuracy on common meals. It identifies individual ingredients, estimates portions, and calculates calories and macros in under 2 seconds. You can always adjust the estimates before confirming.",
   },
   {
     q: "Do I need a subscription to use Dietly?",
-    a: "The free tier includes food logging (5 meals/day), basic macro tracking, water tracking, and 3 AI coach messages per day. Pro unlocks unlimited everything, voice commands, workout tracking, wearable sync, and priority support for $9.99/mo.",
+    a: "The free tier includes food logging (5 meals/day), basic macro tracking, water tracking, and 3 AI coach messages per day. Pro unlocks unlimited everything, voice logging, workout tracking, wearable sync, and priority support for $9.99/month.",
   },
   {
-    q: "What makes the AI coach different from ChatGPT?",
-    a: "Unlike generic AI, our coach has persistent memory — it remembers your preferences, history, and goals across conversations. It uses RAG over your personal data and curated nutrition science to give evidence-backed, personalized advice.",
+    q: "What makes the Dietly AI coach different?",
+    a: "Unlike generic AI assistants, Rexa — Dietly's built-in coach — has persistent memory. It remembers your preferences, history, and goals across every conversation to give personalized, evidence-backed advice that improves over time.",
   },
   {
     q: "Is my health data private and secure?",
-    a: "Absolutely. Your data is encrypted at rest and in transit. We never sell your data or use it to train AI models. You can export or delete all your data at any time. We're GDPR and CCPA compliant.",
+    a: "Absolutely. Your data is encrypted at rest and in transit. We never sell your data, share it with third parties, or use it to train AI models. You can export or delete all your data at any time.",
   },
   {
     q: "What devices and wearables are supported?",
-    a: "Dietly is available on iOS and Android. We integrate with Apple HealthKit, Google Health Connect, and support data from Whoop, Oura, Garmin, Fitbit, and Apple Watch for recovery scoring and adaptive plans.",
+    a: "Dietly is available on iOS and Android. It integrates with Apple HealthKit and Google Health Connect, and supports data from Whoop, Oura, Garmin, Fitbit, and Apple Watch.",
   },
   {
     q: "Can I use voice to log meals and workouts?",
-    a: "Yes! On Pro, you can speak naturally — \"I had a chicken caesar salad and a sparkling water for lunch\" — and our Whisper + GPT pipeline will parse and log everything. During workouts, use hands-free voice to track sets and reps in real time via Gemini Live.",
+    a: "Yes. On Pro, just speak naturally — \"I had a chicken caesar salad and sparkling water for lunch\" — and Dietly logs everything automatically. During workouts, use hands-free voice to track sets and reps in real time.",
   },
 ];
 
