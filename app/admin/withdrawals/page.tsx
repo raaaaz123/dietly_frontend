@@ -53,8 +53,8 @@ export default function WithdrawalsPage() {
     .reduce((s, i) => s + i.amount, 0);
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-4 md:p-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-2xl font-black tracking-tight text-fg">Withdrawals</h1>
           {statusFilter === "pending" && items.length > 0 && (
@@ -89,7 +89,7 @@ export default function WithdrawalsPage() {
         ) : (
           items.map((w) => (
             <div key={w.id} className="bg-elevated border border-border rounded-2xl p-5">
-              <div className="flex items-start justify-between">
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-3 mb-1">
                     <p className="font-bold text-fg">{w.influencer_name}</p>

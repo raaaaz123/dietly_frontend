@@ -57,7 +57,7 @@ export default function FreemiumPage() {
   const isDirty = JSON.stringify(draft) !== JSON.stringify(config);
 
   return (
-    <div className="p-8 max-w-2xl">
+    <div className="p-4 md:p-8 max-w-2xl">
       <div className="mb-8">
         <h1 className="text-2xl font-black tracking-tight text-fg">Freemium Config</h1>
         <p className="text-sm text-muted mt-1">
@@ -68,7 +68,7 @@ export default function FreemiumPage() {
       <div className="space-y-4 mb-8">
         {FIELDS.map(({ key, label, desc, unit }) => (
           <div key={key} className="bg-elevated border border-border rounded-2xl p-5">
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
               <div className="flex-1">
                 <p className="font-semibold text-fg text-sm">{label}</p>
                 <p className="text-xs text-muted mt-0.5">{desc}</p>
@@ -99,7 +99,7 @@ export default function FreemiumPage() {
         ))}
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
         <button
           onClick={save}
           disabled={saving || !isDirty}

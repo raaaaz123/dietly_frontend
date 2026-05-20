@@ -29,13 +29,13 @@ export default function SubscriptionsPage() {
   const arr = stats.estimated_mrr * 12;
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <div className="mb-8">
         <h1 className="text-2xl font-black tracking-tight text-fg">Subscriptions</h1>
         <p className="text-sm text-muted mt-1">Revenue & subscriber analytics</p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {[
           { label: "MONTHLY RECURRING REVENUE", val: `$${stats.estimated_mrr.toFixed(2)}`, accent: true },
           { label: "ANNUAL RUN RATE", val: `$${arr.toFixed(0)}`, accent: true },

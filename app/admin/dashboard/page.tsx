@@ -55,20 +55,20 @@ export default function Dashboard() {
     : "0";
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <div className="mb-8">
         <h1 className="text-2xl font-black tracking-tight text-fg">Dashboard</h1>
         <p className="text-sm text-muted mt-1">Platform overview</p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard label="TOTAL USERS" value={stats.total_users.toLocaleString()} />
         <StatCard label="PRO SUBSCRIBERS" value={stats.pro_subscribers.toLocaleString()} accent />
         <StatCard label="FREE USERS" value={stats.free_users.toLocaleString()} sub={`${convRate}% conversion`} />
         <StatCard label="EST. MRR" value={`$${stats.estimated_mrr.toLocaleString()}`} accent />
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard label="ACTIVE INFLUENCERS" value={stats.active_influencers} sub={`${stats.total_influencers} total`} />
         <StatCard label="PAID CONVERSIONS" value={stats.total_paid_conversions} />
         <StatCard

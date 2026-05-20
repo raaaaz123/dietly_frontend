@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "../lib/auth";
@@ -18,6 +18,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const router = useRouter();
   const pathname = usePathname();
   const isLoginPage = pathname === "/admin/login";
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (isLoginPage) return;
@@ -37,8 +38,21 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="flex min-h-screen bg-bg text-fg">
-      <aside className="w-56 shrink-0 border-r border-border flex flex-col">
+    <div className="flex min-h-screen bg-bg text-fg flex-col md:flex-row relative">
+      {/* Mobile Top Bar */}
+      <div className="md:hidden flex items-center justify-between p-4 border-b border-border bg-bg sticky top-0 z-30">
+        <span className="text-accent font-mono text-xs font-bold tracking-widest">VITAL · ADMIN</span>
+        <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2 text-fg">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        </button>
+      </div>
+
+      {/* Mobile Overlay */}
+      {isSidebarOpen && (
+        <div className="md:hidden fixed inset-0 z-40 bg-black/60" onClick={() => setIsSidebarOpen(false)} />
+      )}
+
+      <aside className={`fixed md:relative inset-y-0 left-0 z-50 w-56 shrink-0 border-r border-border bg-bg flex flex-col transform transition-transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 h-full`}>
         <div className="px-5 py-5 border-b border-border">
           <span className="text-accent font-mono text-xs font-bold tracking-widest">VITAL · ADMIN</span>
         </div>

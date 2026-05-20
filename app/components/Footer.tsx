@@ -40,7 +40,7 @@ export default function Footer() {
             <div className="flex gap-4">
               {/* App Store badges */}
               <a
-                href="#"
+                href="https://apps.apple.com/us/app/dietly-ai-snap-calories/id6769698416"
                 className="px-4 py-2.5 border border-border-strong rounded-lg flex items-center gap-2 hover:bg-surface transition-colors"
               >
                 <svg
@@ -62,7 +62,7 @@ export default function Footer() {
                 </div>
               </a>
               <a
-                href="#"
+                href="https://play.google.com/store/apps/details?id=com.dietlyai.app"
                 className="px-4 py-2.5 border border-border-strong rounded-lg flex items-center gap-2 hover:bg-surface transition-colors"
               >
                 <svg

@@ -53,7 +53,7 @@ export default function UsersPage() {
     : users;
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-black tracking-tight text-fg">Users</h1>
@@ -62,7 +62,7 @@ export default function UsersPage() {
       </div>
 
       {/* Filters */}
-      <div className="flex gap-3 mb-5">
+      <div className="flex flex-col sm:flex-row gap-3 mb-5">
         <input
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
@@ -83,8 +83,8 @@ export default function UsersPage() {
         </select>
       </div>
 
-      <div className="bg-elevated border border-border rounded-2xl overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-elevated border border-border rounded-2xl overflow-x-auto">
+        <table className="w-full text-sm whitespace-nowrap min-w-[800px]">
           <thead>
             <tr className="border-b border-border">
               {["User", "Tier", "Platform", "Language", "Country", "Last seen", ""].map((h) => (

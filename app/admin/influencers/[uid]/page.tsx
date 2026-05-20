@@ -79,7 +79,7 @@ export default function InfluencerDetailPage() {
   };
 
   if (loadError) return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       <button onClick={() => router.back()} className="text-xs text-muted hover:text-fg mb-6 inline-block">← Back</button>
       <div className="bg-elevated border border-red-400/30 rounded-2xl p-6 text-red-400 text-sm">
         <p className="font-bold mb-1">Failed to load influencer</p>
@@ -90,13 +90,13 @@ export default function InfluencerDetailPage() {
   );
 
   if (!inf) return (
-    <div className="p-8 flex items-center gap-3">
+    <div className="p-4 md:p-8 flex items-center gap-3">
       <div className="w-5 h-5 border-2 border-accent border-t-transparent rounded-full animate-spin" />
     </div>
   );
 
   return (
-    <div className="p-8 max-w-4xl">
+    <div className="p-4 md:p-8 max-w-4xl">
       <button onClick={() => router.back()} className="text-xs text-muted hover:text-fg mb-6 inline-block">
         ← Back
       </button>
@@ -112,7 +112,7 @@ export default function InfluencerDetailPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {[
           { label: "TOTAL REFERRALS", val: inf.total_referrals },
           { label: "PAID CONVERSIONS", val: inf.paid_conversions },
@@ -129,11 +129,11 @@ export default function InfluencerDetailPage() {
       {/* Status control */}
       <div className="bg-elevated border border-border rounded-2xl p-5 mb-5">
         <p className="text-xs font-bold text-muted tracking-widest mb-4">ACCOUNT STATUS</p>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
           <select
             value={statusVal}
             onChange={(e) => setStatusVal(e.target.value)}
-            className="bg-bg border border-border rounded-xl px-4 py-2.5 text-sm text-fg outline-none focus:border-accent"
+            className="w-full sm:w-auto bg-bg border border-border rounded-xl px-4 py-2.5 text-sm text-fg outline-none focus:border-accent"
           >
             <option value="pending">Pending</option>
             <option value="active">Active</option>
@@ -142,7 +142,7 @@ export default function InfluencerDetailPage() {
           <button
             onClick={save}
             disabled={saving}
-            className="bg-accent text-accent-ink text-sm font-bold px-5 py-2.5 rounded-xl hover:opacity-90 disabled:opacity-50"
+            className="w-full sm:w-auto bg-accent text-accent-ink text-sm font-bold px-5 py-2.5 rounded-xl hover:opacity-90 disabled:opacity-50"
           >
             {saving ? "Saving…" : "Update"}
           </button>
@@ -152,13 +152,13 @@ export default function InfluencerDetailPage() {
       </div>
 
       {/* Conversions */}
-      <div className="bg-elevated border border-border rounded-2xl overflow-hidden mb-5">
-        <div className="px-5 py-4 border-b border-border">
+      <div className="bg-elevated border border-border rounded-2xl overflow-x-auto mb-5">
+        <div className="px-5 py-4 border-b border-border min-w-[600px]">
           <p className="text-xs font-bold text-muted tracking-widest">
             CONVERSIONS ({inf.conversions.length})
           </p>
         </div>
-        <table className="w-full text-sm">
+        <table className="w-full text-sm whitespace-nowrap min-w-[600px]">
           <thead>
             <tr className="border-b border-border">
               {["User", "Status", "Signed up", "Converted", "Commission"].map((h) => (
@@ -195,13 +195,13 @@ export default function InfluencerDetailPage() {
       </div>
 
       {/* Withdrawals */}
-      <div className="bg-elevated border border-border rounded-2xl overflow-hidden">
-        <div className="px-5 py-4 border-b border-border">
+      <div className="bg-elevated border border-border rounded-2xl overflow-x-auto">
+        <div className="px-5 py-4 border-b border-border min-w-[500px]">
           <p className="text-xs font-bold text-muted tracking-widest">
             WITHDRAWALS ({inf.withdrawals.length})
           </p>
         </div>
-        <table className="w-full text-sm">
+        <table className="w-full text-sm whitespace-nowrap min-w-[500px]">
           <thead>
             <tr className="border-b border-border">
               {["Amount", "Method", "Status", "Date"].map((h) => (

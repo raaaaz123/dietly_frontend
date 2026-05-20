@@ -198,7 +198,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
             
             {/* Left Side: Massive Typography */}
-            <div className="lg:col-span-6 xl:col-span-7 flex flex-col justify-center order-2 lg:order-1 text-center lg:text-left">
+            <div className="lg:col-span-6 xl:col-span-7 flex flex-col justify-center order-1 text-center lg:text-left">
               <Reveal delay={0}>
                 <div className="flex items-center justify-center lg:justify-start gap-4 mb-6 md:mb-8">
                   <span className="w-8 md:w-12 h-px bg-fg hidden md:block" />
@@ -217,22 +217,42 @@ export default function Home() {
                 <div className="mt-8 md:mt-12 flex relative justify-center lg:justify-start">
                   <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-accent to-transparent" />
                   <p className="text-[15px] md:text-[18px] lg:text-[20px] leading-[1.6] text-fg-muted max-w-[500px] font-medium lg:pl-8 mx-auto lg:mx-0">
-                    An agentic coach that remembers you. Smart workout tracking. Voice-first logging. Your health, engineered for precision.
+                    Scan food instantly with your phone camera. An agentic coach that remembers you. Voice-first logging. Your health, engineered for precision.
                   </p>
                 </div>
               </Reveal>
 
               <Reveal delay={400}>
-                <div className="mt-10 md:mt-14 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 md:gap-8 lg:pl-8">
+                <div className="mt-10 md:mt-14 flex flex-col sm:flex-row flex-wrap items-center justify-center lg:justify-start gap-4 md:gap-4 lg:pl-8">
                   <a
-                    href="#download"
-                    className="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-fg text-bg text-[12px] font-bold tracking-[2px] rounded-full overflow-hidden transition-transform duration-500 hover:scale-105"
+                    href="https://apps.apple.com/us/app/dietly-ai-snap-calories/id6769698416"
+                    className="inline-flex items-center justify-center gap-3 w-full sm:w-auto px-6 py-3.5 bg-fg text-bg rounded-full hover:scale-105 transition-transform duration-300"
                   >
-                    <div className="absolute inset-0 bg-accent translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-                    <span className="relative z-10 group-hover:text-fg transition-colors duration-500">START FREE TODAY</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+                    </svg>
+                    <div className="text-left">
+                      <span className="block text-[9px] tracking-wider font-semibold opacity-70">DOWNLOAD ON</span>
+                      <span className="block text-[14px] font-bold -mt-0.5">App Store</span>
+                    </div>
                   </a>
-                  <div className="flex sm:flex-col gap-2 sm:gap-1 items-center sm:items-start">
-                     <div className="text-[11px] font-bold tracking-[2px] text-accent">50K+ USERS</div>
+                  <a
+                    href="https://play.google.com/store/apps/details?id=com.dietlyai.app"
+                    className="inline-flex items-center justify-center gap-3 w-full sm:w-auto px-6 py-3.5 bg-fg text-bg rounded-full hover:scale-105 transition-transform duration-300"
+                  >
+                    <svg width="18" height="20" viewBox="0 0 16 18" fill="currentColor">
+                      <path d="M1.22.557a.77.77 0 0 0-.22.56v15.766a.77.77 0 0 0 .22.56l.03.03L9.3 9.42v-.08L1.25.527l-.03.03z" />
+                      <path d="m12.02 12.15-2.72-2.73v-.08l2.72-2.73.06.03 3.22 1.83c.92.52.92 1.38 0 1.9l-3.22 1.83-.06.03-.06-.08z" />
+                      <path d="M12.08 12.18 9.3 9.42 1.25 17.47c.3.32.8.36 1.36.04l9.47-5.33z" />
+                      <path d="m12.08 6.61-9.47-5.33c-.56-.32-1.06-.28-1.36.04L9.3 9.34l2.78-2.73z" />
+                    </svg>
+                    <div className="text-left">
+                      <span className="block text-[9px] tracking-wider font-semibold opacity-70">DOWNLOAD ON</span>
+                      <span className="block text-[14px] font-bold -mt-0.5">Google Play</span>
+                    </div>
+                  </a>
+                  <div className="flex sm:flex-col gap-2 sm:gap-1 items-center sm:items-start ml-0 sm:ml-2">
+                     <div className="text-[11px] font-bold tracking-[2px] text-accent">1K+ FOOD SCANS</div>
                      <div className="text-[10px] tracking-[1px] text-fg-faint uppercase font-semibold">Join the movement</div>
                   </div>
                 </div>
@@ -240,7 +260,7 @@ export default function Home() {
             </div>
 
             {/* Right Side: Editorial Image Placement */}
-            <div className="lg:col-span-6 xl:col-span-5 relative order-1 lg:order-2 h-[450px] md:h-[600px] lg:h-[75vh] w-full max-w-[500px] lg:max-w-none mx-auto">
+            <div className="lg:col-span-6 xl:col-span-5 relative order-2 h-[450px] md:h-[600px] lg:h-[75vh] w-full max-w-[500px] lg:max-w-none mx-auto">
                <Reveal delay={200} className="w-full h-full absolute inset-0">
                  <div className="relative w-full h-full animate-float flex items-center justify-center lg:justify-end">
                     <Image
@@ -256,7 +276,7 @@ export default function Home() {
                {/* Floating precision elements */}
                <Reveal delay={600} className="absolute bottom-4 left-4 md:bottom-12 md:left-0 lg:bottom-20 lg:-left-10 glass-card px-5 py-3 md:px-6 md:py-4 border-l-[3px] !border-l-accent backdrop-blur-3xl bg-bg-elevated/40 z-20 shadow-xl">
                  <p className="text-[9px] md:text-[10px] font-bold tracking-[2px] text-fg-muted mb-1">AI ACCURACY</p>
-                 <p className="text-[22px] md:text-[32px] font-body font-bold text-fg leading-none tracking-tight">98.5%</p>
+                 <p className="text-[22px] md:text-[32px] font-body font-bold text-fg leading-none tracking-tight">99.6%</p>
                </Reveal>
             </div>
 
@@ -268,11 +288,9 @@ export default function Home() {
       <section className="border-y border-border bg-elevated/50">
         <div className="max-w-[1320px] mx-auto px-6 md:px-10 py-12 md:py-16">
           <Reveal>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            <div className="flex flex-row justify-center gap-16 md:gap-32">
               {[
-                { value: "50,000+", label: "ACTIVE USERS" },
-                { value: "2M+", label: "MEALS LOGGED" },
-                { value: "98%", label: "AI ACCURACY" },
+                { value: "99.6%", label: "AI ACCURACY" },
                 { value: "4.9★", label: "APP STORE" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
@@ -457,6 +475,76 @@ export default function Home() {
       </section>
 
 
+      {/* ═══════════ AI HEALTH COACH ═══════════ */}
+      <section id="ai-coach" className="py-24 md:py-36 border-t border-border bg-elevated/20">
+        <div className="max-w-[1320px] mx-auto px-6 md:px-10">
+          <Reveal>
+            <div className="grid md:grid-cols-2 gap-16 md:gap-24 items-center">
+              {/* Left — image */}
+              <div className="relative order-2 md:order-1 h-[400px] md:h-[600px] w-full rounded-[32px] overflow-hidden border border-border-strong shadow-2xl group">
+                <Image
+                  src="/images/coach.png"
+                  alt="AI Health Coach Chat"
+                  fill
+                  className="object-cover object-top group-hover:scale-105 transition-transform duration-[1.5s] ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-transparent" />
+                <div className="absolute bottom-8 left-4 right-4 md:left-8 md:right-8">
+                  <div className="glass-card p-5 border-l-[3px] !border-l-accent backdrop-blur-3xl bg-bg-elevated/60 shadow-xl">
+                    <p className="text-[13px] md:text-[15px] font-medium text-fg leading-relaxed">
+                      &quot;Based on your 45-min run and low protein intake today, I recommend adding 30g of protein to your dinner. How about grilled chicken?&quot;
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right — copy */}
+              <div className="order-1 md:order-2">
+                <span className="label">YOUR PERSONAL COACH</span>
+                <h2 className="mt-6 text-[clamp(32px,5vw,52px)] font-bold leading-[1.1] tracking-[-1px] text-fg font-body">
+                  Personalized advice,
+                  <br />
+                  <span className="font-display italic tracking-tight text-accent">
+                    24/7 in your language.
+                  </span>
+                </h2>
+                <p className="mt-6 text-[15px] md:text-[16px] leading-relaxed text-muted max-w-[440px]">
+                  Meet your new health coach. It has full context of your daily food logs, macros, and workouts, providing real-time, actionable advice that adapts to your lifestyle.
+                </p>
+
+                <div className="mt-10 space-y-5">
+                  {[
+                    {
+                      icon: "🧠",
+                      title: "Context-Aware Intelligence",
+                      desc: "It knows what you ate, how you slept, and your workout intensity, giving advice that actually makes sense.",
+                    },
+                    {
+                      icon: "🌍",
+                      title: "Speaks Your Native Language",
+                      desc: "Available around the clock and fully fluent in your native language, making health advice accessible anytime.",
+                    },
+                    {
+                      icon: "⚡",
+                      title: "Proactive Adjustments",
+                      desc: "Automatically adjusts your macro targets and workout plans based on your progress and daily feedback.",
+                    },
+                  ].map((item) => (
+                    <div key={item.title} className="flex items-start gap-4">
+                      <span className="text-[20px] shrink-0 mt-0.5">{item.icon}</span>
+                      <div>
+                        <p className="text-[14px] font-bold text-fg">{item.title}</p>
+                        <p className="text-[13px] text-muted mt-0.5 leading-relaxed">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ═══════════ CREATOR PROGRAM ═══════════ */}
       <section id="creators" className="py-24 md:py-36 border-y border-border">
         <div className="max-w-[1320px] mx-auto px-6 md:px-10">
@@ -581,7 +669,7 @@ export default function Home() {
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               {/* App Store */}
               <a
-                href="#"
+                href="https://apps.apple.com/us/app/dietly-ai-snap-calories/id6769698416"
                 className="inline-flex items-center gap-3 px-7 py-3.5 bg-fg text-bg rounded-full hover:opacity-90 transition-opacity"
               >
                 <svg
@@ -603,7 +691,7 @@ export default function Home() {
               </a>
               {/* Google Play */}
               <a
-                href="#"
+                href="https://play.google.com/store/apps/details?id=com.dietlyai.app"
                 className="inline-flex items-center gap-3 px-7 py-3.5 bg-fg text-bg rounded-full hover:opacity-90 transition-opacity"
               >
                 <svg

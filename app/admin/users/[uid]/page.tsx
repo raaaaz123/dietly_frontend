@@ -61,7 +61,7 @@ export default function UserDetail() {
   const sub = detail.subscription as Record<string, string>;
 
   return (
-    <div className="p-8 max-w-4xl">
+    <div className="p-4 md:p-8 max-w-4xl">
       <button
         onClick={() => router.back()}
         className="text-xs text-muted hover:text-fg mb-6 inline-block"
@@ -81,7 +81,7 @@ export default function UserDetail() {
         </span>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
         {[
           { label: "MEALS LOGGED", val: detail.stats.meals_logged },
           { label: "WORKOUTS", val: detail.stats.workouts_logged },
@@ -143,11 +143,11 @@ export default function UserDetail() {
       {/* Subscription override */}
       <div className="bg-elevated border border-border rounded-2xl p-5">
         <p className="text-xs font-bold text-muted tracking-widest mb-4">SUBSCRIPTION OVERRIDE</p>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
           <select
             value={tierValue}
             onChange={(e) => setTierValue(e.target.value)}
-            className="bg-bg border border-border rounded-xl px-4 py-2.5 text-sm text-fg outline-none focus:border-accent"
+            className="w-full sm:w-auto bg-bg border border-border rounded-xl px-4 py-2.5 text-sm text-fg outline-none focus:border-accent"
           >
             <option value="free">Free</option>
             <option value="pro">Pro</option>
@@ -155,7 +155,7 @@ export default function UserDetail() {
           <button
             onClick={setTier}
             disabled={saving}
-            className="bg-accent text-accent-ink text-sm font-bold px-5 py-2.5 rounded-xl hover:opacity-90 disabled:opacity-50 transition-opacity"
+            className="w-full sm:w-auto bg-accent text-accent-ink text-sm font-bold px-5 py-2.5 rounded-xl hover:opacity-90 disabled:opacity-50 transition-opacity"
           >
             {saving ? "Saving…" : "Save"}
           </button>
