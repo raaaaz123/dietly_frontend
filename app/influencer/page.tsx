@@ -99,7 +99,7 @@ export default function InfluencerDashboard() {
 
   const copyLink = () => {
     if (influencerData?.referral_code) {
-      navigator.clipboard.writeText(`https://dietly.app/?ref=${influencerData.referral_code}`);
+      navigator.clipboard.writeText(`https://dietly.life/invite?ref=${influencerData.referral_code}`);
     }
   };
 
@@ -113,7 +113,7 @@ export default function InfluencerDashboard() {
 
   if (!influencerData || appStatus !== "active") return null;
 
-  const REFERRAL_URL = `https://dietly.app/?ref=${influencerData.referral_code}`;
+  const REFERRAL_URL = `https://dietly.life/invite?ref=${influencerData.referral_code}`;
 
   return (
     <div className="min-h-screen bg-bg text-fg">
