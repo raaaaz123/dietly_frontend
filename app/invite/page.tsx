@@ -1,14 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function InvitePage() {
+function InviteContent() {
   const searchParams = useSearchParams();
   const ref = searchParams.get("ref");
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     if (ref) {
       // Try to open the app automatically via custom scheme
       const timeout = setTimeout(() => {
@@ -17,8 +15,6 @@ export default function InvitePage() {
       return () => clearTimeout(timeout);
     }
   }, [ref]);
-
-  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-bg text-fg flex flex-col items-center justify-center p-6 text-center">
@@ -57,5 +53,13 @@ export default function InvitePage() {
         If you already have the app installed, it should open automatically.
       </p>
     </div>
+  );
+}
+
+export default function InvitePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-bg" />}>
+      <InviteContent />
+    </Suspense>
   );
 }

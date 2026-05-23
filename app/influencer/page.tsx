@@ -42,6 +42,38 @@ export default function InfluencerDashboard() {
   const [wSaving, setWSaving] = useState(false);
   const [wMsg, setWMsg] = useState("");
 
+  // Calculator State
+  const [calcUsers, setCalcUsers] = useState<number | string>(100);
+  const [calcPack, setCalcPack] = useState("yearly");
+  const [calcCountry, setCalcCountry] = useState("USD");
+  const [calcPlatform, setCalcPlatform] = useState("all");
+
+  const CURRENCY_PACKS: Record<string, { symbol: string, monthly: number, yearly: number }> = {
+    USD: { symbol: "$", monthly: 9.99, yearly: 79.99 },
+    EUR: { symbol: "€", monthly: 9.99, yearly: 79.99 },
+    GBP: { symbol: "£", monthly: 8.99, yearly: 69.99 },
+    INR: { symbol: "₹", monthly: 899, yearly: 6900 },
+    AUD: { symbol: "A$", monthly: 14.99, yearly: 119.99 },
+    CAD: { symbol: "C$", monthly: 12.99, yearly: 99.99 },
+  };
+
+  useEffect(() => {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      let country = "USD";
+      if (tz.includes("Europe/London")) country = "GBP";
+      else if (tz.includes("Europe/")) country = "EUR";
+      else if (tz.includes("Asia/Calcutta") || tz.includes("Asia/Kolkata")) country = "INR";
+      else if (tz.includes("Australia/")) country = "AUD";
+      else if (tz.includes("America/Toronto") || tz.includes("America/Vancouver")) country = "CAD";
+      
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (country !== "USD") setCalcCountry(country);
+    } catch {
+      // default USD
+    }
+  }, []);
+
   useEffect(() => {
     if (!loading && !firebaseUser) {
       router.replace("/influencer/login");
@@ -156,7 +188,73 @@ export default function InfluencerDashboard() {
         <div className="bg-elevated border border-border rounded-2xl p-5 mb-5">
           <p className="text-xs font-bold text-muted tracking-widest mb-1">YOUR COMMISSION</p>
           <p className="text-3xl font-black text-fg">{Math.round(influencerData.commission_rate * 100)}%</p>
-          <p className="text-xs text-muted mt-1">of each subscriber&apos;s first payment — paid after confirmed revenue</p>
+          <p className="text-xs text-muted mt-1">
+            of Net Revenue (after 30% App Store fees) from each subscriber&apos;s first payment.
+          </p>
+        </div>
+
+        {/* Earnings Estimator */}
+        <div className="bg-elevated border border-border rounded-2xl p-5 mb-5">
+          <p className="text-xs font-bold text-muted tracking-widest mb-4">EARNINGS ESTIMATOR</p>
+          
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+            <div>
+              <label className="block text-xs font-bold text-muted tracking-widest mb-1.5">USERS</label>
+              <input
+                type="number" min={1} value={calcUsers}
+                onChange={(e) => setCalcUsers(e.target.value)}
+                className="w-full bg-bg border border-border rounded-xl px-3 py-2.5 text-sm text-fg outline-none focus:border-accent"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-muted tracking-widest mb-1.5">CURRENCY</label>
+              <select
+                value={calcCountry}
+                onChange={(e) => setCalcCountry(e.target.value)}
+                className="w-full bg-bg border border-border rounded-xl px-3 py-2.5 text-sm text-fg outline-none focus:border-accent"
+              >
+                {Object.keys(CURRENCY_PACKS).map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-muted tracking-widest mb-1.5">PACK</label>
+              <select
+                value={calcPack}
+                onChange={(e) => setCalcPack(e.target.value)}
+                className="w-full bg-bg border border-border rounded-xl px-3 py-2.5 text-sm text-fg outline-none focus:border-accent"
+              >
+                <option value="monthly">Monthly ({CURRENCY_PACKS[calcCountry]?.symbol}{CURRENCY_PACKS[calcCountry]?.monthly})</option>
+                <option value="yearly">Yearly ({CURRENCY_PACKS[calcCountry]?.symbol}{CURRENCY_PACKS[calcCountry]?.yearly})</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-muted tracking-widest mb-1.5">PLATFORM</label>
+              <select
+                value={calcPlatform}
+                onChange={(e) => setCalcPlatform(e.target.value)}
+                className="w-full bg-bg border border-border rounded-xl px-3 py-2.5 text-sm text-fg outline-none focus:border-accent"
+              >
+                <option value="all">iOS & Android</option>
+                <option value="ios">iOS Only</option>
+                <option value="android">Android Only</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="bg-bg border border-border rounded-xl p-4">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-xs text-muted">Gross Revenue ({Number(calcUsers)||0} users × {CURRENCY_PACKS[calcCountry]?.symbol}{calcPack === "yearly" ? CURRENCY_PACKS[calcCountry]?.yearly : CURRENCY_PACKS[calcCountry]?.monthly})</span>
+              <span className="text-sm font-bold text-fg">{CURRENCY_PACKS[calcCountry]?.symbol}{((Number(calcUsers)||0) * (calcPack === "yearly" ? CURRENCY_PACKS[calcCountry]?.yearly : CURRENCY_PACKS[calcCountry]?.monthly)).toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between items-center mb-3">
+              <span className="text-xs text-muted">Net Revenue (After 30% Apple/Google fee)</span>
+              <span className="text-sm font-bold text-fg">{CURRENCY_PACKS[calcCountry]?.symbol}{(((Number(calcUsers)||0) * (calcPack === "yearly" ? CURRENCY_PACKS[calcCountry]?.yearly : CURRENCY_PACKS[calcCountry]?.monthly)) * 0.70).toFixed(2)}</span>
+            </div>
+            <div className="pt-3 border-t border-border flex justify-between items-center">
+              <span className="text-sm font-black text-fg">Your Estimated Earnings ({Math.round(influencerData.commission_rate * 100)}%)</span>
+              <span className="text-xl font-black text-accent">{CURRENCY_PACKS[calcCountry]?.symbol}{((((Number(calcUsers)||0) * (calcPack === "yearly" ? CURRENCY_PACKS[calcCountry]?.yearly : CURRENCY_PACKS[calcCountry]?.monthly)) * 0.70) * influencerData.commission_rate).toFixed(2)}</span>
+            </div>
+          </div>
         </div>
 
         {/* Referral link */}

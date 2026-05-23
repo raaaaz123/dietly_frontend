@@ -54,6 +54,7 @@ export default function InfluencerDetailPage() {
   const [inf, setInf] = useState<InfluencerDetail | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [statusVal, setStatusVal] = useState("active");
+  const [commissionRate, setCommissionRate] = useState(0.30);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState("");
 
@@ -62,6 +63,7 @@ export default function InfluencerDetailPage() {
       .then((d) => {
         setInf(d);
         setStatusVal(d.status);
+        setCommissionRate(d.commission_rate ?? 0.30);
       })
       .catch((e: unknown) => setLoadError((e as Error).message ?? "Failed to load"));
   }, [uid]);
@@ -69,7 +71,7 @@ export default function InfluencerDetailPage() {
   const save = async () => {
     setSaving(true);
     try {
-      await api.put(`/admin/influencers/${uid}`, { status: statusVal });
+      await api.put(`/admin/influencers/${uid}`, { status: statusVal, commission_rate: commissionRate });
       setMsg("Saved ✓");
     } catch (e: unknown) {
       setMsg((e as Error).message);
@@ -128,25 +130,44 @@ export default function InfluencerDetailPage() {
 
       {/* Status control */}
       <div className="bg-elevated border border-border rounded-2xl p-5 mb-5">
-        <p className="text-xs font-bold text-muted tracking-widest mb-4">ACCOUNT STATUS</p>
-        <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
-          <select
-            value={statusVal}
-            onChange={(e) => setStatusVal(e.target.value)}
-            className="w-full sm:w-auto bg-bg border border-border rounded-xl px-4 py-2.5 text-sm text-fg outline-none focus:border-accent"
-          >
-            <option value="pending">Pending</option>
-            <option value="active">Active</option>
-            <option value="suspended">Suspended</option>
-          </select>
-          <button
-            onClick={save}
-            disabled={saving}
-            className="w-full sm:w-auto bg-accent text-accent-ink text-sm font-bold px-5 py-2.5 rounded-xl hover:opacity-90 disabled:opacity-50"
-          >
-            {saving ? "Saving…" : "Update"}
-          </button>
-          {msg && <span className="text-xs text-muted">{msg}</span>}
+        <p className="text-xs font-bold text-muted tracking-widest mb-4">ACCOUNT SETTINGS</p>
+        <div className="flex flex-col sm:flex-row items-end gap-3 w-full">
+          <div className="w-full sm:w-auto">
+            <label className="block text-xs font-bold text-muted tracking-widest mb-1.5">STATUS</label>
+            <select
+              value={statusVal}
+              onChange={(e) => setStatusVal(e.target.value)}
+              className="w-full sm:w-auto bg-bg border border-border rounded-xl px-4 py-2.5 text-sm text-fg outline-none focus:border-accent"
+            >
+              <option value="pending">Pending</option>
+              <option value="active">Active</option>
+              <option value="suspended">Suspended</option>
+            </select>
+          </div>
+
+          <div className="w-full sm:w-auto">
+            <label className="block text-xs font-bold text-muted tracking-widest mb-1.5">COMMISSION RATE (%)</label>
+            <input
+              type="number"
+              step="1"
+              min="0"
+              max="100"
+              value={Math.round(commissionRate * 100)}
+              onChange={(e) => setCommissionRate(Number(e.target.value) / 100)}
+              className="w-full sm:w-auto bg-bg border border-border rounded-xl px-4 py-2.5 text-sm text-fg outline-none focus:border-accent"
+            />
+          </div>
+
+          <div className="w-full sm:w-auto">
+            <button
+              onClick={save}
+              disabled={saving}
+              className="w-full sm:w-auto bg-accent text-accent-ink text-sm font-bold px-5 py-2.5 rounded-xl hover:opacity-90 disabled:opacity-50"
+            >
+              {saving ? "Saving…" : "Update"}
+            </button>
+          </div>
+          {msg && <span className="text-xs text-muted mb-3">{msg}</span>}
         </div>
         {inf.notes && <p className="text-xs text-muted mt-3">{inf.notes}</p>}
       </div>
