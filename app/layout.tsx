@@ -1,16 +1,10 @@
-import type { Metadata } from "next";
-import { Fraunces, Albert_Sans, DM_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Plus_Jakarta_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./lib/auth";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const albert = Albert_Sans({
-  variable: "--font-albert",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
   display: "swap",
 });
@@ -100,13 +94,20 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#FBFDFB",
+  colorScheme: "light",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${albert.variable} ${dmMono.variable}`}
+      className={`${jakarta.variable} ${dmMono.variable}`}
     >
       <body className="min-h-screen flex flex-col">
         <AuthProvider>{children}</AuthProvider>

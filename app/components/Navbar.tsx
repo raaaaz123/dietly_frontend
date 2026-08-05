@@ -3,25 +3,33 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowIcon, ChartIcon, ScanIcon, SparkIcon } from "./Icons";
+
+const navLinks = [
+  { label: "Features", href: "/#features" },
+  { label: "How it works", href: "/#how-it-works" },
+  { label: "Coach", href: "/#ai-coach" },
+  { label: "FAQ", href: "/#faq" },
+];
 
 const tools = [
   {
     label: "Macro Calculator",
-    desc: "TDEE & macros in seconds",
+    desc: "TDEE and macros in seconds",
     href: "/macro-calculator",
-    icon: "⊕",
+    Icon: ChartIcon,
   },
   {
     label: "Body Fat Calculator",
     desc: "Navy method body composition",
     href: "/body-fat-calculator",
-    icon: "◎",
+    Icon: ScanIcon,
   },
   {
     label: "AI Coach",
     desc: "Personalized nutrition coaching",
-    href: "/#features",
-    icon: "✦",
+    href: "/#ai-coach",
+    Icon: SparkIcon,
   },
 ];
 
@@ -31,220 +39,220 @@ export default function Navbar() {
   const [toolsOpen, setToolsOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-bg/80 backdrop-blur-xl border-b border-border"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
-        {/* Brand */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <Image
-            src="/images/logo.png"
-            alt="Dietly Logo"
-            width={40}
-            height={40}
-            className="rounded-xl group-hover:opacity-80 transition-opacity drop-shadow-sm"
-          />
-          <span className="text-[24px] font-bold tracking-[0px] text-fg font-display mt-0.5 italic">
-            Dietly
-          </span>
-        </Link>
-
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-10">
-          {[
-            { label: "Features", href: "/#features" },
-            { label: "How it Works", href: "/#how-it-works" },
-          ].map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-[13px] font-semibold tracking-wide text-muted hover:text-fg transition-colors duration-300"
-            >
-              {link.label}
-            </a>
-          ))}
-
-          {/* Free Tools dropdown */}
-          <div
-            className="relative"
-            onMouseEnter={() => setToolsOpen(true)}
-            onMouseLeave={() => setToolsOpen(false)}
+    <header className="fixed top-0 left-0 right-0 z-50">
+      <nav
+        className={`transition-all duration-300 ${
+          scrolled || menuOpen
+            ? "bg-bg/85 backdrop-blur-xl border-b border-border"
+            : "bg-transparent border-b border-transparent"
+        }`}
+      >
+        <div className="wrap flex items-center justify-between h-[62px] md:h-[76px]">
+          {/* Brand */}
+          <Link
+            href="/"
+            className="flex items-center gap-2.5"
+            onClick={() => setMenuOpen(false)}
           >
-            <button className="flex items-center gap-1 text-[13px] font-semibold tracking-wide text-muted hover:text-fg transition-colors duration-300">
-              Free Tools
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                className={`transition-transform duration-200 mt-px ${toolsOpen ? "rotate-180" : ""}`}
-              >
-                <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
+            <Image
+              src="/images/logo.png"
+              alt=""
+              width={34}
+              height={34}
+              className="rounded-[10px]"
+              priority
+            />
+            <span className="text-[19px] font-extrabold tracking-[-0.03em] text-fg">
+              Dietly
+            </span>
+          </Link>
 
-            {/* Dropdown panel */}
+          {/* Desktop nav */}
+          <div className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="px-3.5 py-2 rounded-full text-[14px] font-semibold text-fg-muted hover:text-fg hover:bg-surface transition-colors duration-200"
+              >
+                {link.label}
+              </a>
+            ))}
+
+            {/* Free tools dropdown */}
             <div
-              className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 w-64 transition-all duration-200 origin-top ${
-                toolsOpen ? "opacity-100 scale-y-100 pointer-events-auto" : "opacity-0 scale-y-95 pointer-events-none"
-              }`}
+              className="relative"
+              onMouseEnter={() => setToolsOpen(true)}
+              onMouseLeave={() => setToolsOpen(false)}
             >
-              {/* Arrow */}
-              <div className="flex justify-center mb-1">
-                <div className="w-2.5 h-2.5 bg-surface border-l border-t border-border rotate-45" />
-              </div>
-              <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-xl shadow-black/20">
-                {tools.map((tool, i) => (
-                  <Link
-                    key={tool.href}
-                    href={tool.href}
-                    onClick={() => setToolsOpen(false)}
-                    className={`flex items-start gap-3 px-4 py-3.5 hover:bg-bg transition-colors group/item ${
-                      i !== tools.length - 1 ? "border-b border-border" : ""
-                    }`}
-                  >
-                    <span className="text-accent text-lg leading-none mt-0.5">{tool.icon}</span>
-                    <div>
-                      <p className="text-[13px] font-semibold text-fg group-hover/item:text-accent transition-colors">
-                        {tool.label}
-                      </p>
-                      <p className="text-[11px] text-muted mt-0.5">{tool.desc}</p>
-                    </div>
-                  </Link>
-                ))}
+              <button
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-[14px] font-semibold text-fg-muted hover:text-fg hover:bg-surface transition-colors duration-200"
+                aria-expanded={toolsOpen}
+              >
+                Free tools
+                <svg
+                  width="11"
+                  height="11"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  className={`transition-transform duration-200 ${
+                    toolsOpen ? "rotate-180" : ""
+                  }`}
+                  aria-hidden
+                >
+                  <path
+                    d="M2 4.2l4 4 4-4"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+
+              <div
+                className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[288px] transition-all duration-200 ${
+                  toolsOpen
+                    ? "opacity-100 translate-y-0 pointer-events-auto"
+                    : "opacity-0 -translate-y-1 pointer-events-none"
+                }`}
+              >
+                <div className="bg-elevated border border-border rounded-2xl p-1.5 shadow-[0_24px_56px_-20px_rgba(14,26,18,0.18)]">
+                  {tools.map(({ label, desc, href, Icon }) => (
+                    <Link
+                      key={href}
+                      href={href}
+                      onClick={() => setToolsOpen(false)}
+                      className="flex items-start gap-3 p-3 rounded-xl hover:bg-green-50 transition-colors group/item"
+                    >
+                      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent-deep">
+                        <Icon size={16} />
+                      </span>
+                      <span className="block">
+                        <span className="block text-[13.5px] font-bold text-fg group-hover/item:text-accent-deep transition-colors">
+                          {label}
+                        </span>
+                        <span className="block text-[12px] text-fg-faint mt-0.5">
+                          {desc}
+                        </span>
+                      </span>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          {[
-            { label: "Creators", href: "/#creators" },
-            { label: "FAQ", href: "/#faq" },
-          ].map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={`text-[13px] font-semibold tracking-wide transition-colors duration-300 ${
-                link.label === "Creators"
-                  ? "text-accent hover:opacity-80"
-                  : "text-muted hover:text-fg"
-              }`}
+          {/* Desktop CTA */}
+          <div className="hidden lg:flex items-center gap-2">
+            <Link
+              href="/influencer"
+              className="px-3.5 py-2 rounded-full text-[14px] font-semibold text-fg-muted hover:text-accent-deep hover:bg-green-50 transition-colors duration-200"
             >
-              {link.label}
+              Creators
+            </Link>
+            <a href="#download" className="btn btn-primary btn-sm">
+              Get the app
             </a>
-          ))}
-        </div>
+          </div>
 
-        {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link
-            href="/influencer"
-            className="px-5 py-2 border border-accent/40 text-accent text-[11px] font-bold tracking-[1.4px] rounded-full hover:bg-accent/10 transition-all duration-300"
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setMenuOpen((v) => !v)}
+            className="lg:hidden -mr-2 flex h-11 w-11 items-center justify-center rounded-full active:bg-surface transition-colors"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
           >
-            CREATOR PORTAL
-          </Link>
-          <a
-            href="#download"
-            className="px-6 py-2.5 bg-accent text-accent-ink text-[12px] font-bold tracking-[1.6px] rounded-full hover:bg-accent/90 transition-all duration-300 hover:shadow-[0_0_24px_rgba(74,222,128,0.25)]"
-          >
-            DOWNLOAD FREE
-          </a>
+            <span className="relative block h-3.5 w-[22px]">
+              <span
+                className={`absolute left-0 h-[2px] w-full rounded-full bg-fg transition-all duration-300 ${
+                  menuOpen ? "top-1.5 rotate-45" : "top-0"
+                }`}
+              />
+              <span
+                className={`absolute left-0 h-[2px] w-full rounded-full bg-fg transition-all duration-300 ${
+                  menuOpen ? "top-1.5 -rotate-45" : "top-3"
+                }`}
+              />
+            </span>
+          </button>
         </div>
+      </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden flex flex-col gap-1.5 p-2"
-          aria-label="Toggle menu"
-        >
-          <span
-            className={`w-5 h-[1.5px] bg-fg transition-transform duration-300 ${
-              menuOpen ? "rotate-45 translate-y-[4.5px]" : ""
-            }`}
-          />
-          <span
-            className={`w-5 h-[1.5px] bg-fg transition-opacity duration-300 ${
-              menuOpen ? "opacity-0" : ""
-            }`}
-          />
-          <span
-            className={`w-5 h-[1.5px] bg-fg transition-transform duration-300 ${
-              menuOpen ? "-rotate-45 -translate-y-[4.5px]" : ""
-            }`}
-          />
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
+      {/* Mobile sheet */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-500 ${
-          menuOpen ? "max-h-[600px] border-b border-border" : "max-h-0"
-        } bg-bg/95 backdrop-blur-xl`}
+        className={`lg:hidden overflow-hidden bg-bg/97 backdrop-blur-xl transition-[max-height,opacity] duration-500 ${
+          menuOpen
+            ? "max-h-[calc(100dvh-62px)] opacity-100 border-b border-border overflow-y-auto"
+            : "max-h-0 opacity-0"
+        }`}
       >
-        <div className="px-6 py-8 flex flex-col gap-6">
-          {[
-            { label: "Features", href: "/#features" },
-            { label: "How it Works", href: "/#how-it-works" },
-            { label: "Creators", href: "/#creators" },
-            { label: "FAQ", href: "/#faq" },
-          ].map((link) => (
+        <div className="wrap py-6 flex flex-col gap-1">
+          {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className={`text-[15px] font-semibold transition-colors ${
-                link.label === "Creators" ? "text-accent" : "text-muted hover:text-fg"
-              }`}
+              className="flex items-center justify-between py-3.5 border-b border-border text-[17px] font-bold text-fg"
             >
               {link.label}
+              <ArrowIcon size={17} className="text-fg-faint" />
             </a>
           ))}
-
-          {/* Mobile tools list */}
-          <div>
-            <p className="text-[10px] font-bold tracking-[2px] text-muted uppercase mb-3">
-              Free Tools
-            </p>
-            <div className="flex flex-col gap-2">
-              {tools.map((tool) => (
-                <Link
-                  key={tool.href}
-                  href={tool.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl bg-surface border border-border"
-                >
-                  <span className="text-accent">{tool.icon}</span>
-                  <span className="text-[14px] font-semibold text-fg">{tool.label}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-
           <Link
             href="/influencer"
             onClick={() => setMenuOpen(false)}
-            className="mt-1 inline-flex items-center justify-center px-6 py-3 border border-accent/40 text-accent text-[12px] font-bold tracking-[1.4px] rounded-full hover:bg-accent/10 transition-colors"
+            className="flex items-center justify-between py-3.5 border-b border-border text-[17px] font-bold text-accent-deep"
           >
-            CREATOR PORTAL →
+            Creator program
+            <ArrowIcon size={17} />
           </Link>
+
+          <p className="mt-6 mb-3 text-[11px] font-bold tracking-[0.14em] uppercase text-fg-faint">
+            Free tools
+          </p>
+          <div className="flex flex-col gap-2">
+            {tools.map(({ label, desc, href, Icon }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-3 rounded-2xl border border-border bg-elevated p-3.5"
+              >
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent-deep">
+                  <Icon size={17} />
+                </span>
+                <span className="block">
+                  <span className="block text-[14px] font-bold text-fg">{label}</span>
+                  <span className="block text-[12px] text-fg-faint">{desc}</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+
           <a
             href="#download"
             onClick={() => setMenuOpen(false)}
-            className="mt-1 inline-flex justify-center px-6 py-3 bg-accent text-accent-ink text-[12px] font-bold tracking-[1.6px] rounded-full"
+            className="btn btn-primary mt-7 mb-2 w-full"
           >
-            DOWNLOAD FREE
+            Download free
           </a>
         </div>
       </div>
-    </nav>
+    </header>
   );
 }
