@@ -29,20 +29,20 @@ export default function MobileCTA() {
         visible ? "translate-y-0" : "translate-y-[130%]"
       }`}
     >
-      <div className="mx-3 mb-3 rounded-[22px] border border-border bg-bg/92 backdrop-blur-xl p-2.5 shadow-[0_-8px_40px_-12px_rgba(14,26,18,0.22)]">
+      <div className="mx-3 mb-3 rounded-[22px] border border-border bg-bg/92 backdrop-blur-xl p-2.5 shadow-[0_-8px_40px_-12px_rgba(0,0,0,0.8)]">
         <div className="flex items-center gap-2">
           <div className="pl-1.5 pr-0.5 min-w-0">
             <p className="text-[13px] font-extrabold leading-tight text-fg truncate">
-              Start free today
+              Get your Form Score
             </p>
             <p className="text-[11px] leading-tight text-fg-faint">
-              No card needed
+              Free to start
             </p>
           </div>
           <div className="ml-auto flex gap-2">
             <a
               href={APP_STORE_URL}
-              className="flex h-11 items-center gap-2 rounded-2xl bg-fg px-4 text-white"
+              className="flex h-11 items-center gap-2 rounded-2xl border border-border-strong bg-elevated px-4 text-fg"
               aria-label="Download on the App Store"
             >
               <AppleGlyph size={17} />
@@ -50,7 +50,7 @@ export default function MobileCTA() {
             </a>
             <a
               href={PLAY_STORE_URL}
-              className="flex h-11 items-center gap-2 rounded-2xl bg-accent px-4 text-white shadow-[0_8px_20px_-8px_rgba(24,169,87,0.6)]"
+              className="flex h-11 items-center gap-2 rounded-2xl bg-accent px-4 text-accent-ink shadow-[0_8px_20px_-8px_rgba(210,245,60,0.5)]"
               aria-label="Get it on Google Play"
             >
               <PlayGlyph size={16} />

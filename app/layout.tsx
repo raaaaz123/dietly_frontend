@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./lib/auth";
+import { SITE_URL as SITE, DESCRIPTION, APP_STORE_ID, APP_STORE_URL } from "./lib/site";
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -16,28 +17,26 @@ const dmMono = DM_Mono({
   display: "swap",
 });
 
-const SITE_URL = "https://dietly.life";
+const SITE_URL = SITE;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Dietly — AI Nutrition & Health Tracking App",
+    default: "Dietly — AI Body Scan, Workout & Diet App",
     template: "%s | Dietly",
   },
-  description:
-    "Dietly is an AI-powered nutrition and fitness app. Snap a photo of any meal for instant calorie and macro tracking, get personalized coaching, log workouts by voice, and stay consistent with smart hydration and streak features.",
+  description: DESCRIPTION,
   keywords: [
-    "AI nutrition app",
-    "calorie tracker",
+    "AI body scan app",
+    "physique score",
+    "AI workout planner",
+    "workout and diet app",
+    "gym plan app",
+    "body fat scan",
+    "muscle building app",
+    "AI fitness coach",
     "macro tracker",
-    "AI food recognition",
-    "meal logging app",
-    "fitness tracker",
-    "weight loss app",
-    "diet app",
-    "healthy eating app",
-    "nutrition coach",
-    "workout tracker",
+    "calorie tracker",
     "Dietly",
   ],
   authors: [{ name: "Rexatech", url: SITE_URL }],
@@ -49,24 +48,14 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: "Dietly",
-    title: "Dietly — AI Nutrition & Health Tracking App",
-    description:
-      "Snap a photo of any meal for instant macro tracking. Personalized AI coaching that remembers your goals. Available free on iOS and Android.",
-    images: [
-      {
-        url: "/images/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Dietly — AI Nutrition App",
-      },
-    ],
+    title: "Dietly — AI Body Scan, Workout & Diet App",
+    description: DESCRIPTION,
+    // Images come from app/opengraph-image.tsx, which Next wires up itself.
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dietly — AI Nutrition & Health Tracking App",
-    description:
-      "Snap a photo of any meal for instant macro tracking. Personalized AI coaching that remembers your goals.",
-    images: ["/images/og-image.png"],
+    title: "Dietly — AI Body Scan, Workout & Diet App",
+    description: DESCRIPTION,
     creator: "@dietlyapp",
   },
   robots: {
@@ -85,8 +74,8 @@ export const metadata: Metadata = {
   },
   appLinks: {
     ios: {
-      url: "https://apps.apple.com/app/dietly-ai/id0000000000",
-      app_store_id: "0000000000",
+      url: APP_STORE_URL,
+      app_store_id: APP_STORE_ID,
     },
     android: {
       package: "com.dietlyai.app",
@@ -95,8 +84,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FBFDFB",
-  colorScheme: "light",
+  // Matches --bg. The browser chrome on mobile takes this colour, so a light
+  // value here put a white bar above a black page.
+  themeColor: "#0A0A0A",
+  colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
 };
