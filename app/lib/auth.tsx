@@ -1,8 +1,8 @@
 "use client";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-const ADMIN_USER = process.env.NEXT_PUBLIC_ADMIN_USERNAME ?? "admin";
-const ADMIN_PASS = process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? "admin";
+const ADMIN_USER = process.env.ADMIN_USERNAME ?? "admin";
+const ADMIN_PASS = process.env.ADMIN_PASSWORD ?? "admin";
 const SESSION_KEY = "vital_admin_session";
 
 interface AuthCtx {

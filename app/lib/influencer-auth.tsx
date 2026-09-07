@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import { auth, googleProvider } from "./firebase";
 
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const BASE = process.env.API_URL ?? "http://localhost:8000";
 
 export type AppStatus = "loading" | "none" | "pending" | "active" | "rejected" | "suspended";
 
