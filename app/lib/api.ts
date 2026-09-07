@@ -1,5 +1,5 @@
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
-const ADMIN_KEY = process.env.NEXT_PUBLIC_ADMIN_API_KEY ?? "vital-admin-dev-key";
+const BASE = process.env.API_URL ?? "http://localhost:8000";
+const ADMIN_KEY = process.env.ADMIN_API_KEY ?? "vital-admin-dev-key";
 
 async function request<T>(
   method: string,

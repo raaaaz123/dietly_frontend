@@ -1,7 +1,10 @@
-export const APP_STORE_URL =
-  "https://apps.apple.com/us/app/dietly-ai-snap-calories/id6769698416";
-export const PLAY_STORE_URL =
-  "https://play.google.com/store/apps/details?id=com.dietlyai.app";
+import { APP_STORE_URL, PLAY_STORE_URL } from "../lib/site";
+
+/* Re-exported so the existing importers (MobileCTA) keep working while the
+   URLs themselves live in one place. The App Store link used to be the old
+   "dietly-ai-snap-calories" slug — Apple redirects a stale slug on the same id,
+   but it is the pre-pivot name sitting in every share sheet and preview card. */
+export { APP_STORE_URL, PLAY_STORE_URL };
 
 function AppleGlyph({ size = 19 }: { size?: number }) {
   return (

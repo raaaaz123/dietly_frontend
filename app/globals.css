@@ -1,51 +1,81 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════
-   DIETLY — Light Green Theme
-   Mobile-first, minimal, high-contrast light UI
+   DIETLY — Acid Lime on Black
+   ═══════════════════════════════════════════════
+
+   These tokens mirror Dietly/Utilities/Theme.swift (`Palette.dark`) so the
+   site and the app read as one product. Only change a value here if it
+   changes there too.
+
+   The names are aliases for palette *roles*, not claims about hue — the app
+   does the same thing. `--green-500` is "the accent", not a green, and
+   renaming the scale would touch every page for no rendered difference.
+
+   Two rules carried over from the app, both load-bearing:
+
+   1. Lime is a LIGHT colour. Anything sitting on it takes black
+      (`--accent-ink`), never white — white on #D2F53C is 1.3:1.
+   2. Cards separate from the page by one step of grey and nothing else. No
+      shadow: a shadow is how a light UI lifts a card, and it is invisible
+      here. The only glow in the design is on the install button, where it is
+      doing a job.
    ═══════════════════════════════════════════════ */
 
 :root {
-  /* Surfaces */
-  --bg: #FBFDFB;
-  --bg-elevated: #FFFFFF;
-  --bg-surface: #F2F8F4;
-  --bg-mint: #E8F6ED;
+  color-scheme: dark;
+
+  /* Surfaces — each one step of grey above the last */
+  --bg: #0A0A0A;
+  --bg-elevated: #161616;
+  --bg-surface: #161616;
+  --bg-mint: rgba(210, 245, 60, 0.07);
 
   /* Text */
-  --fg: #0E1A12;
-  --fg-muted: #4B5D52;
-  --fg-faint: #74857A;
-  --fg-ghost: rgba(14, 26, 18, 0.06);
+  --fg: #FFFFFF;
+  --fg-muted: #9A9A9A;
+  /* Raised from the app's #6B6B6B. That value is 3.6:1 on black, which is
+     under AA for the 12–13px labels this token is used for on the web; #8C8C8C
+     is 5.2:1. The one deliberate deviation from Theme.swift, and it is here
+     because a phone is held at 30cm and a monitor is not. */
+  --fg-faint: #8C8C8C;
+  --fg-ghost: rgba(255, 255, 255, 0.06);
 
-  /* Light green accent scale */
-  --green-50: #F1FAF4;
-  --green-100: #E1F5E9;
-  --green-200: #C2EBD2;
-  --green-300: #93DCAF;
-  --green-400: #5CC886;
-  --green-500: #18A957;
-  --green-600: #12904A;
-  --green-700: #0E7539;
+  /* The accent scale, dark to light. Chartreuse, not leaf green: on black a
+     mid green reads as muddy, and only a colour up near yellow stays bright
+     enough to carry emphasis. */
+  --green-50: rgba(210, 245, 60, 0.06);
+  --green-100: rgba(210, 245, 60, 0.12);
+  --green-200: rgba(210, 245, 60, 0.20);
+  --green-300: #8FA82A;
+  --green-400: #B4D435;
+  --green-500: #D2F53C;
+  --green-600: #DEF86B;
+  --green-700: #E9FB9C;
 
-  --accent: #18A957;
-  --accent-hover: #12904A;
-  --accent-deep: #0E7539;
-  --accent-light: #93DCAF;
-  --accent-soft: #E1F5E9;
-  --accent-ink: #FFFFFF;
+  --accent: #D2F53C;
+  --accent-hover: #DEF86B;
+  /* "Deep" means *more legible against the page*, which on black is brighter,
+     not darker. Used for text and icons; `--accent` is for fills. */
+  --accent-deep: #D2F53C;
+  --accent-light: #E9FB9C;
+  --accent-soft: rgba(210, 245, 60, 0.12);
+  --accent-ink: #0A0A0A;
 
-  /* Lines */
-  --border: rgba(14, 26, 18, 0.07);
-  --border-strong: rgba(14, 26, 18, 0.13);
-  --border-accent: rgba(24, 169, 87, 0.22);
+  /* Borders — the only thing separating a card from the page */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --border-accent: rgba(210, 245, 60, 0.30);
 
-  /* Elevation */
-  --shadow-xs: 0 1px 2px rgba(14, 26, 18, 0.04);
-  --shadow-sm: 0 2px 8px -2px rgba(14, 26, 18, 0.06);
-  --shadow-md: 0 8px 24px -8px rgba(14, 26, 18, 0.10);
-  --shadow-lg: 0 24px 56px -20px rgba(14, 26, 18, 0.16);
-  --shadow-green: 0 12px 32px -10px rgba(24, 169, 87, 0.35);
+  /* Elevation. Black-on-black shadows do nothing, so these are near-invisible
+     by design and the lime glow is reserved for the install CTA. */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 24px 56px -20px rgba(0, 0, 0, 0.7);
+  /* No glow. A coloured halo under a button is decoration, and on a minimal
+     page the lime fill is already the loudest thing on screen. */
+  --shadow-green: none;
 }
 
 @theme inline {
@@ -177,10 +207,6 @@ p { text-wrap: pretty; }
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent-deep);
-  background: var(--accent-soft);
-  border: 1px solid var(--border-accent);
-  padding: 6px 12px;
-  border-radius: 999px;
 }
 
 /* Legacy alias used by tool pages */
@@ -250,15 +276,16 @@ p { text-wrap: pretty; }
 }
 .btn-primary:hover {
   background: var(--accent-hover);
-  box-shadow: 0 16px 40px -12px rgba(24, 169, 87, 0.45);
 }
 
+/* Named for the light theme it was built for. On a black page a black button
+   is invisible, so this is now the app's raised-grey secondary. */
 .btn-dark {
-  background: var(--fg);
-  color: #fff;
-  box-shadow: var(--shadow-md);
+  background: var(--bg-elevated);
+  color: var(--fg);
+  border: 1px solid var(--border-strong);
 }
-.btn-dark:hover { background: #1B2C21; }
+.btn-dark:hover { background: #232323; border-color: var(--border-accent); }
 
 .btn-ghost {
   background: var(--bg-elevated);
@@ -281,14 +308,13 @@ p { text-wrap: pretty; }
   gap: 10px;
   padding: 12px 20px;
   border-radius: 16px;
-  background: var(--fg);
-  color: #fff;
-  box-shadow: var(--shadow-md);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  background: var(--bg-elevated);
+  color: var(--fg);
+  border: 1px solid var(--border-strong);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
 }
 .store-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  border-color: var(--border-strong);
 }
 .store-btn:active { transform: scale(0.985); }
 
@@ -302,15 +328,11 @@ p { text-wrap: pretty; }
 .card {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
-  border-radius: 24px;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.35s ease, border-color 0.35s ease;
+  border-radius: 20px;
+  transition: border-color 0.2s ease;
 }
 .card-hover:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-accent);
-  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
 }
 
 .card-mint {
@@ -321,7 +343,7 @@ p { text-wrap: pretty; }
 
 /* Legacy alias used by tool pages */
 .glass-card {
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -342,26 +364,12 @@ p { text-wrap: pretty; }
 }
 
 /* ─── Decorative backgrounds ─── */
-.mesh-hero {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(60% 50% at 78% 12%, rgba(24, 169, 87, 0.13) 0%, transparent 70%),
-    radial-gradient(55% 45% at 8% 4%, rgba(147, 220, 175, 0.22) 0%, transparent 72%);
-}
+/* Kept as a no-op rather than deleted: the tool pages still reference it, and
+   the page is a flat black now. Gradients read as noise at this contrast. */
+.mesh-hero { display: none; }
 
-.grid-lines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgba(14, 26, 18, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(14, 26, 18, 0.035) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(70% 60% at 50% 30%, #000 0%, transparent 100%);
-  -webkit-mask-image: radial-gradient(70% 60% at 50% 30%, #000 0%, transparent 100%);
-}
+/* Same: the landing page no longer draws a grid. */
+.grid-lines { display: none; }
 
 .divider { height: 1px; background: var(--border); width: 100%; }
 
