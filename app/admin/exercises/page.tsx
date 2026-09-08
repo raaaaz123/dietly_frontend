@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "../../lib/api";
+import MediaJobs from "./MediaJobs";
 
 /**
  * The exercise catalogue — 4,119 rows, so nothing here loads all of them.
@@ -192,6 +193,8 @@ export default function ExercisesPage() {
           Reload catalogue
         </button>
       </div>
+
+      <MediaJobs onChanged={() => load(true)} />
 
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
