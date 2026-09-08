@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { hasSession } from "../../../lib/adminSession";
 
 /**
  * Server-side proxy for every admin call.
@@ -24,6 +25,15 @@ import { NextRequest } from "next/server";
  * routing table to keep in sync with the backend's. Everything here is already
  * behind `require_admin` server-side; this proxy adds the credential, it does
  * not decide what may be called.
+ *
+ * Which is exactly why it has to check a session first. Attaching the admin key
+ * to whatever arrives turns this route into an unauthenticated admin gateway on
+ * the public internet — strictly worse than the leaked-key problem it replaced,
+ * because that one at least required opening the bundle. Verified by calling it
+ * with curl and no credentials at all and getting a 200 back. The login was
+ * client-side (`app/lib/auth.tsx` compared an inlined password and set a
+ * sessionStorage flag), so there was nothing here to check against; see
+ * `../session/route.ts`, which is where the real one now lives.
  */
 
 const API = process.env.API_URL ?? "http://localhost:8000";
@@ -33,6 +43,9 @@ const KEY = process.env.ADMIN_API_KEY ?? "vital-admin-dev-key";
 export const maxDuration = 60;
 
 async function forward(req: NextRequest, path: string[]) {
+  if (!hasSession(req)) {
+    return Response.json({ detail: "Admin sign-in required" }, { status: 401 });
+  }
   const search = req.nextUrl.search;
   const target = `${API}/${path.join("/")}${search}`;
 
