@@ -31,6 +31,21 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        // The app-association file, served the way Apple insists on reading it.
+        //
+        // Apple fetches this with its own client, does **not** follow
+        // redirects, and wants JSON. Two things were wrong: it was being
+        // served as application/octet-stream, and `dietly.life` 307s to
+        // `www.dietly.life`, so a device asking the apex host got a redirect
+        // and gave up. The app declares both hosts for that reason; this makes
+        // sure whichever one it asks answers with the file itself.
+        source: "/.well-known/apple-app-site-association",
+        headers: [
+          { key: "Content-Type", value: "application/json" },
+          { key: "Cache-Control", value: "public, max-age=3600" },
+        ],
+      },
+      {
         // Allow AI crawlers to read llms.txt freely
         source: "/llms.txt",
         headers: [

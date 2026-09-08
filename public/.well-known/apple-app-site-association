@@ -3,8 +3,8 @@
     "apps": [],
     "details": [
       {
-        "appID": "YOUR_APPLE_TEAM_ID.com.dietlyai.app",
-        "paths": ["/invite", "/invite/*"]
+        "appID": "AZCK98MRC8.com.dietlyai.app",
+        "paths": ["/f", "/f/*", "/invite", "/invite/*"]
       }
     ]
   }

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { APP_STORE_URL } from "@/app/lib/site";
 
 function InviteContent() {
   const searchParams = useSearchParams();
@@ -10,7 +11,10 @@ function InviteContent() {
     if (ref) {
       // Try to open the app automatically via custom scheme
       const timeout = setTimeout(() => {
-        window.location.href = `dietlyai://invite?ref=${ref}`;
+        // `dietly://`, not `dietlyai://`. The app has never registered
+        // `dietlyai`, so this line has silently done nothing since it was
+        // written — the referral link opened this page and stopped there.
+        window.location.href = `dietly://invite?ref=${ref}`;
       }, 500);
       return () => clearTimeout(timeout);
     }
@@ -36,7 +40,7 @@ function InviteContent() {
 
       <div className="flex flex-col gap-4 w-full max-w-sm">
         <a 
-          href="https://apps.apple.com/app/idYOUR_APP_ID" 
+          href={APP_STORE_URL} 
           className="bg-fg text-bg font-bold py-4 rounded-xl hover:opacity-90 transition-opacity"
         >
           Download for iOS
