@@ -3,8 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   env: {
     API_URL: process.env.API_URL,
-    ADMIN_USERNAME: process.env.ADMIN_USERNAME,
-    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
     // ADMIN_API_KEY is deliberately NOT re-exported here any more. Everything
     // in this block is inlined into the client bundle, and `app/lib/api.ts` —
     // imported by "use client" pages — put the key in every visitor's browser,
@@ -12,9 +10,10 @@ const nextConfig: NextConfig = {
     // go through `app/api/admin/[...path]/route.ts`, which reads the key from
     // the real server-side environment.
     //
-    // ADMIN_USERNAME/ADMIN_PASSWORD above are still inlined and still wrong for
-    // the same reason; `app/lib/auth.tsx` compares them in the browser, so
-    // fixing them means moving the login check server-side too.
+    // ADMIN_USERNAME/ADMIN_PASSWORD are gone from this block too. They were
+    // inlined for the same reason and were the whole of the admin login —
+    // `app/lib/auth.tsx` compared them in the browser. The check now runs in
+    // `app/api/admin/session/route.ts` against the server environment.
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
     FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
