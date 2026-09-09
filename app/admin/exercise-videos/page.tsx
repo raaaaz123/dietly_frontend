@@ -187,20 +187,26 @@ export default function ExerciseVideosPage() {
       return;
     }
 
-    // Every 1.5s. Fast enough that a finished render appears promptly, slow
-    // enough that a run carrying several megabytes of base64 is not re-sent
-    // more often than it changes.
+    // Every 1.5s, asking only for what we do not already have: each item
+    // carries two base64 clips, so re-fetching the finished ones on every poll
+    // would be megabytes a second of content already on screen.
+    const got: Preview[] = [];
     while (true) {
       await new Promise((r) => setTimeout(r, 1500));
       let job: PreviewJob;
       try {
-        job = await api.get<PreviewJob>("/exercises/admin/render/preview/status");
+        job = await api.get<PreviewJob>(
+          `/exercises/admin/render/preview/status?since=${got.length}`
+        );
       } catch {
         // One dropped poll is not a failed render. Keep waiting; a genuinely
         // dead server will surface when the next one fails too.
         continue;
       }
-      setPreviews(job.items ?? []);
+      if (job.items?.length) {
+        got.push(...job.items);
+        setPreviews([...got]);
+      }
       setProgress({ done: job.done, total: job.total, current: job.current });
       if (!job.running) {
         if (job.error) setError(job.error);
