@@ -63,6 +63,14 @@ type VideoStatus = {
   pending: number;
 };
 
+/** The shipped palette, mirrored from `exercise_brand.py`.
+ *
+ * Duplicated rather than fetched because it is only ever a *starting point* for
+ * the pickers — the server owns the real defaults and falls back to them for
+ * anything it cannot parse, so the two drifting costs a slightly wrong swatch,
+ * not a wrong render. */
+const SHIPPED = { page: "#000000", body: "#727B86", accent: "#D2F53C" };
+
 /** A preview run, as the backend reports it while it works. */
 type PreviewJob = {
   running: boolean;
@@ -97,6 +105,7 @@ export default function ExerciseVideosPage() {
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const [engine, setEngine] = useState("matte");
   const [crf, setCrf] = useState(23);
+  const [colours, setColours] = useState(SHIPPED);
   const [kind, setKind] = useState<"video" | "still">("video");
   const [previews, setPreviews] = useState<Preview[]>([]);
   const [rendering, setRendering] = useState(false);
@@ -173,7 +182,7 @@ export default function ExerciseVideosPage() {
     try {
       const started = await api.post<PreviewJob>(
         "/exercises/admin/render/preview",
-        { slugs: [...picked], engine, kind, crf }
+        { slugs: [...picked], engine, kind, crf, ...colours }
       );
       if (started.error) {
         setError(started.error);
@@ -221,8 +230,13 @@ export default function ExerciseVideosPage() {
     setBusy(true);
     setError(null);
     try {
+      // The colours approved on the bench are the colours the catalogue gets.
+      const q = new URLSearchParams({
+        limit: String(limit), engine, crf: String(crf),
+        page: colours.page, body: colours.body, accent: colours.accent,
+      });
       const s = await api.post<VideoStatus>(
-        `/exercises/admin/migrate-videos?limit=${limit}&engine=${engine}&crf=${crf}`
+        `/exercises/admin/migrate-videos?${q}`
       );
       setStatus(s);
       wasRunning.current = true;
@@ -311,6 +325,48 @@ export default function ExerciseVideosPage() {
             </select>
           </label>
         </div>
+        {/* Colours. Three, not six: the figure is a three-stop ramp, but the
+            other two stops are derived from the mid-tone server-side so the
+            relationship between them survives. Picking three greys by hand
+            that still read as one lit figure is a good way to get a muddy
+            one. */}
+        <div className="flex flex-wrap items-end gap-5 mt-5 pt-5 border-t border-border">
+          <Swatch
+            label="Background"
+            hint="the plate behind the figure"
+            value={colours.page}
+            onChange={(v) => setColours((c) => ({ ...c, page: v }))}
+          />
+          <Swatch
+            label="Figure"
+            hint="mid-tone; shadow and highlight follow"
+            value={colours.body}
+            onChange={(v) => setColours((c) => ({ ...c, body: v }))}
+          />
+          <Swatch
+            label="Worked muscle"
+            hint="also tints the glow"
+            value={colours.accent}
+            onChange={(v) => setColours((c) => ({ ...c, accent: v }))}
+          />
+          <button
+            onClick={() => setColours(SHIPPED)}
+            disabled={
+              colours.page === SHIPPED.page &&
+              colours.body === SHIPPED.body &&
+              colours.accent === SHIPPED.accent
+            }
+            className="text-[11px] px-2 py-1 rounded-lg border border-border hover:border-border-strong text-muted disabled:opacity-30 transition-colors"
+          >
+            Reset to shipped
+          </button>
+        </div>
+
+        <p className="text-[11px] text-faint mt-3">
+          The <span className="text-fg">Current</span> panel below always
+          renders the shipped look, so the pair stays a before/after of the
+          engine <em>and</em> the colours.
+        </p>
       </Section>
 
       {/* ---- 2. Pick ---- */}
@@ -470,6 +526,63 @@ export default function ExerciseVideosPage() {
 }
 
 /* ------------------------------------------------------------------ bits */
+
+/**
+ * One colour, pickable two ways.
+ *
+ * The native swatch is the fast path and the hex field is the exact one — a
+ * brand colour arrives as `#D2F53C` from a palette, not as a point in a
+ * gradient, and typing it should not require hunting for it in a picker.
+ *
+ * The text field holds its own draft while it is being typed, because a
+ * half-typed `#D2F` is a valid three-digit colour that the parent would
+ * otherwise accept and render mid-keystroke.
+ */
+function Swatch({
+  label,
+  hint,
+  value,
+  onChange,
+}: {
+  label: string;
+  hint: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  const [draft, setDraft] = useState(value);
+  useEffect(() => setDraft(value), [value]);
+
+  function commit(next: string) {
+    setDraft(next);
+    if (/^#[0-9a-fA-F]{6}$/.test(next)) onChange(next.toUpperCase());
+  }
+
+  return (
+    <label className="text-xs text-muted">
+      <span className="block text-fg font-semibold">{label}</span>
+      <span className="block text-[11px] text-faint mb-1.5">{hint}</span>
+      <span className="flex items-center gap-2">
+        <input
+          type="color"
+          value={value}
+          onChange={(e) => onChange(e.target.value.toUpperCase())}
+          className="h-8 w-10 rounded-lg border border-border bg-transparent cursor-pointer"
+          aria-label={`${label} colour`}
+        />
+        <input
+          type="text"
+          value={draft}
+          onChange={(e) => commit(e.target.value)}
+          onBlur={() => setDraft(value)}
+          spellCheck={false}
+          className="w-24 bg-transparent border border-border rounded-lg px-2 py-1 text-fg font-mono text-[11px]"
+          aria-label={`${label} hex`}
+        />
+      </span>
+    </label>
+  );
+}
+
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
