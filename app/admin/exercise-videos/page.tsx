@@ -63,6 +63,16 @@ type VideoStatus = {
   pending: number;
 };
 
+/** A preview run, as the backend reports it while it works. */
+type PreviewJob = {
+  running: boolean;
+  total: number;
+  done: number;
+  current: string;
+  error: string;
+  items: Preview[];
+};
+
 /** The engines, and what each is actually doing. */
 const ENGINES = [
   {
@@ -90,6 +100,9 @@ export default function ExerciseVideosPage() {
   const [kind, setKind] = useState<"video" | "still">("video");
   const [previews, setPreviews] = useState<Preview[]>([]);
   const [rendering, setRendering] = useState(false);
+  const [progress, setProgress] = useState<
+    { done: number; total: number; current: string } | null
+  >(null);
   const [status, setStatus] = useState<VideoStatus | null>(null);
   const [limit, setLimit] = useState(25);
   const [busy, setBusy] = useState(false);
@@ -138,23 +151,63 @@ export default function ExerciseVideosPage() {
     });
   }
 
+  /**
+   * Start a preview run, then poll it.
+   *
+   * This used to be a single POST that waited for every render. It could not
+   * be: one exercise is two full re-encodes (14-19s on a fast laptop, several
+   * times that on the server), the picker allows eight, and `/api/admin/*` is
+   * capped at `maxDuration = 60`. So the request was killed mid-render and
+   * came back as a gateway-timeout HTML page — which is why the failure showed
+   * up as an empty error box rather than anything actionable.
+   *
+   * Polling also means results appear one at a time instead of all at the end,
+   * so the first comparison is on screen while the rest are still encoding.
+   */
   async function runPreview() {
     if (picked.size === 0) return;
     setRendering(true);
     setError(null);
     setPreviews([]);
+    setProgress(null);
     try {
-      const r = await api.post<{ items: Preview[] }>("/exercises/admin/render/preview", {
-        slugs: [...picked],
-        engine,
-        kind,
-        crf,
-      });
-      setPreviews(r.items ?? []);
+      const started = await api.post<PreviewJob>(
+        "/exercises/admin/render/preview",
+        { slugs: [...picked], engine, kind, crf }
+      );
+      if (started.error) {
+        setError(started.error);
+        setRendering(false);
+        return;
+      }
+      setProgress({ done: started.done, total: started.total, current: started.current });
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Render failed");
-    } finally {
+      setError(e instanceof Error ? e.message : "Could not start the render");
       setRendering(false);
+      return;
+    }
+
+    // Every 1.5s. Fast enough that a finished render appears promptly, slow
+    // enough that a run carrying several megabytes of base64 is not re-sent
+    // more often than it changes.
+    while (true) {
+      await new Promise((r) => setTimeout(r, 1500));
+      let job: PreviewJob;
+      try {
+        job = await api.get<PreviewJob>("/exercises/admin/render/preview/status");
+      } catch {
+        // One dropped poll is not a failed render. Keep waiting; a genuinely
+        // dead server will surface when the next one fails too.
+        continue;
+      }
+      setPreviews(job.items ?? []);
+      setProgress({ done: job.done, total: job.total, current: job.current });
+      if (!job.running) {
+        if (job.error) setError(job.error);
+        setRendering(false);
+        setProgress(null);
+        return;
+      }
     }
   }
 
@@ -289,7 +342,16 @@ export default function ExerciseVideosPage() {
         </button>
         {rendering && (
           <p className="text-xs text-muted mt-2">
-            Two renders per exercise, so this takes about {kind === "video" ? "20–40s" : "2s"} each.
+            {progress && progress.total > 0 ? (
+              <>
+                {progress.done} of {progress.total} done
+                {progress.current ? ` · rendering ${progress.current}` : ""} · two
+                renders each, so allow {kind === "video" ? "20–40s" : "2s"} per
+                exercise. Results appear as they finish.
+              </>
+            ) : (
+              <>Starting…</>
+            )}
           </p>
         )}
       </Section>
