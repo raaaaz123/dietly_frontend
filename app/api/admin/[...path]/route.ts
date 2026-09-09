@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
-import { hasSession } from "../../../lib/adminSession";
+import { hasSession, sessionId } from "../../../lib/adminSession";
+import { notConfiguredResponse, secret } from "../../../lib/adminSecrets";
 
 /**
  * Server-side proxy for every admin call.
@@ -26,6 +27,12 @@ import { hasSession } from "../../../lib/adminSession";
  * behind `require_admin` server-side; this proxy adds the credential, it does
  * not decide what may be called.
  *
+ * And why the key is read through `adminSecrets` rather than with a `??`
+ * default. It had one — `"vital-admin-dev-key"`, committed to this repo — so a
+ * deployment missing `ADMIN_API_KEY` did not fail, it quietly signed every
+ * upstream request with a published credential that the backend accepts if it
+ * happens to be the deployed value too. Now the request is refused instead.
+ *
  * Which is exactly why it has to check a session first. Attaching the admin key
  * to whatever arrives turns this route into an unauthenticated admin gateway on
  * the public internet — strictly worse than the leaked-key problem it replaced,
@@ -37,7 +44,6 @@ import { hasSession } from "../../../lib/adminSession";
  */
 
 const API = process.env.API_URL ?? "http://localhost:8000";
-const KEY = process.env.ADMIN_API_KEY ?? "vital-admin-dev-key";
 
 /** Long enough for `build-media` and `select-core`, which are not quick. */
 export const maxDuration = 60;
@@ -46,6 +52,19 @@ async function forward(req: NextRequest, path: string[]) {
   if (!hasSession(req)) {
     return Response.json({ detail: "Admin sign-in required" }, { status: 401 });
   }
+
+  // Read before anything else is done with the request, so a misconfigured
+  // deployment refuses rather than reaching upstream with a default key.
+  let key: string;
+  try {
+    key = secret("ADMIN_API_KEY");
+  } catch (e) {
+    return notConfiguredResponse(e) ?? Response.json(
+      { detail: "Admin is not configured on this deployment" }, { status: 503 }
+    );
+  }
+
+  const session = sessionId(req);
   const search = req.nextUrl.search;
   const target = `${API}/${path.join("/")}${search}`;
 
@@ -60,7 +79,12 @@ async function forward(req: NextRequest, path: string[]) {
       method: req.method,
       headers: {
         "Content-Type": "application/json",
-        "X-Admin-Key": KEY,
+        "X-Admin-Key": key,
+        // Attribution, not authentication — see `sessionId`. The backend
+        // writes it into `admin_audit` so a change made through this proxy can
+        // be traced to the session that made it. The key alone cannot say
+        // that: there is one of it and everybody shares it.
+        ...(session ? { "X-Admin-Session": session } : {}),
       },
       body: body || undefined,
       cache: "no-store",

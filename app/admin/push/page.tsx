@@ -3,8 +3,21 @@ import { useCallback, useEffect, useState } from "react";
 import { api } from "../../lib/api";
 
 /**
- * Push: the registry, whether the hourly pass is actually running, and the
- * two ways to send something by hand.
+ * Push: the registry, whether the hourly pass is actually running, what the
+ * schedule says, and the three things you can only do by hand.
+ *
+ * Rewritten alongside the pivot. Two things were wrong with the old page and
+ * both were about it reporting a world that no longer existed:
+ *
+ *   • It drew a `channels` row with `expo` beside `fcm`. Nothing has been able
+ *     to mint an Expo token since the app became Swift, so that column read
+ *     zero forever — and a zero on a dashboard is a measurement, not an
+ *     absence. Expo rows are now counted as *debt*, with the purge that clears
+ *     them next to the number.
+ *   • It listed nudge kinds as bare identifiers. Fourteen of them, and no way
+ *     to know what `afternoon_fuel` actually says to a customer without
+ *     opening `proactive.py`. The schedule now explains itself, from the same
+ *     source the sender reads.
  *
  * Broadcast defaults to a rehearsal and stays that way until someone types
  * the word — a real broadcast reaches every registered device at once and
@@ -16,13 +29,15 @@ type Overview = {
     total: number;
     users: number;
     platforms: Record<string, number>;
-    channels: Record<string, number>;
+    channel?: string;
+    expo_rows?: number;
+    reachable?: number;
     freshness?: Record<string, number>;
   };
   history: {
     days: number;
     since: string;
-    series: { day: string; total: number }[];
+    series: { day: string; total: number; by_kind?: Record<string, number> }[];
     by_kind: Record<string, number>;
     total: number;
     last_send_day: string | null;
@@ -31,6 +46,9 @@ type Overview = {
   };
   schedule: {
     kinds: string[];
+    kind_notes?: Record<string, string>;
+    max_per_day?: number;
+    lapsed_after_days?: number;
     last_run: Record<string, unknown> | null;
     recent_runs: Record<string, unknown>[];
   };
@@ -39,7 +57,8 @@ type Overview = {
 
 type BroadcastResult = {
   dry_run?: boolean;
-  matched?: number;
+  targeted_users?: number;
+  targeted_devices?: number;
   sent?: number;
   failed?: number;
   [k: string]: unknown;
@@ -66,13 +85,17 @@ export default function PushPage() {
     load();
   }, [load]);
 
+  const expoRows = data?.devices.expo_rows ?? 0;
+
   return (
     <div className="p-4 md:p-8">
       <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
         <div>
           <h1 className="text-2xl font-black tracking-tight text-fg">Push</h1>
           <p className="text-sm text-muted mt-1">
-            {loading ? "Loading…" : `${data?.devices.total ?? 0} devices · ${data?.devices.users ?? 0} accounts`}
+            {loading
+              ? "Loading…"
+              : `${data?.devices.total ?? 0} devices · ${data?.devices.users ?? 0} accounts · native APNs via FCM`}
           </p>
         </div>
         <div className="flex gap-2">
@@ -118,9 +141,17 @@ export default function PushPage() {
         <>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
             <Stat label="Devices" value={data.devices.total} />
-            <Stat label="Accounts" value={data.devices.users} />
+            {/* Reachable, not registered. The registry keeps a row until a send
+                fails, so a 90-day-old row is an uninstall being counted as an
+                install — and every delivery rate computed against the total is
+                wrong by however many of those there are. */}
+            <Stat
+              label="Reachable (30d)"
+              value={data.devices.reachable ?? 0}
+              tone="accent"
+            />
             <Stat label="Sent today" value={data.history.sent_today} tone="accent" />
-            <Stat label={`Sent (${data.history.days}d)`} value={data.history.total} tone="accent" />
+            <Stat label={`Sent (${data.history.days}d)`} value={data.history.total} />
             <Stat
               label="Silent days"
               value={data.history.silent_days ?? 0}
@@ -130,11 +161,12 @@ export default function PushPage() {
 
           <div className="grid lg:grid-cols-2 gap-4 mb-6">
             <Card title="Registry">
+              <KV label="Channel" value={(data.devices.channel ?? "fcm").toUpperCase()} />
               <KV label="Platforms" value={fmtCounts(data.devices.platforms)} />
-              <KV label="Channels" value={fmtCounts(data.devices.channels)} />
               {data.devices.freshness && (
                 <KV label="Freshness" value={fmtCounts(data.devices.freshness)} />
               )}
+              <PurgeExpo rows={expoRows} onDone={load} />
             </Card>
 
             <Card title="Schedule">
@@ -147,20 +179,32 @@ export default function PushPage() {
                 }
               />
               <KV label="Nudge kinds" value={String(data.schedule.kinds.length)} />
+              <KV
+                label="Cap per user / day"
+                value={
+                  data.schedule.max_per_day
+                    ? `${data.schedule.max_per_day} (streak saver exempt)`
+                    : "—"
+                }
+              />
+              <KV
+                label="Lapsed after"
+                value={
+                  data.schedule.lapsed_after_days
+                    ? `${data.schedule.lapsed_after_days} days — comeback only`
+                    : "—"
+                }
+              />
               <RunNow onDone={load} />
             </Card>
           </div>
 
-          <Card title={`Sends by kind — last ${data.history.days} days`} className="mb-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-2 mt-1">
-              {Object.entries(data.history.by_kind).map(([kind, n]) => (
-                <div key={kind} className="flex items-center justify-between text-sm">
-                  <span className={n ? "text-muted" : "text-faint"}>{kind}</span>
-                  <span className={n ? "text-fg font-semibold" : "text-faint"}>{n}</span>
-                </div>
-              ))}
-            </div>
-          </Card>
+          <Schedule
+            kinds={data.schedule.kinds}
+            notes={data.schedule.kind_notes ?? {}}
+            counts={data.history.by_kind}
+            days={data.history.days}
+          />
 
           <Sparkline series={data.history.series} />
         </>
@@ -170,6 +214,124 @@ export default function PushPage() {
         <TestSend />
         <Broadcast onSent={load} />
       </div>
+    </div>
+  );
+}
+
+/**
+ * The schedule, explained. One row per kind: what it is for, and how many went
+ * out in the window.
+ *
+ * A kind at zero is the row worth looking at — either its condition genuinely
+ * never held, or the rule is broken and nobody would know, because a nudge that
+ * never fires produces exactly the same silence as one whose condition is
+ * simply never true.
+ */
+function Schedule({
+  kinds,
+  notes,
+  counts,
+  days,
+}: {
+  kinds: string[];
+  notes: Record<string, string>;
+  counts: Record<string, number>;
+  days: number;
+}) {
+  return (
+    <Card title={`Schedule — sends in the last ${days} days`} className="mb-6">
+      <div className="mt-1 divide-y divide-border">
+        {kinds.map((kind) => {
+          const n = counts[kind] ?? 0;
+          return (
+            <div key={kind} className="flex items-start gap-4 py-2.5">
+              <div className="min-w-0 flex-1">
+                <p className={`text-sm font-medium ${n ? "text-fg" : "text-muted"}`}>
+                  {kind}
+                </p>
+                {notes[kind] && (
+                  <p className="text-xs text-faint mt-0.5">{notes[kind]}</p>
+                )}
+              </div>
+              <span
+                className={`shrink-0 text-sm tabular-nums ${
+                  n ? "text-accent font-semibold" : "text-faint"
+                }`}
+              >
+                {n.toLocaleString()}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </Card>
+  );
+}
+
+/**
+ * The Expo cleanup, offered only when there is something to clean.
+ *
+ * Rehearsal first, like the broadcast, and for the same reason: it deletes
+ * rows across every account and the count is the thing to look at before
+ * pressing anything.
+ */
+function PurgeExpo({ rows, onDone }: { rows: number; onDone: () => void }) {
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<string | null>(null);
+
+  if (!rows) {
+    return (
+      <p className="text-xs text-faint mt-3 pt-3 border-t border-border">
+        No legacy Expo rows. The sender is FCM-only — Expo was the React-Native
+        build&apos;s channel and nothing can register one now.
+      </p>
+    );
+  }
+
+  async function run(dryRun: boolean) {
+    setBusy(true);
+    setMsg(null);
+    try {
+      const r = await api.post<{ found?: number; deleted?: number }>(
+        "/admin/push/purge-expo",
+        { dry_run: dryRun }
+      );
+      setMsg(
+        dryRun
+          ? `${r.found ?? 0} legacy rows found. Nothing deleted.`
+          : `Deleted ${r.deleted ?? 0} of ${r.found ?? 0}.`
+      );
+      if (!dryRun) onDone();
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Purge failed");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="mt-3 pt-3 border-t border-border">
+      <p className="text-xs text-orange-400 mb-2">
+        {rows} legacy Expo row{rows === 1 ? "" : "s"} — unreachable, and counted
+        in every device total until removed.
+      </p>
+      <div className="flex gap-2">
+        <button
+          disabled={busy}
+          onClick={() => run(true)}
+          className="text-xs text-muted hover:text-fg border border-border hover:border-border-strong px-3 py-2 rounded-lg transition-colors disabled:opacity-40"
+        >
+          {busy ? "Working…" : "Count them"}
+        </button>
+        <button
+          disabled={busy}
+          onClick={() => run(false)}
+          className="text-xs text-red-400 hover:text-red-300 border border-red-500/40 hover:border-red-500/70 px-3 py-2 rounded-lg transition-colors disabled:opacity-30"
+        >
+          Purge
+        </button>
+      </div>
+      {msg && <p className="text-xs text-muted mt-2">{msg}</p>}
     </div>
   );
 }
@@ -236,7 +398,11 @@ function TestSend() {
   return (
     <Card title="Test send">
       <p className="text-xs text-faint mb-3">
-        One account, per-token verdict. The first thing to check when someone reports getting nothing.
+        One account, per-token verdict. The first thing to check when someone
+        reports getting nothing — <code>third-party-auth-error</code> means
+        Firebase has no APNs key for this bundle id,{" "}
+        <code>registration-token-not-registered</code> means the install is gone,
+        and no rows at all means the app never registered.
       </p>
       <Input value={uid} onChange={setUid} placeholder="User UID" />
       <Input value={title} onChange={setTitle} placeholder="Title" />
@@ -302,15 +468,24 @@ function Broadcast({ onSent }: { onSent: () => void }) {
   return (
     <Card title="Broadcast">
       <p className="text-xs text-faint mb-3">
-        Every registered device. Rehearse first — the dry run reports who it would reach without sending.
+        Every registered device. Rehearse first — the dry run reports who it
+        would reach without sending.
       </p>
       <Input value={title} onChange={setTitle} placeholder="Title" />
       <Input value={body} onChange={setBody} placeholder="Body" />
+      {/* The lock screen truncates, and it truncates the body first. Shown as a
+          count rather than enforced: a long message is a judgement call, and
+          this page should inform it, not overrule it. */}
+      <Preview title={title} body={body} />
       <div className="flex flex-wrap gap-4 my-2">
         <Check label="Opens paywall" checked={offer} onChange={setOffer} />
         <Check label="Free tier only" checked={onlyFree} onChange={setOnlyFree} />
       </div>
-      <Input value={activeDays} onChange={setActiveDays} placeholder="Active within N days (blank = all)" />
+      <Input
+        value={activeDays}
+        onChange={setActiveDays}
+        placeholder="Active within N days (blank = all)"
+      />
 
       <div className="flex flex-wrap gap-2 mt-2">
         <button
@@ -323,7 +498,7 @@ function Broadcast({ onSent }: { onSent: () => void }) {
         <input
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
-          placeholder='Type SEND to arm'
+          placeholder="Type SEND to arm"
           className="w-36 bg-elevated border border-border rounded-lg px-3 py-2 text-xs text-fg outline-none focus:border-red-500/50 placeholder:text-faint"
         />
         <button
@@ -339,12 +514,30 @@ function Broadcast({ onSent }: { onSent: () => void }) {
       {result && (
         <>
           <p className={`text-xs mt-3 ${result.dry_run ? "text-muted" : "text-emerald-400"}`}>
-            {result.dry_run ? "Rehearsal — nothing was sent." : "Sent."}
+            {result.dry_run
+              ? `Rehearsal — would reach ${result.targeted_devices ?? 0} device(s) across ${result.targeted_users ?? 0} account(s). Nothing was sent.`
+              : `Sent to ${result.sent ?? 0} device(s)${result.failed ? `, ${result.failed} failed` : ""}.`}
           </p>
           <Pre value={result} />
         </>
       )}
     </Card>
+  );
+}
+
+/** What the banner looks like, and where the phone will cut it off. */
+function Preview({ title, body }: { title: string; body: string }) {
+  if (!title && !body) return null;
+  const long = title.length > 40 || body.length > 110;
+  return (
+    <div className="mb-2 rounded-xl border border-border bg-bg px-3 py-2.5">
+      <p className="text-sm font-semibold text-fg truncate">{title || "Title"}</p>
+      <p className="text-xs text-muted line-clamp-2">{body || "Body"}</p>
+      <p className={`text-[10px] mt-1.5 ${long ? "text-orange-400" : "text-faint"}`}>
+        {title.length} / {body.length} chars
+        {long ? " — a lock screen shows roughly 40 and 110." : ""}
+      </p>
+    </div>
   );
 }
 

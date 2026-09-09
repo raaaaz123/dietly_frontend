@@ -24,8 +24,15 @@ import { api } from "../../lib/api";
  * catalogue opens on "1 to 2 Jump Box" and "A brief introduction" — in Explore,
  * and on the onboarding screen that asks for money.
  *
- * Neither is written to be run from a request: build is minutes to hours and is
- * fire-and-forget, so this starts it and then polls.
+ * **Migrate images.** Every row that has not been through build-media still
+ * serves its thumbnail straight from `apilyfta.com` — somebody else's host, on
+ * the critical path of every exercise card, over an unsigned URL that names the
+ * dataset we licensed. This mirrors those stills into our own private bucket
+ * under the `poster_key` the row already has a column for. It does **not**
+ * touch video: no key, no source URL, no re-encode.
+ *
+ * None of these is written to be run from a request: build is minutes to hours
+ * and all three are fire-and-forget, so this starts them and then polls.
  */
 
 type BuildStatus = {
@@ -41,7 +48,28 @@ type BuildStatus = {
   finished_at: string;
 };
 
+/** `GET /exercises/admin/migrate-images/status`. */
+type MigrateStatus = {
+  running: boolean;
+  done: number;
+  total: number;
+  migrated: number;
+  failed: number;
+  error: string;
+  current: string;
+  /** Standing counts, answered whether or not a run is in progress. */
+  /** Every non-deleted row in the catalogue. Distinct from `total`, which is
+   *  how many rows the *current run* is working through. */
+  total_catalogue: number;
+  ours: number;
+  pending: number;
+  foreign_still: number;
+  source_only: number;
+  no_still: number;
+};
+
 export default function MediaJobs({ onChanged }: { onChanged: () => void }) {
+  const [migrate, setMigrate] = useState<MigrateStatus | null>(null);
   const [status, setStatus] = useState<BuildStatus | null>(null);
   const [limit, setLimit] = useState(25);
   const [busy, setBusy] = useState(false);
@@ -51,11 +79,30 @@ export default function MediaJobs({ onChanged }: { onChanged: () => void }) {
   /// Set while a run is in progress so the catalogue is reloaded once — and
   /// only once — when it stops.
   const wasRunning = useRef(false);
+  const migrateWasRunning = useRef(false);
 
   const poll = useCallback(async () => {
     try {
       const s = await api.get<BuildStatus>("/exercises/admin/build-media/status");
       setStatus(s);
+      // Polled alongside, not instead: the two jobs are independent and the
+      // image counts are worth showing even when neither is running.
+      try {
+        const m = await api.get<MigrateStatus>(
+          "/exercises/admin/migrate-images/status"
+        );
+        setMigrate(m);
+        // Read from the response, not from `migrate` — that is the previous
+        // render's state, so testing it here would decide a run had finished
+        // one poll late, or never.
+        if (migrateWasRunning.current && !m.running) {
+          migrateWasRunning.current = false;
+          onChanged();
+        }
+      } catch {
+        // A backend that predates this route. The panel hides itself rather
+        // than reporting an error for a job that does not exist there.
+      }
       if (wasRunning.current && !s.running) {
         wasRunning.current = false;
         onChanged();
@@ -125,7 +172,29 @@ export default function MediaJobs({ onChanged }: { onChanged: () => void }) {
     }
   }
 
+  async function migrateImages() {
+    setBusy(true);
+    setError(null);
+    setNote(null);
+    try {
+      const r = await api.post<MigrateStatus>(
+        `/exercises/admin/migrate-images?limit=${limit}`
+      );
+      setMigrate(r);
+      migrateWasRunning.current = true;
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Could not start the image migration");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   const running = status?.running ?? false;
+  const migrating = migrate?.running ?? false;
+  const migratePct =
+    migrate && migrate.total > 0
+      ? Math.round((migrate.done / migrate.total) * 100)
+      : 0;
   const pct =
     status && status.total > 0
       ? Math.round((status.done / status.total) * 100)
@@ -197,8 +266,105 @@ export default function MediaJobs({ onChanged }: { onChanged: () => void }) {
         </div>
       )}
 
+      {migrate && (
+        <div className="mt-4 pt-4 border-t border-border">
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div className="min-w-0">
+              <h3 className="text-sm font-semibold text-fg">Exercise images</h3>
+              <p className="text-xs text-muted mt-1 max-w-xl">
+                Unmigrated rows serve their thumbnail from{" "}
+                <code className="text-fg">apilyfta.com</code> — a host we
+                don&apos;t own, on the critical path of every exercise card, over
+                an unsigned URL that names the dataset. This copies those stills
+                into our private bucket. Videos are not touched.
+              </p>
+            </div>
+            <button
+              onClick={migrateImages}
+              disabled={busy || migrating || running || migrate.pending === 0}
+              className="shrink-0 text-xs px-3 py-2 rounded-lg border border-border hover:border-border-strong text-fg disabled:opacity-40 transition-colors"
+            >
+              {migrating
+                ? "Migrating…"
+                : migrate.pending === 0
+                  ? "All migrated"
+                  : `Migrate ${Math.min(limit, migrate.pending)} images`}
+            </button>
+          </div>
+
+          {/* The two numbers asked for, plus what is left. Percentage as well
+              as counts: "3,180 of 4,119" is a fraction somebody has to do in
+              their head, and the whole point of this panel is knowing at a
+              glance whether the catalogue is ours yet. */}
+          <div className="grid grid-cols-3 gap-3 mt-4">
+            <Stat label="Total exercises" value={migrate.total_catalogue} />
+            <Stat
+              label="Served from our bucket"
+              value={migrate.ours}
+              accent
+              suffix={
+                migrate.total_catalogue > 0
+                  ? ` · ${Math.round((migrate.ours / migrate.total_catalogue) * 100)}%`
+                  : undefined
+              }
+            />
+            <Stat label="Still external" value={migrate.pending} warn={migrate.pending > 0} />
+          </div>
+
+          {(migrating || migrate.done > 0) && (
+            <div className="mt-4">
+              <div className="h-1.5 bg-border rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-accent transition-all duration-500"
+                  style={{ width: `${migratePct}%` }}
+                />
+              </div>
+              <p className="text-xs text-muted mt-2">
+                {migrate.done}/{migrate.total} · {migrate.migrated} migrated
+                {migrate.failed > 0 && (
+                  <span className="text-warn"> · {migrate.failed} failed</span>
+                )}
+                {migrate.current && migrating && (
+                  <span className="text-faint"> · {migrate.current}</span>
+                )}
+              </p>
+              {migrate.error && (
+                <p className="text-xs text-warn mt-1">{migrate.error}</p>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
       {note && <p className="text-xs text-accent mt-3">{note}</p>}
       {error && <p className="text-xs text-warn mt-3">{error}</p>}
+    </div>
+  );
+}
+
+/// One number, named. Three of these is the whole answer to "is the catalogue
+/// ours yet", which is the question this panel exists for.
+function Stat({
+  label,
+  value,
+  accent,
+  warn,
+  suffix,
+}: {
+  label: string;
+  value: number;
+  accent?: boolean;
+  warn?: boolean;
+  suffix?: string;
+}) {
+  const tone = accent ? "text-accent" : warn ? "text-warn" : "text-fg";
+  return (
+    <div className="border border-border rounded-lg px-3 py-2">
+      <div className={`text-lg font-bold ${tone}`}>
+        {value.toLocaleString()}
+        {suffix && <span className="text-xs font-medium text-muted">{suffix}</span>}
+      </div>
+      <div className="text-[11px] text-muted mt-0.5">{label}</div>
     </div>
   );
 }
