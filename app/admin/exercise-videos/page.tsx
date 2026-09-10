@@ -245,11 +245,21 @@ export default function ExerciseVideosPage() {
     setBusy(true);
     setError(null);
     try {
-      // The colours approved on the bench are the colours the catalogue gets.
-      const q = new URLSearchParams({
-        limit: String(limit), engine, crf: String(crf),
-        page: colours.page, body: colours.body, accent: colours.accent,
-      });
+      // With the bench hidden there is no transform to apply, so the run is a
+      // straight copy into R2 — the same move the still migration makes.
+      //
+      // This mattered more than hiding the UI did: `engine` still held the
+      // bench's default of `matte`, and it is sent explicitly, so a migration
+      // started from the page kept re-encoding every clip regardless of the
+      // server's default. Sending the colours with a copy is meaningless too.
+      const q = new URLSearchParams(
+        SHOW_RENDER_BENCH
+          ? {
+              limit: String(limit), engine, crf: String(crf),
+              page: colours.page, body: colours.body, accent: colours.accent,
+            }
+          : { limit: String(limit), engine: "copy" }
+      );
       const s = await api.post<VideoStatus>(
         `/exercises/admin/migrate-videos?${q}`
       );
@@ -270,9 +280,19 @@ export default function ExerciseVideosPage() {
     <div className="p-4 md:p-8">
       <h1 className="text-2xl font-black tracking-tight text-fg">Exercise videos</h1>
       <p className="text-sm text-muted mt-1 max-w-2xl">
-        Branding a clip is a full re-encode — H.264 carries no alpha, so every
-        frame is segmented, recoloured and encoded again. Render a few here and
-        look at them before running the catalogue.
+        {SHOW_RENDER_BENCH ? (
+          <>
+            Branding a clip is a full re-encode — H.264 carries no alpha, so
+            every frame is segmented, recoloured and encoded again. Render a few
+            here and look at them before running the catalogue.
+          </>
+        ) : (
+          <>
+            Moves the catalogue&rsquo;s clips off the dataset host and into our
+            own R2 bucket. The file is copied as-is — no re-encode, no branding
+            — so quality is identical to the source.
+          </>
+        )}
       </p>
 
       {error && (
@@ -493,11 +513,22 @@ export default function ExerciseVideosPage() {
       {/* ---- 4. Commit ---- */}
       <Section title="4 · Run it on the catalogue">
         <p className="text-xs text-muted max-w-2xl">
-          Writes <code className="text-fg">video_key</code> and, where the render
-          produced one, <code className="text-fg">poster_key</code> — the poster
-          is cut from the clip at 45% through, four times the resolution of the
-          shipped thumbnail for no extra download. Rows already in our bucket are
-          skipped, so an interrupted run resumes rather than repeating.
+          {SHOW_RENDER_BENCH ? (
+            <>
+              Writes <code className="text-fg">video_key</code> and, where the
+              render produced one, <code className="text-fg">poster_key</code>.
+            </>
+          ) : (
+            <>
+              Copies the source clip into our R2 bucket byte for byte — no
+              re-encode, nothing about the clip changes except where it is
+              served from. Writes <code className="text-fg">video_key</code> and
+              a <code className="text-fg">poster_key</code> cut from the clip at
+              45% through.
+            </>
+          )}{" "}
+          Rows already in our bucket are skipped, so an interrupted run resumes
+          rather than repeating.
         </p>
 
         <div className="flex items-center gap-2 mt-4">
