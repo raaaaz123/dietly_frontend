@@ -1,4 +1,4 @@
-import PhoneMock from "./PhoneMock";
+import PhoneShot from "./PhoneShot";
 import StoreButtons from "./StoreButtons";
 
 /**
@@ -39,7 +39,14 @@ export default function Hero() {
 
           </div>
 
-          <PhoneMock />
+          <PhoneShot
+            src="/images/app/scan.png"
+            alt="Dietly's scan result: a Form Score of 72 out of 100 with definition, leanness, symmetry and posture broken out, and leanness marked as the thing to fix first."
+            priority
+            width={660}
+            height={1300}
+            className="mx-auto w-full max-w-[300px]"
+          />
         </div>
       </div>
     </section>
