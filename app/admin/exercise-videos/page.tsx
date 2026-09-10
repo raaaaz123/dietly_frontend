@@ -100,6 +100,21 @@ const ENGINES = [
   },
 ];
 
+/**
+ * The render bench is hidden, not deleted.
+ *
+ * The transform it previews (sections 1-3: engine, colours, before/after)
+ * produced clips whose quality was worse than the source, so it must not be
+ * reachable from the UI — but the pipeline behind it is the only thing that
+ * knows how to write `video_key`, and the judgement may well be revisited with
+ * a different engine. Deleting the code would take the migration with it.
+ *
+ * Flip to `true` to get the bench back. Section 4 stays visible either way:
+ * running the catalogue is the migration to R2, which is wanted, and it copies
+ * the source clip across untouched when no transform is configured.
+ */
+const SHOW_RENDER_BENCH = false;
+
 export default function ExerciseVideosPage() {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [picked, setPicked] = useState<Set<string>>(new Set());
@@ -276,6 +291,9 @@ export default function ExerciseVideosPage() {
         </div>
       )}
 
+      {/* Sections 1-3 are the render bench — see SHOW_RENDER_BENCH. */}
+      {SHOW_RENDER_BENCH && (
+      <>
       {/* ---- 1. Settings ---- */}
       <Section title="1 · How to render">
         <div className="flex flex-wrap gap-3">
@@ -468,6 +486,8 @@ export default function ExerciseVideosPage() {
             ))}
           </div>
         </Section>
+      )}
+      </>
       )}
 
       {/* ---- 4. Commit ---- */}
