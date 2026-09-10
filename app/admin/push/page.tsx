@@ -380,6 +380,16 @@ function TestSend() {
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<unknown>(null);
   const [error, setError] = useState<string | null>(null);
+  /** Which real nudge to fire. Empty means the fixed title/body above. */
+  const [kind, setKind] = useState("");
+  const [kinds, setKinds] = useState<string[]>([]);
+
+  useEffect(() => {
+    api
+      .get<{ kinds?: string[] }>("/admin/push/catalogue")
+      .then((c) => setKinds(c.kinds ?? []))
+      .catch(() => {});
+  }, []);
 
   async function send() {
     if (!uid.trim()) return;
@@ -387,7 +397,15 @@ function TestSend() {
     setError(null);
     setResult(null);
     try {
-      setResult(await api.post("/admin/push/test", { uid: uid.trim(), title, body }));
+      // A named kind sends that nudge with its real generated copy, which the
+      // fixed-title test cannot do — proving a token is alive says nothing
+      // about whether the message for a given nudge reads well on a lock
+      // screen, and that is the thing worth checking before turning one on.
+      setResult(
+        kind
+          ? await api.post("/admin/push/test-kind", { uid: uid.trim(), kind })
+          : await api.post("/admin/push/test", { uid: uid.trim(), title, body })
+      );
     } catch (e) {
       setError(e instanceof Error ? e.message : "Send failed");
     } finally {
@@ -397,6 +415,30 @@ function TestSend() {
 
   return (
     <Card title="Test send">
+      <div className="mb-3">
+        <label className="text-[11px] text-muted block mb-1">
+          Send as a real nudge
+        </label>
+        <select
+          value={kind}
+          onChange={(e) => setKind(e.target.value)}
+          className="w-full text-xs bg-transparent border border-border rounded-lg px-2 py-2 text-fg"
+        >
+          <option value="">Custom message (title and body below)</option>
+          {kinds.map((k) => (
+            <option key={k} value={k}>
+              {k} — with its generated copy
+            </option>
+          ))}
+        </select>
+        {kind && (
+          <p className="text-[11px] text-faint mt-1">
+            Ignores the daily cap and the send window. Still respects the
+            user&rsquo;s category switches &mdash; a test that ignored those
+            would be the one way to push a promotion at somebody who opted out.
+          </p>
+        )}
+      </div>
       <p className="text-xs text-faint mb-3">
         One account, per-token verdict. The first thing to check when someone
         reports getting nothing — <code>third-party-auth-error</code> means
