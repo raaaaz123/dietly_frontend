@@ -3,10 +3,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "../../lib/api";
 
 /**
- * The two catalogue jobs, with somewhere to run them.
+ * The catalogue jobs, with somewhere to run them.
  *
- * Both already existed on the backend and neither had a control in this admin
- * app — they were only reachable from `tools/glow_media_dashboard.py`, a
+ * The media jobs already existed on the backend and none had a control in this
+ * admin app — they were only reachable from `tools/glow_media_dashboard.py`, a
  * separate Python service. So the catalogue sat in a state that looks correct
  * here and is broken in the app, with nothing on this page to say so or to fix
  * it:
@@ -31,8 +31,18 @@ import { api } from "../../lib/api";
  * under the `poster_key` the row already has a column for. It does **not**
  * touch video: no key, no source URL, no re-encode.
  *
- * None of these is written to be run from a request: build is minutes to hours
- * and all three are fire-and-forget, so this starts them and then polls.
+ * **Unpublish without video.** A published exercise is allowed to have no clip
+ * — `is_usable` only asks for published-and-not-deleted, so the planner can
+ * reach a movement that has nothing but written steps and a placeholder. That
+ * is the right trade while the library is being filled and the wrong one once
+ * it is: form is a movement, and a paying user who taps one expects a demo.
+ * This takes every live clipless row out of the app in one statement. It is
+ * reversible — the rows are unpublished, not deleted — but it is a bulk write
+ * over thousands of rows, so the button arms before it fires.
+ *
+ * The three media jobs are not written to be run from a request: build is
+ * minutes to hours and all three are fire-and-forget, so this starts them and
+ * then polls. The unpublish is the exception — one UPDATE, answered inline.
  */
 
 type BuildStatus = {
@@ -68,13 +78,23 @@ type MigrateStatus = {
   no_still: number;
 };
 
-export default function MediaJobs({ onChanged }: { onChanged: () => void }) {
+export default function MediaJobs({
+  publishedNoVideo,
+  onChanged,
+}: {
+  /** Live rows with no clip, from the catalogue stats the page already loads. */
+  publishedNoVideo: number;
+  onChanged: () => void;
+}) {
   const [migrate, setMigrate] = useState<MigrateStatus | null>(null);
   const [status, setStatus] = useState<BuildStatus | null>(null);
   const [limit, setLimit] = useState(25);
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  /// Arms the unpublish button. A bulk write over the whole catalogue is not
+  /// something a misplaced click should do, and `confirm()` blocks the tab.
+  const [armed, setArmed] = useState(false);
 
   /// Set while a run is in progress so the catalogue is reloaded once — and
   /// only once — when it stops.
@@ -172,6 +192,33 @@ export default function MediaJobs({ onChanged }: { onChanged: () => void }) {
     }
   }
 
+  async function unpublishNoVideo() {
+    setBusy(true);
+    setError(null);
+    setNote(null);
+    setArmed(false);
+    try {
+      // Synchronous: it is one UPDATE, so it answers with what it changed
+      // rather than leaving a job to poll.
+      const r = await api.post<{
+        unpublished?: number;
+        candidates?: number;
+      }>("/exercises/admin/unpublish-no-video");
+      const n = r?.unpublished ?? 0;
+      setNote(
+        n === 0
+          ? "Nothing to do — every published exercise already has a clip."
+          : `Unpublished ${n.toLocaleString()} exercise${n === 1 ? "" : "s"} with no video. ` +
+            `They stay editable here and come back the moment a clip lands.`
+      );
+      onChanged();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Could not unpublish those rows");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function migrateImages() {
     setBusy(true);
     setError(null);
@@ -254,14 +301,14 @@ export default function MediaJobs({ onChanged }: { onChanged: () => void }) {
             {status.done}/{status.total} · {status.rendered} rendered ·{" "}
             {status.skipped} skipped
             {status.failed > 0 && (
-              <span className="text-warn"> · {status.failed} failed</span>
+              <span className="text-orange-400"> · {status.failed} failed</span>
             )}
             {status.current && running && (
               <span className="text-faint"> · {status.current}</span>
             )}
           </p>
           {status.error && (
-            <p className="text-xs text-warn mt-1">{status.error}</p>
+            <p className="text-xs text-orange-400 mt-1">{status.error}</p>
           )}
         </div>
       )}
@@ -322,22 +369,74 @@ export default function MediaJobs({ onChanged }: { onChanged: () => void }) {
               <p className="text-xs text-muted mt-2">
                 {migrate.done}/{migrate.total} · {migrate.migrated} migrated
                 {migrate.failed > 0 && (
-                  <span className="text-warn"> · {migrate.failed} failed</span>
+                  <span className="text-orange-400"> · {migrate.failed} failed</span>
                 )}
                 {migrate.current && migrating && (
                   <span className="text-faint"> · {migrate.current}</span>
                 )}
               </p>
               {migrate.error && (
-                <p className="text-xs text-warn mt-1">{migrate.error}</p>
+                <p className="text-xs text-orange-400 mt-1">{migrate.error}</p>
               )}
             </div>
           )}
         </div>
       )}
 
+      <div className="mt-4 pt-4 border-t border-border">
+        <div className="flex items-start justify-between gap-4 flex-wrap">
+          <div className="min-w-0">
+            <h3 className="text-sm font-semibold text-fg">Video-only catalogue</h3>
+            <p className="text-xs text-muted mt-1 max-w-xl">
+              Unpublishes every live exercise with no demo clip — a poster does
+              not count, because form is a movement and a still cannot show one.
+              They stay here, editable, and can be published again the moment a
+              clip lands.{" "}
+              {publishedNoVideo > 0 ? (
+                <span className="text-orange-400">
+                  {publishedNoVideo.toLocaleString()} published right now have no
+                  video.
+                </span>
+              ) : (
+                <span className="text-faint">
+                  Every published exercise already has one.
+                </span>
+              )}
+            </p>
+          </div>
+
+          <div className="shrink-0 flex items-center gap-2">
+            {armed && (
+              <button
+                onClick={() => setArmed(false)}
+                className="text-xs px-3 py-2 rounded-lg border border-border hover:border-border-strong text-muted hover:text-fg transition-colors"
+              >
+                Cancel
+              </button>
+            )}
+            {/* Two clicks, not `confirm()`: a browser dialog blocks the tab,
+                and this writes thousands of rows. */}
+            <button
+              onClick={() => (armed ? unpublishNoVideo() : setArmed(true))}
+              disabled={busy || running || migrating || publishedNoVideo === 0}
+              className={`text-xs px-3 py-2 rounded-lg border disabled:opacity-40 transition-colors ${
+                armed
+                  ? "border-orange-400/50 text-orange-400 hover:bg-orange-400/10"
+                  : "border-border hover:border-border-strong text-fg"
+              }`}
+            >
+              {publishedNoVideo === 0
+                ? "Nothing to unpublish"
+                : armed
+                  ? `Yes — unpublish ${publishedNoVideo.toLocaleString()}`
+                  : `Unpublish ${publishedNoVideo.toLocaleString()} without video`}
+            </button>
+          </div>
+        </div>
+      </div>
+
       {note && <p className="text-xs text-accent mt-3">{note}</p>}
-      {error && <p className="text-xs text-warn mt-3">{error}</p>}
+      {error && <p className="text-xs text-orange-400 mt-3">{error}</p>}
     </div>
   );
 }
@@ -357,7 +456,7 @@ function Stat({
   warn?: boolean;
   suffix?: string;
 }) {
-  const tone = accent ? "text-accent" : warn ? "text-warn" : "text-fg";
+  const tone = accent ? "text-accent" : warn ? "text-orange-400" : "text-fg";
   return (
     <div className="border border-border rounded-lg px-3 py-2">
       <div className={`text-lg font-bold ${tone}`}>

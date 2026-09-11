@@ -48,6 +48,8 @@ type Stats = {
   publishable: number;
   no_media: number;
   missing_video: number;
+  /** Published *and* clipless — what the "unpublish without video" job clears. */
+  published_no_video: number;
 };
 
 type ListResponse = {
@@ -194,15 +196,21 @@ export default function ExercisesPage() {
         </button>
       </div>
 
-      <MediaJobs onChanged={() => load(true)} />
+      <MediaJobs
+        publishedNoVideo={stats?.published_no_video ?? 0}
+        onChanged={() => load(true)}
+      />
 
       {stats && (
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-6">
           <Stat label="Total" value={stats.total} />
           <Stat label="Published" value={stats.published} tone="accent" />
           <Stat label="Ready to publish" value={stats.publishable} tone="accent" />
           <Stat label="No media" value={stats.no_media} tone="warn" />
           <Stat label="Missing video" value={stats.missing_video} tone="warn" />
+          {/* The one an older backend won't send — it lands as 0 rather than
+              NaN, and the job button next to it hides itself the same way. */}
+          <Stat label="Live without video" value={stats.published_no_video ?? 0} tone="warn" />
         </div>
       )}
 
