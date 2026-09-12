@@ -15,6 +15,8 @@ const NAV = [
   { href: "/admin/influencers", label: "Influencers", icon: "✦" },
   { href: "/admin/withdrawals", label: "Withdrawals", icon: "⊕" },
   { href: "/admin/freemium", label: "Freemium Config", icon: "◎" },
+  { href: "/admin/app-config", label: "App config", icon: "⚙" },
+  { href: "/admin/discards", label: "Discards", icon: "⊘" },
   { href: "/admin/feature-requests", label: "Feature requests", icon: "✎" },
   { href: "/admin/audit", label: "Audit", icon: "❐" },
 ];
