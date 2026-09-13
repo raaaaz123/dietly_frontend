@@ -41,11 +41,12 @@ export default function Hero() {
 
           <PhoneShot
             src="/images/app/scan.png"
-            alt="Dietly's scan result: a Form Score of 72 out of 100 with definition, leanness, symmetry and posture broken out, and leanness marked as the thing to fix first."
+            alt="Dietly's scan result: a Form Score of 72 out of 100 over the scan photo, with definition, leanness, symmetry, posture, body fat and potential broken out, and leanness marked as the thing to fix first."
             priority
-            width={660}
-            height={1300}
-            className="mx-auto w-full max-w-[300px]"
+            frame={false}
+            width={1024}
+            height={1536}
+            className="mx-auto w-full max-w-[340px]"
           />
         </div>
       </div>

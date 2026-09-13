@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 /**
- * A real capture, in a phone.
+ * A real capture, in a phone — or, with `frame={false}`, on its own.
  *
  * This replaces `PhoneMock`, which drew an approximation of the score screen
  * in CSS because — as its own header admitted — every screenshot available at
@@ -12,12 +12,17 @@ import Image from "next/image";
  *
  * The frame is drawn rather than a bezel PNG. A device image dates the page
  * the moment Apple changes a corner radius, and it is 300KB to say "phone".
+ *
+ * `frame={false}` is for the artwork that is not a phone capture — the share
+ * card, which is already a rounded, bordered card of its own. A phone bezel
+ * around a 2:3 card reads as a tablet, so it gets the shadow and nothing else.
  */
 export default function PhoneShot({
   src,
   alt,
   priority = false,
   className = "",
+  frame = true,
   width = 660,
   height = 1434,
 }: {
@@ -25,26 +30,40 @@ export default function PhoneShot({
   alt: string;
   priority?: boolean;
   className?: string;
+  /// False for art that already carries its own card edge.
+  frame?: boolean;
   /// The capture's own pixel size. Next uses it for the intrinsic ratio, so a
   /// number that does not match the file letterboxes the frame.
   width?: number;
   height?: number;
 }) {
+  const picture = (
+    <Image
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      priority={priority}
+      sizes="(max-width: 768px) 78vw, 300px"
+      className="h-auto w-full"
+    />
+  );
+
+  if (!frame) {
+    return (
+      <div
+        className={`relative overflow-hidden rounded-[2.2rem] shadow-[0_24px_70px_-30px_rgba(0,0,0,0.9)] ${className}`}
+      >
+        {picture}
+      </div>
+    );
+  }
+
   return (
     <div
       className={`relative rounded-[2.6rem] border border-border-strong bg-elevated p-2.5 shadow-[0_24px_70px_-30px_rgba(0,0,0,0.9)] ${className}`}
     >
-      <div className="overflow-hidden rounded-[2.05rem] bg-bg">
-        <Image
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          priority={priority}
-          sizes="(max-width: 768px) 78vw, 300px"
-          className="h-auto w-full"
-        />
-      </div>
+      <div className="overflow-hidden rounded-[2.05rem] bg-bg">{picture}</div>
     </div>
   );
 }

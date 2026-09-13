@@ -15,14 +15,18 @@ import PhoneShot from "./PhoneShot";
 const screens: {
   src: string;
   alt: string;
+  frame?: boolean;
+  width?: number;
   height?: number;
   title: string;
   body: string;
 }[] = [
   {
     src: "/images/app/scan.png",
-    alt: "The Form Score screen: 72 out of 100 over a scan, with definition, leanness, symmetry and posture scored underneath.",
-    height: 1300,
+    frame: false,
+    alt: "The Form Score screen: 72 out of 100 over a scan, with definition, leanness, symmetry, posture, body fat and potential scored around it.",
+    width: 1024,
+    height: 1536,
     title: "Your score, and its weak point",
     body: "Definition, leanness, symmetry and posture — with the one that is holding the number down marked “fix first”.",
   },
@@ -55,14 +59,31 @@ export default function Screens() {
           <h2 className="h2 mt-5">Four screens do the whole job.</h2>
         </div>
 
-        <ul className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+        {/* Subgrid so the captions sit on one line: the share card is a 2:3
+            image among 1:2 phone captures, and without a shared image row it
+            drags its own caption 200px up the page. */}
+        <ul className="mt-12 grid gap-10 sm:grid-cols-2 sm:grid-rows-[auto_auto_auto_auto] lg:grid-cols-4 lg:grid-rows-[auto_auto] lg:gap-6">
           {screens.map((screen) => (
-            <li key={screen.src}>
-              <PhoneShot src={screen.src} alt={screen.alt} height={screen.height} />
-              <h3 className="h3 mt-6">{screen.title}</h3>
-              <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
-                {screen.body}
-              </p>
+            <li
+              key={screen.src}
+              className="sm:row-span-2 sm:grid sm:grid-rows-subgrid sm:gap-0"
+            >
+              <div className="flex items-center justify-center">
+                <PhoneShot
+                  src={screen.src}
+                  alt={screen.alt}
+                  frame={screen.frame}
+                  width={screen.width}
+                  height={screen.height}
+                  className="w-full"
+                />
+              </div>
+              <div>
+                <h3 className="h3 mt-6">{screen.title}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
+                  {screen.body}
+                </p>
+              </div>
             </li>
           ))}
         </ul>
