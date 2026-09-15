@@ -11,7 +11,7 @@
  * Store's health rules.
  */
 
-const faqs = [
+export const faqs = [
   {
     q: "Is the Form Score actually accurate?",
     a: "It is an estimate from your photo and your answers, not a clinical measurement. Its value is consistency — shot the same way each week, it shows you change you cannot see in a mirror or on a scale.",

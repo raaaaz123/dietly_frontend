@@ -3,8 +3,9 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export const metadata = {
-  title: 'Data Deletion - Dietly AI',
-  description: 'How to request deletion of your account and data on Dietly AI.',
+  title: 'Delete Your Account & Data',
+  description: 'How to permanently delete your Dietly account and all of the data attached to it.',
+  alternates: { canonical: '/delete-account' },
 };
 
 export default function DeleteAccount() {

@@ -9,6 +9,14 @@ import Cta from "./components/Cta";
 import Footer from "./components/Footer";
 import MobileCTA from "./components/MobileCTA";
 import JsonLd from "./components/JsonLd";
+import type { Metadata } from "next";
+
+// The title, description and the rest come from the root layout; this page only
+// claims its own URL. Every public page now declares its canonical, because the
+// root layout no longer declares one for all of them at once.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 /**
  * The landing page.

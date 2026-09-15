@@ -3,32 +3,41 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Reveal from "../components/Reveal";
 import BodyFatCalculator from "./BodyFatCalculator";
+import { SITE_URL } from "../lib/site";
 
 export const metadata: Metadata = {
-  title: "Free Body Fat Calculator (US Navy Method) | Dietly",
-  description: "Calculate your body fat percentage easily using the highly accurate US Navy Method. Free tool to track your fitness and fat loss progress.",
+  // No "| Dietly" suffix: the root layout's title template appends it already.
+  title: "Body Fat Calculator — US Navy Method",
+  description: "Estimate your body fat percentage from three tape measurements using the US Navy method. Free, no signup, and honest about its margin of error.",
   keywords: ["body fat calculator", "us navy body fat method", "fat percentage calculator", "fitness tools", "fat loss tracker"],
+  alternates: { canonical: "/body-fat-calculator" },
   openGraph: {
-    title: "Free Body Fat Calculator | Dietly",
-    description: "Calculate your body fat percentage easily using the highly accurate US Navy Method.",
+    title: "Body Fat Calculator — US Navy Method",
+    description: "Estimate your body fat percentage from three tape measurements using the US Navy method.",
+    url: "/body-fat-calculator",
     type: "website",
   }
 };
 
 export default function BodyFatCalculatorPage() {
   // Structured Data for SEO
+  // `WebApplication`, not `SoftwareApplication` — see the note on the macro
+  // calculator. This page is a tool you use in a browser, not an install.
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
+    "@type": "WebApplication",
     "name": "Dietly Body Fat Calculator",
+    "url": `${SITE_URL}/body-fat-calculator`,
     "applicationCategory": "HealthApplication",
+    "browserRequirements": "Requires JavaScript",
     "operatingSystem": "Any",
+    "isAccessibleForFree": true,
     "offers": {
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "USD"
     },
-    "description": "A free tool to calculate Body Fat Percentage using the US Navy tape measure method."
+    "description": "A free tool to estimate Body Fat Percentage using the US Navy tape measure method."
   };
 
   return (
@@ -42,7 +51,7 @@ export default function BodyFatCalculatorPage() {
       <main className="pt-32 pb-24 overflow-hidden">
         <div className="max-w-[1000px] mx-auto px-6 md:px-12 text-center">
           <Reveal>
-            <span className="text-[11px] font-bold tracking-[3px] text-accent uppercase mb-6 block">Free SEO Tool</span>
+            <span className="text-[11px] font-bold tracking-[3px] text-accent uppercase mb-6 block">Free Tool — No Signup</span>
             <h1 className="text-[clamp(40px,6vw,72px)] font-bold leading-[1.05] tracking-[-2px] text-fg font-body mb-6">
               Body Fat <span className="font-display italic text-accent font-light">Percentage</span> Calculator
             </h1>

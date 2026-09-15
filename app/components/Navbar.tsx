@@ -17,6 +17,10 @@ import { SITE_NAME } from "../lib/site";
 const links = [
   { label: "How it works", href: "/#how" },
   { label: "Inside the app", href: "/#inside" },
+  // The only link here that leaves the homepage. It is worth the slot: the
+  // calculators are the site's organic entry points, and a visitor who arrived
+  // on one has otherwise no route to the other seven.
+  { label: "Free tools", href: "/tools" },
   { label: "FAQ", href: "/#faq" },
 ];
 

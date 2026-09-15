@@ -19,10 +19,26 @@ const columns = [
     ],
   },
   {
+    // Four of the eight, plus the hub. Listing all eight in a footer that
+    // appears on every page dilutes each link and makes the column a wall;
+    // `/tools` is the route to the rest, and each tool page carries its own
+    // hand-picked "related" strip.
     title: "Free tools",
     links: [
+      { label: "TDEE calculator", href: "/tdee-calculator" },
       { label: "Macro calculator", href: "/macro-calculator" },
+      { label: "Protein calculator", href: "/protein-calculator" },
       { label: "Body fat calculator", href: "/body-fat-calculator" },
+      { label: "All calculators", href: "/tools" },
+    ],
+  },
+  {
+    title: "Guides",
+    links: [
+      { label: "What is a physique score?", href: "/guides/what-is-a-physique-score" },
+      { label: "Progress photos", href: "/guides/progress-photos-guide" },
+      { label: "Body recomposition", href: "/guides/body-recomposition" },
+      { label: "All guides", href: "/guides" },
     ],
   },
   {
@@ -40,7 +56,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-border">
       <div className="wrap py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div>
             <div className="flex items-center gap-2.5">
               <Image

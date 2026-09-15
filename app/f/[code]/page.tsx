@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params;
   const clean = code.toUpperCase();
   return {
-    title: "You've been invited to Dietly",
+    title: { absolute: "You've been invited to Dietly" },
     description:
       "Join their ladder. Ranked by what you actually lift for your bodyweight — not by who posts the most.",
     alternates: { canonical: `${SITE_URL}/f/${clean}` },

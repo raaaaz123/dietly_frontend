@@ -85,7 +85,7 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <span className="font-semibold text-fg">Service providers:</span> We use a small number of infrastructure providers (cloud hosting, crash analytics) who process data on our behalf under strict confidentiality agreements. They are not permitted to use your data for any purpose other than providing services to us.
+                <span className="font-semibold text-fg">Service providers:</span> We use a small number of infrastructure providers (cloud hosting, crash analytics, and website analytics) who process data on our behalf under strict confidentiality agreements. They are not permitted to use your data for any purpose other than providing services to us.
               </li>
               <li>
                 <span className="font-semibold text-fg">Legal requirements:</span> We may disclose information if required by law, court order, or to protect the rights, property, or safety of Rexatech, our users, or the public.

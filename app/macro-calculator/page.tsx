@@ -3,32 +3,46 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Reveal from "../components/Reveal";
 import MacroCalculator from "./MacroCalculator";
+import { SITE_URL } from "../lib/site";
 
 export const metadata: Metadata = {
-  title: "Free AI Macro & TDEE Calculator | Dietly",
-  description: "Calculate your daily calorie needs and optimal macronutrient split for weight loss, muscle gain, or maintenance. Fast, free, and highly accurate.",
+  // No "| Dietly" suffix here: the root layout's title template already appends
+  // it, so writing it again rendered "... | Dietly | Dietly" and spent the
+  // characters that get truncated in a result page on the brand twice.
+  title: "Macro Calculator — TDEE & Macros for Your Goal",
+  description: "Work out your daily calories and your protein, carb and fat split for fat loss, muscle gain or maintenance. Free, no signup, Mifflin-St Jeor.",
   keywords: ["macro calculator", "tdee calculator", "calorie calculator", "ai macro planner", "diet tracker"],
+  alternates: { canonical: "/macro-calculator" },
   openGraph: {
-    title: "Free AI Macro & TDEE Calculator | Dietly",
-    description: "Calculate your daily calorie needs and optimal macronutrient split for weight loss, muscle gain, or maintenance.",
+    title: "Macro Calculator — TDEE & Macros for Your Goal",
+    description: "Work out your daily calories and your protein, carb and fat split for fat loss, muscle gain or maintenance.",
+    url: "/macro-calculator",
     type: "website",
   }
 };
 
 export default function MacroCalculatorPage() {
   // Structured Data for SEO
+  // `WebApplication`, not `SoftwareApplication`. This markup describes the
+  // calculator on this page — a thing you use in a browser — and the type it
+  // used to claim is the one that describes an installable app, complete with an
+  // install-shaped Offer. The app-level SoftwareApplication still lives on the
+  // homepage, where it is true.
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Dietly Macro Calculator",
+    "@type": "WebApplication",
+    "name": "Dietly Macro & TDEE Calculator",
+    "url": `${SITE_URL}/macro-calculator`,
     "applicationCategory": "HealthApplication",
+    "browserRequirements": "Requires JavaScript",
     "operatingSystem": "Any",
+    "isAccessibleForFree": true,
     "offers": {
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "USD"
     },
-    "description": "A free tool to calculate Total Daily Energy Expenditure (TDEE) and macronutrient ratios for fitness goals."
+    "description": "A free tool to calculate Total Daily Energy Expenditure (TDEE) and macronutrient ratios for fitness goals, using the Mifflin-St Jeor equation."
   };
 
   return (
@@ -42,7 +56,7 @@ export default function MacroCalculatorPage() {
       <main className="pt-32 pb-24 overflow-hidden">
         <div className="max-w-[1000px] mx-auto px-6 md:px-12 text-center">
           <Reveal>
-            <span className="text-[11px] font-bold tracking-[3px] text-accent uppercase mb-6 block">Free SEO Tool</span>
+            <span className="text-[11px] font-bold tracking-[3px] text-accent uppercase mb-6 block">Free Tool — No Signup</span>
             <h1 className="text-[clamp(40px,6vw,72px)] font-bold leading-[1.05] tracking-[-2px] text-fg font-body mb-6">
               AI Macro <span className="font-display italic text-accent font-light">&</span> TDEE Calculator
             </h1>

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./lib/auth";
+import Analytics from "./lib/analytics";
 import { SITE_URL as SITE, DESCRIPTION, APP_STORE_ID, APP_STORE_URL } from "./lib/site";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -58,6 +59,17 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     creator: "@dietlyapp",
   },
+  // Verification tokens for Search Console and Bing Webmaster Tools. Read from
+  // the server environment rather than committed: they are not secret, but they
+  // are per-property, and a token checked into the repo is a token nobody
+  // remembers to change when the property does. Unset in dev, so nothing is
+  // emitted locally.
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+    other: process.env.BING_SITE_VERIFICATION
+      ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION }
+      : {},
+  },
   robots: {
     index: true,
     follow: true,
@@ -69,9 +81,12 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: {
-    canonical: SITE_URL,
-  },
+  // No `alternates` here on purpose. Next merges parent metadata into every
+  // child segment, so a canonical set at the root is inherited by any page that
+  // does not set its own — which is how /macro-calculator and
+  // /body-fat-calculator both ended up declaring the homepage as their
+  // canonical and asking Google to drop them. Canonicals belong on the page
+  // that owns the URL; `metadataBase` above makes a relative one resolve.
   appLinks: {
     ios: {
       url: APP_STORE_URL,
@@ -101,6 +116,7 @@ export default function RootLayout({
       className={`${jakarta.variable} ${dmMono.variable}`}
     >
       <body className="min-h-screen flex flex-col">
+        <Analytics />
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

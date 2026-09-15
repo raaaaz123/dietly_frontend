@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
     FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
+    // Safe to inline, unlike the admin credentials above: a PostHog project key
+    // only grants event ingestion, and it has to reach the browser to do its
+    // job. Unset means posthog-js is never loaded at all.
+    POSTHOG_KEY: process.env.POSTHOG_KEY,
+    POSTHOG_HOST: process.env.POSTHOG_HOST,
   },
   async headers() {
     return [
@@ -46,8 +51,11 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Allow AI crawlers to read llms.txt freely
-        source: "/llms.txt",
+        // Allow AI crawlers to read the llms files freely. Both are generated
+        // from `app/lib/llms.ts` now rather than sitting in public/, so the
+        // Content-Type below is redundant with what the route sets — it is kept
+        // because the caching is not.
+        source: "/llms:variant(|-full).txt",
         headers: [
           { key: "Content-Type", value: "text/plain; charset=utf-8" },
           { key: "Cache-Control", value: "public, max-age=86400" },
