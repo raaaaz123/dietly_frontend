@@ -3,6 +3,12 @@ import { Plus_Jakarta_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./lib/auth";
 import Analytics from "./lib/analytics";
+// Aliased: `Analytics` above is our own PostHog component, and the two do
+// different jobs rather than duplicating one. Vercel's counts visitors and page
+// views with no configuration and no key; ours is gated on `POSTHOG_KEY` and
+// exists for the one number the SEO work is judged on — organic visit to store
+// click. Losing either would lose something.
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import { SITE_URL as SITE, DESCRIPTION, APP_STORE_ID, APP_STORE_URL } from "./lib/site";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -117,6 +123,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col">
         <Analytics />
+        <VercelAnalytics />
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
