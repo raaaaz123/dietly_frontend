@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import Reveal from "../components/Reveal";
 import { JsonLdScript } from "../components/tools/ToolPage";
 import { SITE_NAME, SITE_URL } from "../lib/site";
+import BodyMap, { BarbellIcon, KitIcon, regionFor } from "../components/exercises/BodyMap";
 import { EXERCISES, CATEGORIES, KIT, INDEXABLE } from "../lib/exercises";
 
 const TITLE = "Exercise Library — 500+ Movements With Demos";
@@ -59,20 +60,34 @@ export default function ExercisesHub() {
                 By muscle
               </h2>
               <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {CATEGORIES.map((c) => (
-                  <Link
-                    key={c.slug}
-                    href={`/exercises/muscle/${c.slug}`}
-                    className="card card-hover p-5 block group"
-                  >
-                    <span className="block text-[16px] font-bold text-fg group-hover:text-accent transition-colors">
-                      {c.name}
-                    </span>
-                    <span className="mt-1 block text-[13px] text-fg-muted">
-                      {c.items.length} movements
-                    </span>
-                  </Link>
-                ))}
+                {CATEGORIES.map((c) => {
+                  const region = regionFor(c.name);
+                  return (
+                    <Link
+                      key={c.slug}
+                      href={`/exercises/muscle/${c.slug}`}
+                      className="card card-hover p-5 flex items-center gap-4 group"
+                    >
+                      {/* `currentColor` still drives the barbell and the dim
+                          half of the body; the lit muscle sets its own colour. */}
+                      <span className="shrink-0 text-fg-faint group-hover:text-fg transition-colors">
+                        {region === "barbell" ? (
+                          <BarbellIcon size={34} />
+                        ) : (
+                          <BodyMap region={region} size={34} />
+                        )}
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-[16px] font-bold text-fg group-hover:text-accent transition-colors">
+                          {c.name}
+                        </span>
+                        <span className="mt-1 block text-[13px] text-fg-muted">
+                          {c.items.length} movements
+                        </span>
+                      </span>
+                    </Link>
+                  );
+                })}
               </div>
             </section>
 
@@ -85,13 +100,18 @@ export default function ExercisesHub() {
                   <Link
                     key={k.slug}
                     href={`/exercises/equipment/${k.slug}`}
-                    className="card card-hover p-5 block group"
+                    className="card card-hover p-5 flex items-center gap-4 group"
                   >
-                    <span className="block text-[16px] font-bold text-fg group-hover:text-accent transition-colors">
-                      {k.name}
+                    <span className="shrink-0 text-fg-faint group-hover:text-fg transition-colors">
+                      <KitIcon kind={k.slug as "bodyweight" | "minimal" | "gym"} size={34} />
                     </span>
-                    <span className="mt-1 block text-[13px] text-fg-muted">
-                      {k.blurb} · {k.items.length} movements
+                    <span className="min-w-0">
+                      <span className="block text-[16px] font-bold text-fg group-hover:text-accent transition-colors">
+                        {k.name}
+                      </span>
+                      <span className="mt-1 block text-[13px] text-fg-muted">
+                        {k.blurb} · {k.items.length} movements
+                      </span>
                     </span>
                   </Link>
                 ))}

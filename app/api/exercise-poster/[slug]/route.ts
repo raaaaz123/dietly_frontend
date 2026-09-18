@@ -31,18 +31,42 @@ export async function GET(
   const key = process.env.ADMIN_API_KEY;
   if (!base || !key) return new NextResponse("Media not configured", { status: 503 });
 
-  // The **web-media** endpoint, not the plain item one: it returns the
-  // watermarked rendition where `build-media` has produced it, and falls back
-  // to the clean file where it has not. The app keeps calling the clean
-  // endpoint, so a subscriber never sees a mark on their own session.
-  const res = await fetch(`${base}/exercises/admin/web-media/${encodeURIComponent(slug)}`, {
-    headers: { "X-Admin-Key": key },
-    next: { revalidate: 300 },
-  });
-  if (!res.ok) return new NextResponse("Poster unavailable", { status: 502 });
+  const row = await fetchRow(base, key, slug);
+  if (!row) return new NextResponse("Poster unavailable", { status: 502 });
 
-  const row = await res.json();
-  const url = row.thumbnail_url;
+  const url = row.thumbnail_url || row.demo_video_url;
   if (!url) return new NextResponse("No poster for this movement", { status: 404 });
   return NextResponse.redirect(url, { status: 302, headers: NO_STORE });
+}
+
+/** Tries the watermarked route, then the clean one.
+ *
+ *  Not belt-and-braces: pointing this at `web-media` alone broke every clip and
+ *  thumbnail on the site the moment it shipped, because the frontend deployed
+ *  before the backend route existed and a 404 upstream became a 502 here. Two
+ *  independently deployed services cannot be assumed to move together, so the
+ *  newer route is an upgrade rather than a dependency. */
+async function fetchRow(
+  base: string,
+  key: string,
+  slug: string,
+): Promise<Record<string, string> | null> {
+  const paths = [
+    `/exercises/admin/web-media/${encodeURIComponent(slug)}`,
+    `/exercises/admin/item/${encodeURIComponent(slug)}`,
+  ];
+  for (const path of paths) {
+    try {
+      const res = await fetch(`${base}${path}`, {
+        headers: { "X-Admin-Key": key },
+        // The upstream signature is short-lived, so there is nothing worth
+        // caching beyond the few minutes a crawler might re-request within.
+        next: { revalidate: 300 },
+      });
+      if (res.ok) return (await res.json()) as Record<string, string>;
+    } catch {
+      // A network error on the first path must still let the second try.
+    }
+  }
+  return null;
 }
