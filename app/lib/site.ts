@@ -27,6 +27,17 @@ export const APP_STORE_URL = `https://apps.apple.com/app/id${APP_STORE_ID}`;
 export const PLAY_STORE_URL =
   "https://play.google.com/store/apps/details?id=com.dietlyai.app";
 
+/**
+ * IndexNow ownership key (`§2.2`).
+ *
+ * Not a secret: the protocol proves ownership by serving this exact string at
+ * `{SITE_URL}/{INDEXNOW_KEY}.txt`, so the file in `public/` has to be public and
+ * committed. Rotating it means generating a new hex string, writing the new
+ * file, deleting the old one and changing this constant — all three, or
+ * submissions start failing silently with a 403.
+ */
+export const INDEXNOW_KEY = "7ff8c76abd83084c342e887a87b60f74";
+
 /** Counts quoted in copy. `1,300` is the exercise catalogue — see ExerciseLibrary.swift. */
 export const EXERCISE_COUNT = "1,300+";
 export const SCORE_MAX = 100;

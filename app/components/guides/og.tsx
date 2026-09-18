@@ -23,7 +23,7 @@ export function guideOgImage(slug: string) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#0A0A0A",
+          background: "#0D0D0D",
           padding: 80,
           fontFamily: "sans-serif",
         }}
@@ -35,7 +35,7 @@ export function guideOgImage(slug: string) {
           <div
             style={{
               marginLeft: 14,
-              color: "#D2F53C",
+              color: "#F0EEE9",
               fontSize: 22,
               fontWeight: 700,
               letterSpacing: 2,

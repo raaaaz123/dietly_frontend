@@ -1,80 +1,93 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════
-   DIETLY — Acid Lime on Black
+   DIETLY — Monochrome on near-black
    ═══════════════════════════════════════════════
 
-   These tokens mirror Dietly/Utilities/Theme.swift (`Palette.dark`) so the
-   site and the app read as one product. Only change a value here if it
-   changes there too.
+   Every value below is sampled from the reference design, not guessed:
+   page #0D0D0D, cards #161616, hairlines #3A3A3A, text #F0EEE9, labels
+   #808080. The text is a warm off-white rather than #FFF on purpose — pure
+   white on near-black buzzes, and the half-degree of warmth is most of why
+   the reference reads as considered rather than default.
 
-   The names are aliases for palette *roles*, not claims about hue — the app
-   does the same thing. `--green-500` is "the accent", not a green, and
-   renaming the scale would touch every page for no rendered difference.
+   The palette has NO accent hue. Emphasis is carried by weight, size and one
+   step of surface grey. That is the whole idea of the design, so before
+   reaching for a colour here, use a heavier weight instead.
 
-   Two rules carried over from the app, both load-bearing:
+   The token *names* still say "accent" and "green". They are role aliases, not
+   claims about hue — `--green-500` means "the accent", and it is now an
+   off-white. Renaming the scale would touch every page on the site for no
+   rendered difference, so the names stay and this paragraph explains them.
 
-   1. Lime is a LIGHT colour. Anything sitting on it takes black
-      (`--accent-ink`), never white — white on #D2F53C is 1.3:1.
-   2. Cards separate from the page by one step of grey and nothing else. No
-      shadow: a shadow is how a light UI lifts a card, and it is invisible
-      here. The only glow in the design is on the install button, where it is
-      doing a job.
+   Two rules carried over from the app, both still load-bearing:
+
+   1. The accent is a LIGHT colour, so anything sitting on it takes ink
+      (`--accent-ink`), never white. This was true when the accent was lime and
+      it is more true now.
+   2. Cards separate from the page by one step of grey plus a hairline, and
+      nothing else. No shadow: a shadow is how a light UI lifts a card, and it
+      is invisible here.
    ═══════════════════════════════════════════════ */
 
 :root {
   color-scheme: dark;
 
   /* Surfaces — each one step of grey above the last */
-  --bg: #0A0A0A;
+  --bg: #0D0D0D;
   --bg-elevated: #161616;
   --bg-surface: #161616;
-  --bg-mint: rgba(210, 245, 60, 0.07);
+  --bg-mint: rgba(255, 255, 255, 0.04);
 
   /* Text */
-  --fg: #FFFFFF;
+  --fg: #F0EEE9;
   --fg-muted: #9A9A9A;
-  /* Raised from the app's #6B6B6B. That value is 3.6:1 on black, which is
-     under AA for the 12–13px labels this token is used for on the web; #8C8C8C
-     is 5.2:1. The one deliberate deviation from Theme.swift, and it is here
-     because a phone is held at 30cm and a monitor is not. */
+  /* The reference puts small labels at #808080. That is 4.4:1 on #0D0D0D,
+     which misses AA for the 12–13px this token is used at, so it stays at
+     #8C8C8C (5.2:1). The one deliberate deviation from the reference, and it
+     is here because a phone is held at 30cm and a monitor is not. */
   --fg-faint: #8C8C8C;
   --fg-ghost: rgba(255, 255, 255, 0.06);
 
-  /* The accent scale, dark to light. Chartreuse, not leaf green: on black a
-     mid green reads as muddy, and only a colour up near yellow stays bright
-     enough to carry emphasis. */
-  --green-50: rgba(210, 245, 60, 0.06);
-  --green-100: rgba(210, 245, 60, 0.12);
-  --green-200: rgba(210, 245, 60, 0.20);
-  --green-300: #8FA82A;
-  --green-400: #B4D435;
-  --green-500: #D2F53C;
-  --green-600: #DEF86B;
-  --green-700: #E9FB9C;
+  /* The accent scale, dark to light. Neutral greys up to the off-white. */
+  --green-50: rgba(255, 255, 255, 0.04);
+  --green-100: rgba(255, 255, 255, 0.08);
+  --green-200: rgba(255, 255, 255, 0.16);
+  --green-300: #5A5A5A;
+  --green-400: #9A9A9A;
+  --green-500: #F0EEE9;
+  --green-600: #F7F6F3;
+  --green-700: #FFFFFF;
 
-  --accent: #D2F53C;
-  --accent-hover: #DEF86B;
-  /* "Deep" means *more legible against the page*, which on black is brighter,
-     not darker. Used for text and icons; `--accent` is for fills. */
-  --accent-deep: #D2F53C;
-  --accent-light: #E9FB9C;
-  --accent-soft: rgba(210, 245, 60, 0.12);
-  --accent-ink: #0A0A0A;
+  --accent: #F0EEE9;
+  --accent-hover: #FFFFFF;
+  /* "Deep" means *more legible against the page*, which on near-black is
+     brighter, not darker. Used for text and icons; `--accent` is for fills. */
+  --accent-deep: #F0EEE9;
+  --accent-light: #FFFFFF;
+  --accent-soft: rgba(240, 238, 233, 0.10);
+  --accent-ink: #0D0D0D;
 
-  /* Borders — the only thing separating a card from the page */
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --border-accent: rgba(210, 245, 60, 0.30);
+  /* Borders — the only thing separating a card from the page. The reference
+     draws these at #3A3A3A, which is rgba(255,255,255,0.18) over #0D0D0D:
+     considerably more visible than the 0.08 this used to be, and the reason
+     its cards read as objects rather than as slightly lighter fog. */
+  --border: rgba(255, 255, 255, 0.11);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --border-accent: rgba(255, 255, 255, 0.28);
+
+  /* The sticky navbar's height: 36px logo + 14px padding either side + the
+     1px bottom border. The hero subtracts it to fill exactly the rest of the
+     first screen, so it lives here rather than as a magic number in one file.
+     Change it if the navbar's padding changes. */
+  --nav-h: 65px;
 
   /* Elevation. Black-on-black shadows do nothing, so these are near-invisible
-     by design and the lime glow is reserved for the install CTA. */
+     by design. */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.5);
   --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.6);
   --shadow-lg: 0 24px 56px -20px rgba(0, 0, 0, 0.7);
-  /* No glow. A coloured halo under a button is decoration, and on a minimal
-     page the lime fill is already the loudest thing on screen. */
+  /* No glow, and now nothing coloured left to glow with. */
   --shadow-green: none;
 }
 
@@ -167,19 +180,39 @@ p { text-wrap: pretty; }
   .wrap { padding-inline: 32px; }
 }
 
-.section { padding-block: 64px; }
+/* Section rhythm.
+   Was 64/112. The reference sits its whole hero — heading, stats, badges — in
+   about the vertical space this page was spending on one gap, and the page had
+   drifted to where a phone user scrolled through more empty than content. The
+   rule now is that the gap between two sections should be smaller than the
+   tallest thing inside either of them. */
+.section { padding-block: 36px; }
 @media (min-width: 768px) {
-  .section { padding-block: 112px; }
+  .section { padding-block: 56px; }
 }
 
 /* ─── Type utilities ─── */
+/* `.h1` is the hero heading and nothing else, so it is tuned to the hero's
+   column rather than to the viewport.
+
+   It needs two ramps because that column changes what it tracks at `lg`: below
+   1024px the hero is one column and the heading gets the full wrap width; above
+   it, the grid splits and the heading gets ~55% of it. A single clamp cannot
+   serve both — at 8.4vw the size pinned to its maximum from 738px upward while
+   the column kept shrinking, which broke "Train what needs work." across two
+   lines and orphaned "work." on its own. Measured one line per sentence at 320,
+   360, 375, 390, 414, 768, 1024, 1280 and 1440. */
 .h1 {
-  font-size: clamp(34px, 9vw, 68px);
+  font-size: clamp(26px, 8.3vw, 58px);
   line-height: 1.03;
   font-weight: 800;
 }
+@media (min-width: 1024px) {
+  .h1 { font-size: clamp(32px, 4.6vw, 58px); }
+}
+
 .h2 {
-  font-size: clamp(27px, 5.4vw, 44px);
+  font-size: clamp(26px, 5vw, 40px);
   line-height: 1.08;
   font-weight: 800;
 }
@@ -198,6 +231,8 @@ p { text-wrap: pretty; }
   .lead { font-size: 18px; }
 }
 
+/* With no accent hue to spend, the eyebrow stops competing with the heading
+   it sits above and becomes what it always was: a quiet label. */
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -206,7 +241,7 @@ p { text-wrap: pretty; }
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent-deep);
+  color: var(--fg-faint);
 }
 
 /* Legacy alias used by tool pages */
@@ -217,9 +252,9 @@ p { text-wrap: pretty; }
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent-deep);
+  color: var(--fg-faint);
   background: var(--accent-soft);
-  border: 1px solid var(--border-accent);
+  border: 1px solid var(--border);
   padding: 6px 12px;
   border-radius: 999px;
 }
@@ -233,7 +268,7 @@ p { text-wrap: pretty; }
   -webkit-text-fill-color: transparent;
 }
 
-/* Green marker behind inline words */
+/* Marker behind inline words */
 .marker {
   position: relative;
   white-space: nowrap;
@@ -285,7 +320,7 @@ p { text-wrap: pretty; }
   color: var(--fg);
   border: 1px solid var(--border-strong);
 }
-.btn-dark:hover { background: #232323; border-color: var(--border-accent); }
+.btn-dark:hover { background: #1F1F1F; border-color: var(--border-strong); }
 
 .btn-ghost {
   background: var(--bg-elevated);
@@ -296,33 +331,26 @@ p { text-wrap: pretty; }
 .btn-ghost:hover {
   border-color: var(--border-accent);
   background: var(--green-50);
-  color: var(--accent-deep);
+  color: var(--fg);
 }
 
 .btn-sm { font-size: 13px; padding: 11px 18px; }
 
-/* Store badge button */
-.store-btn {
+/* Store badges.
+   These used to be hand-drawn buttons — our own glyph, our own wording, our own
+   radius. Both stores publish the real artwork and both sets of brand
+   guidelines ask you to use it, so the badges are now the official assets and
+   this class only positions them. `--badge-h` is the *content* height both
+   badges are normalised to; Google's PNG ships with 41px of clear space baked
+   in, which is cropped in `public/badges/google-play.png` so the two line up. */
+.store-badge {
   display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 20px;
-  border-radius: 16px;
-  background: var(--bg-elevated);
-  color: var(--fg);
-  border: 1px solid var(--border-strong);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  border-radius: 9px;
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.store-btn:hover {
-  border-color: var(--border-strong);
-}
-.store-btn:active { transform: scale(0.985); }
-
-.store-btn-light {
-  background: var(--bg-elevated);
-  color: var(--fg);
-  border: 1px solid var(--border-strong);
-}
+.store-badge:hover { opacity: 0.82; }
+.store-badge:active { transform: scale(0.985); }
+.store-badge img { display: block; height: var(--badge-h, 44px); width: auto; }
 
 /* ─── Cards ─── */
 .card {
@@ -359,8 +387,8 @@ p { text-wrap: pretty; }
   height: 44px;
   border-radius: 14px;
   background: var(--accent-soft);
-  color: var(--accent-deep);
-  border: 1px solid var(--border-accent);
+  color: var(--fg);
+  border: 1px solid var(--border);
 }
 
 /* ─── Decorative backgrounds ─── */
@@ -370,6 +398,37 @@ p { text-wrap: pretty; }
 
 /* Same: the landing page no longer draws a grid. */
 .grid-lines { display: none; }
+
+/* The stat chips from the reference: value in the page's text colour, label
+   under it in grey, one hairline box around both. Deliberately a component
+   rather than six utility classes repeated four times, because the row only
+   reads as a row if every chip agrees about its padding. */
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg-elevated);
+}
+.stat-value {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--fg);
+}
+.stat-label {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--fg-faint);
+}
+@media (min-width: 768px) {
+  .stat { padding: 14px 18px; }
+  .stat-value { font-size: 22px; }
+}
 
 .divider { height: 1px; background: var(--border); width: 100%; }
 
@@ -445,5 +504,5 @@ p { text-wrap: pretty; }
 /* ─── Scrollbar ─── */
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--green-200); border-radius: 999px; border: 3px solid var(--bg); }
-::-webkit-scrollbar-thumb:hover { background: var(--green-300); }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.16); border-radius: 999px; border: 3px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.26); }

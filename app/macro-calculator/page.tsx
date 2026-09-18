@@ -3,7 +3,41 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Reveal from "../components/Reveal";
 import MacroCalculator from "./MacroCalculator";
+import { JsonLdScript, ToolFaq, faqJsonLd } from "../components/tools/ToolPage";
 import { SITE_URL } from "../lib/site";
+
+/**
+ * The five questions this page is actually opened with.
+ *
+ * It had none — it and /body-fat-calculator were the two pages that predate the
+ * tool registry, and the six calculators added after them all shipped an FAQ and
+ * the matching `FAQPage` markup while these two were missed. The answers below
+ * are rendered by `ToolFaq` and emitted as schema from the same array, which is
+ * the only version of this worth having: a `FAQPage` whose answers are not
+ * visible on the page is the most common route to a structured-data penalty.
+ */
+const FAQS = [
+  {
+    q: "What are macros?",
+    a: "Protein, carbohydrate and fat \u2014 the three nutrients that carry calories. Your calorie target decides how much you lose or gain; the split between those three decides how much of the change is muscle rather than fat, and how full you feel getting there.",
+  },
+  {
+    q: "Do I have to hit my macros exactly?",
+    a: "No. Protein is the one worth hitting closely, because it is what protects muscle in a deficit. Carbs and fat can move around each other freely as long as the calorie total holds \u2014 within about 5 grams of protein and 100 calories on the day is close enough for the result to be the same.",
+  },
+  {
+    q: "Why did my numbers change when I picked a different activity level?",
+    a: "The activity multiplier is applied to your BMR, so one step up adds roughly 150\u2013250 calories a day. Most people pick a level too high: the multipliers describe your whole week including rest days, so three or four gym sessions on top of a desk job is 'moderately active', not 'very active'.",
+  },
+  {
+    q: "Should my macros be different on rest days?",
+    a: "They can be, but they do not need to be. Calorie cycling \u2014 more carbs on training days, fewer on rest days \u2014 works if the weekly total is unchanged, and it is one more thing to get wrong. Hold one set of numbers every day until the weekly trend tells you to change them.",
+  },
+  {
+    q: "How long before I change these numbers?",
+    a: "Two weeks. Bodyweight swings with water, salt and glycogen by a kilo or more day to day, so a single weigh-in tells you nothing. Take the two-week average against the previous two-week average, and only adjust if the trend disagrees with the goal.",
+  },
+];
 
 export const metadata: Metadata = {
   // No "| Dietly" suffix here: the root layout's title template already appends
@@ -51,6 +85,7 @@ export default function MacroCalculatorPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <JsonLdScript data={faqJsonLd(FAQS)} />
       <Navbar />
 
       <main className="pt-32 pb-24 overflow-hidden">
@@ -109,15 +144,20 @@ export default function MacroCalculatorPage() {
                 </ul>
               </div>
 
+              {/* This section used to pitch the calorie-counting app Dietly was before
+                  the pivot \u2014 "snap a photo of your meal, our AI vision recognises the
+                  food" \u2014 on the site's highest-traffic page. The product is a training
+                  app now, and food logging exists to support the plan. */}
               <div>
-                <h2 className="text-[28px] font-bold text-fg font-body tracking-tight mb-4">The easiest way to track your macros</h2>
+                <h2 className="text-[28px] font-bold text-fg font-body tracking-tight mb-4">Numbers are the easy part</h2>
                 <p>
-                  Knowing your macros is only half the battle. Actually tracking them every day is where 95% of people fail. Reading labels, weighing food, and searching databases is exhausting.
+                  A macro target tells you what to eat. It does not tell you what to train, and for most people that is the half that decides whether the physique actually changes.
                 </p>
                 <p className="mt-4">
-                  That&apos;s why we built <strong>Dietly</strong>. Instead of manual data entry, you just snap a photo of your meal. Our AI vision instantly recognizes the food, estimates the portion size, and logs the exact calories, protein, carbs, and fats directly to your daily target.
+                  <strong>Dietly</strong> starts at the other end: one photo a week is scored out of 100, the scan names the weak point holding the number down, and the week of training is built around fixing it. Food logging is in the same app, with targets set from your goal rather than a generic number \u2014 so these macros have somewhere to go.
                 </p>
               </div>
+              <ToolFaq faqs={FAQS} />
             </article>
           </Reveal>
         </section>

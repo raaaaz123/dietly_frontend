@@ -15,38 +15,42 @@ import PhoneShot from "./PhoneShot";
 const screens: {
   src: string;
   alt: string;
-  frame?: boolean;
   width?: number;
   height?: number;
   title: string;
   body: string;
 }[] = [
   {
-    src: "/images/app/scan.png",
-    frame: false,
-    alt: "The Form Score screen: 72 out of 100 over a scan, with definition, leanness, symmetry, posture, body fat and potential scored around it.",
-    width: 1024,
-    height: 1536,
+    src: "/images/app/scan.webp",
+    width: 760,
+    height: 1553,
+    alt: "The scan result screen: a photo of a lean athletic man framed by green scan brackets, a Form Score of 72 out of 100, and definition 68, leanness 61, symmetry 80, posture 74, body fat 19% and potential 84 below it, with leanness marked \u201cfix first\u201d.",
     title: "Your score, and its weak point",
-    body: "Definition, leanness, symmetry and posture — with the one that is holding the number down marked “fix first”.",
+    body: "Definition, leanness, symmetry and posture \u2014 with the one holding the number down marked \u201cfix first\u201d.",
   },
   {
-    src: "/images/app/training.png",
-    alt: "The Training tab: a week strip with today marked, three session options for the day, and saved sessions below.",
-    title: "The week, openable",
-    body: "Every day of the block, not just today — and where a day offers alternatives, all of them.",
+    src: "/images/app/training.webp",
+    width: 760,
+    height: 1542,
+    alt: "The week screen, headed \u201cThis week \u2014 built from your last scan\u201d: four routine cards for Monday, Tuesday, Thursday and Saturday, each with its exercise count, duration, a body map of the muscles it loads and a Start button. Monday is marked Today.",
+    title: "The week, built from the scan",
+    body: "Four sessions, each with the muscles it loads and a time before you commit to it. Today is marked.",
   },
   {
-    src: "/images/app/session.png",
-    alt: "A session page listing six movements with sets and reps, above a muscle distribution strip.",
-    title: "Every session, before you start it",
-    body: "Sets, reps and rest for each movement, and which muscles the session actually loads. Swap anything that isn't free.",
+    src: "/images/app/session.webp",
+    width: 760,
+    height: 1542,
+    alt: "A Romanian deadlift in progress: an anatomical render with the hamstrings and glutes highlighted, a Technique button, and a set table showing 60kg for 10 and 70kg for 8 completed, the third set active.",
+    title: "Log it set by set",
+    body: "Weight and reps per set, ticked off as you go, with a technique clip and a one-tap swap for anything that is taken.",
   },
   {
-    src: "/images/app/trends.png",
-    alt: "The Progress tab: weekly training volume as bars, an adherence grid, and a muscle balance breakdown.",
+    src: "/images/app/trends.webp",
+    width: 760,
+    height: 1544,
+    alt: "The progress screen: a twelve-week line chart of the Form Score rising to 72, with +9 since week 1 and 11 scans taken, above a row of progress photo thumbnails from week 1 to week 12.",
     title: "Whether it is working",
-    body: "Tonnage a week, sessions kept against sessions planned, and the areas getting the least work.",
+    body: "The score week by week, and every scan photo kept beside it, so a good month is visible rather than remembered.",
   },
 ];
 
@@ -56,13 +60,13 @@ export default function Screens() {
       <div className="wrap">
         <div className="max-w-2xl">
           <p className="eyebrow">The app</p>
-          <h2 className="h2 mt-5">Four screens do the whole job.</h2>
+          <h2 className="h2 mt-3.5">Four screens do the whole job.</h2>
         </div>
 
         {/* Subgrid so the captions sit on one line: the share card is a 2:3
             image among 1:2 phone captures, and without a shared image row it
             drags its own caption 200px up the page. */}
-        <ul className="mt-12 grid gap-10 sm:grid-cols-2 sm:grid-rows-[auto_auto_auto_auto] lg:grid-cols-4 lg:grid-rows-[auto_auto] lg:gap-6">
+        <ul className="mt-8 grid gap-7 sm:grid-cols-2 sm:grid-rows-[auto_auto_auto_auto] lg:grid-cols-4 lg:grid-rows-[auto_auto] lg:gap-5">
           {screens.map((screen) => (
             <li
               key={screen.src}
@@ -72,14 +76,14 @@ export default function Screens() {
                 <PhoneShot
                   src={screen.src}
                   alt={screen.alt}
-                  frame={screen.frame}
-                  width={screen.width}
-                  height={screen.height}
+                  frame={false}
+                  width={screen.width ?? 760}
+                  height={screen.height ?? 1542}
                   className="w-full"
                 />
               </div>
               <div>
-                <h3 className="h3 mt-6">{screen.title}</h3>
+                <h3 className="h3 mt-4">{screen.title}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
                   {screen.body}
                 </p>

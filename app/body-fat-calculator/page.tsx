@@ -3,6 +3,39 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Reveal from "../components/Reveal";
 import BodyFatCalculator from "./BodyFatCalculator";
+import { JsonLdScript, ToolFaq, faqJsonLd } from "../components/tools/ToolPage";
+
+/**
+ * The five questions this page is actually opened with.
+ *
+ * Added for the same reason as the ones on /macro-calculator: these two pages
+ * predate the tool registry, and the six calculators built after them all
+ * shipped an FAQ plus `FAQPage` markup while these were missed. Rendered by
+ * `ToolFaq` and emitted as schema from this same array \u2014 markup whose answers
+ * are not visible on the page is how sites earn a structured-data penalty.
+ */
+const FAQS = [
+  {
+    q: "How accurate is the US Navy method?",
+    a: "For most people it lands within a few percentage points of a DEXA scan, which is good enough to track a direction. It is an estimate from circumferences, not a measurement of fat, so treat the trend across several readings as the real output and the single number as approximate.",
+  },
+  {
+    q: "Why is this different from my smart scale?",
+    a: "A scale uses bioimpedance \u2014 it sends a small current through you and infers composition from resistance, which moves with how hydrated you are. This uses tape measurements, which do not. Neither is ground truth; pick one and stay with it, because comparing across methods tells you nothing.",
+  },
+  {
+    q: "What is a healthy body fat percentage?",
+    a: "Commonly cited ranges put fitness-level men around 14\u201317% and women around 21\u201324%, with essential fat far lower and athletes lower still. The ranges are wide and vary by age and source, so treat them as orientation rather than a target handed to you.",
+  },
+  {
+    q: "How often should I measure?",
+    a: "Every two to four weeks, same time of day, same conditions \u2014 first thing in the morning before eating or drinking is easiest to repeat. Measuring more often mostly records tape pressure and hydration, not change.",
+  },
+  {
+    q: "Can I lower body fat without losing weight?",
+    a: "Yes \u2014 that is body recomposition, and it is why the scale stops being useful. Losing fat and adding muscle at the same rate holds bodyweight flat while this number falls. It is most achievable if you are new to training, returning after a break, or carrying more fat to start with.",
+  },
+];
 import { SITE_URL } from "../lib/site";
 
 export const metadata: Metadata = {
@@ -46,6 +79,7 @@ export default function BodyFatCalculatorPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <JsonLdScript data={faqJsonLd(FAQS)} />
       <Navbar />
 
       <main className="pt-32 pb-24 overflow-hidden">
@@ -109,15 +143,19 @@ export default function BodyFatCalculatorPage() {
                 </ul>
               </div>
 
+              {/* Was a pitch for the calorie app Dietly sold before the pivot \u2014 "our
+                  AI agent recognizes your meals from a photo". The product is a training
+                  app now, and this page's visitor is measuring a physique, not a plate. */}
               <div>
-                <h2 className="text-[28px] font-bold text-fg font-body tracking-tight mb-4">Lowering Your Body Fat</h2>
+                <h2 className="text-[28px] font-bold text-fg font-body tracking-tight mb-4">Lowering your body fat</h2>
                 <p>
-                  To decrease body fat, you must be in a consistent caloric deficit while consuming enough protein to preserve muscle mass. This is often tedious to track manually.
+                  Fat loss needs a consistent calorie deficit and enough protein to hold on to muscle while you are in it. That part is arithmetic, and the calculators here will get you the numbers.
                 </p>
                 <p className="mt-4">
-                  <strong>Dietly</strong> automates this entire process. Instead of manually weighing food and scanning barcodes, our AI agent recognizes your meals from a photo and logs your macros instantly, ensuring you stay in the perfect fat-loss zone effortlessly.
+                  The harder question is what to train while the weight comes off, because a deficit is exactly when muscle is easiest to lose. <strong>Dietly</strong> scores one photo a week out of 100, names the area holding the score back, and builds that week around it \u2014 so the tape measure has something to show in a month.
                 </p>
               </div>
+              <ToolFaq faqs={FAQS} />
             </article>
           </Reveal>
         </section>

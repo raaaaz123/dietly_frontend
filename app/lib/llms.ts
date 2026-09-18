@@ -12,6 +12,8 @@ import {
 } from "./site";
 import { TOOLS } from "./tools";
 import { GUIDES } from "./guides";
+import { COMPETITORS, ROUNDUP_SLUG } from "./competitors";
+import { EXERCISES, CATEGORIES, KIT } from "./exercises";
 
 /**
  * The text served at /llms.txt and /llms-full.txt, built from `lib/site`.
@@ -74,6 +76,21 @@ ${TOOLS.map((t) => `- [${t.name}](${SITE_URL}/${t.slug}) — ${t.blurb}`).join("
 
 ${GUIDES.map((g) => `- [${g.heading}](${SITE_URL}/guides/${g.slug}) — ${g.blurb}`).join("\n")}
 
+## Exercise library
+
+${EXERCISES.length} movements, each with a demonstration clip, the muscle it targets, the equipment it needs and a starting set and rep scheme. Browse by muscle or by the equipment available. Demonstrations are licensed from Gym Visual.
+
+- [Exercise library](${SITE_URL}/exercises) — All ${EXERCISES.length} movements, by muscle and by equipment.
+${CATEGORIES.map((c) => `- [${c.name} exercises](${SITE_URL}/exercises/muscle/${c.slug}) — ${c.items.length} movements that train the ${c.name.toLowerCase()}.`).join("\n")}
+${KIT.map((k) => `- [${k.name} exercises](${SITE_URL}/exercises/equipment/${k.slug}) — ${k.items.length} movements. ${k.blurb}`).join("\n")}
+
+## Comparisons
+
+Honest comparisons against the apps ${SITE_NAME} is weighed against. Every fact about another company's product on these pages was read off that company's own published pages on a date printed at the top of the page, with the source linked at the bottom; no price or feature is quoted from a third-party roundup. Each page also states where the other app is better.
+
+${COMPETITORS.map((c) => `- [${SITE_NAME} vs ${c.name}](${SITE_URL}/vs/${c.slug}) — ${c.blurb} ${c.name} facts checked ${c.checked}.`).join("\n")}
+- [Best AI body scan apps, compared](${SITE_URL}/${ROUNDUP_SLUG}) — What a phone camera can and cannot measure, which scan apps are real, and when a DEXA scan or a tape measure is the better answer. Discloses that ${SITE_NAME} is one of the apps in it.
+
 ## Pages
 
 - [Home](${SITE_URL}) — What the scan is, how the plan follows from it, what is inside the app, FAQ, download links.
@@ -92,6 +109,7 @@ ${SITE_NAME} runs a creator referral program: commission on referred subscribers
 
 ## More
 
+- [Compare](${SITE_URL}/vs) — Every comparison in one place.
 - [Full version](${SITE_URL}/llms-full.txt)
 `;
 }

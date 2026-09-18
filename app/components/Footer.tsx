@@ -16,6 +16,12 @@ const columns = [
       { label: "How it works", href: "/#how" },
       { label: "Inside the app", href: "/#inside" },
       { label: "Get the app", href: "/#get" },
+      // The comparison cluster's only sitewide link. The nav above is
+      // deliberately four items, so this is the route that keeps /vs and the
+      // roundup from being orphans reachable only from each other.
+      { label: "Exercise library", href: "/exercises" },
+      { label: "Compare apps", href: "/vs" },
+      { label: "Best body scan apps", href: "/best-ai-body-scan-apps" },
     ],
   },
   {

@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "check:seo": "node scripts/check-seo.mjs",
-    "test": "node --test \"tests/*.test.ts\""
+    "test": "node --test \"tests/*.test.ts\"",
+    "indexnow": "node scripts/indexnow.mjs",
+    "check:host": "node scripts/check-host.mjs",
+    "fetch:exercises": "node scripts/fetch-exercises.mjs"
   },
   "dependencies": {
     "firebase": "^11.10.0",

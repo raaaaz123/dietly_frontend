@@ -10,7 +10,7 @@ those need Search Console and a keyword tool before we act on them.
 
 ---
 
-## Status — 2026-09-15
+## Status — 2026-09-18 (rev 2)
 
 ### Phase 1 — shipped
 
@@ -51,17 +51,119 @@ plausible-looking and wrong by six points. `formulas.ts` was first written with
 the inch constants. The shipped `BodyFatCalculator.tsx` has always been correct;
 the new shared module now matches it, and a test pins both.
 
+### Phase 3.4 — shipped 2026-09-18
+
+**Five comparison pages plus a roundup** — `/vs/fitbod`, `/vs/macrofactor`,
+`/vs/myfitnesspal`, `/vs/cal-ai`, `/vs/bodygram`, a `/vs` hub, and
+`/best-ai-body-scan-apps`. Sitemap **19 URLs → 26**; `check-seo.mjs` now
+covers 29 routes.
+
+**Where the competitor facts came from.** Every price and feature was read off
+a page the vendor publishes, on 2026-09-18, and the source is linked on the
+page that uses it. Nothing was taken from a third-party roundup — search
+results for this category are largely small apps blogging about themselves and
+quoting each other's invented numbers, and a table built from those is wrong
+within a month. Where a vendor publishes no price (Cal AI, Bodygram), the page
+says so rather than repeating a figure from a review site.
+
+**The structural honesty bits**, because they are the whole defence of the
+format: each page renders the checked date and the vendor's source links; each
+carries a trademark / non-affiliation notice and an email to report an error;
+each has a *"Where {competitor} is better"* section, and the roundup opens by
+disclosing that we make one of the apps in it. `check-seo.mjs` fails the build
+if any of those go missing, and `tests/competitors.test.ts` fails it if an
+entry quotes a price without a source, concedes nothing to the rival, or wins
+every row of its own table.
+
+**Staleness has a deadline.** `tests/competitors.test.ts` fails once any
+entry's `checked` date is more than 365 days old. Re-read the vendor pages and
+bump the date; do not bump the date alone.
+
+### Phase 1 re-audit — 2026-09-18
+
+Audited against the **live** site rather than against this file. `§1.1`, `§1.3`,
+`§1.4`, `§4.1` and `§2.3`'s code are shipped and confirmed in production:
+`https://www.dietly.life/macro-calculator` serves
+`<link rel="canonical" href="https://dietly.life/macro-calculator">` and a title
+carrying the brand exactly once. `store_click` still fires after the store
+buttons were replaced with the official badges, because `analytics.tsx` tracks
+by delegation on `<a href>` rather than by a handler per button.
+
+**`§1.2` is still live and still costing us.** Measured today:
+
+```
+https://dietly.life/                 307 -> https://www.dietly.life/
+https://dietly.life/macro-calculator 307 -> https://www.dietly.life/macro-calculator
+https://dietly.life/robots.txt       307, 15 bytes ("Redirecting...")
+https://www.dietly.life/             200
+```
+
+So every canonical we emit names a host that redirects, the redirect is
+**temporary**, and a crawler that only fetches the apex never reads robots.txt
+at all. `npm run check:host` now asserts all three of those and prints the
+Vercel fix; it exits non-zero today.
+
+**IndexNow is now wired (`§2.2`).** `npm run indexnow` submits every sitemap URL
+to Bing/Yandex/Seznam/Naver in one call. The ownership key is
+`app/lib/site.ts:INDEXNOW_KEY`, served from `public/<key>.txt` — public by
+design, so it is committed. The script **refuses to run while `§1.2` is
+unfixed**, because submitting URLs on a host we bounce crawlers away from spends
+the quota making things worse.
+
+**The comparison cluster is not deployed.** `/vs`, `/vs/*` and
+`/best-ai-body-scan-apps` all 404 in production — they exist only in the repo.
+They need a push before `§2` measurement or IndexNow means anything for them.
+
+### Phase 2 re-audit — 2026-09-18
+
+`§3.1` (eight calculators), `§4.2`'s `Organization` / `SoftwareApplication` /
+`WebApplication` / `BreadcrumbList` / `HowTo`, and the generated sitemap were all
+already shipped and correct. Auditing the built HTML rather than this file found
+three things that were not:
+
+1. **`/macro-calculator` and `/body-fat-calculator` had no FAQ at all.** They
+   predate the tool registry; the six calculators built after them each shipped
+   five questions plus `FAQPage`, and these two — the site's highest-value pages
+   — rendered prose only. Both now carry five questions and emit the markup from
+   the same array that renders them.
+2. **Both still sold the pre-pivot product.** Each closed by pitching photo
+   calorie logging ("our AI vision instantly recognizes the food", "our AI agent
+   recognizes your meals from a photo"). Rewritten around the scan and the
+   training week, which is what the app does now.
+3. **`/tools`, `/guides`, `/vs` and `/support` had no share card.** The first
+   three were simply missed. `/support` was subtler and worth knowing: declaring
+   an `openGraph` block *without* an `images` key suppresses the root
+   `app/opengraph-image.tsx` that `/privacy`, `/terms` and `/delete-account`
+   silently inherit — so the page that described itself got nothing and the ones
+   that said nothing got a card.
+
+**Two new guards in `check-seo.mjs`**, both of which failed on first run and
+caught real defects:
+
+- every indexable route must emit an `og:image`
+- a calculator that renders an FAQ must emit `FAQPage`, **and every answer in
+  that markup must appear in the rendered page**. Markup describing answers a
+  visitor cannot see is the common route to a structured-data manual action.
+
+The second guard needed a fix of its own: it compared raw HTML, so React
+escaping an apostrophe to `&#x27;` made `/protein-calculator`'s "anabolic
+window" answer look missing when it rendered fine. It decodes entities and
+strips tags before comparing now.
+
 ### Still needs a human
 
 1. `§1.2` **Vercel domains** — set `dietly.life` primary so `www` **308**s to it.
-   Still the one remaining P0, and it cannot be done from the repo.
-2. `§2.1/2.2` Verify GSC + Bing, then set `GOOGLE_SITE_VERIFICATION` and
+   Still the one remaining P0, and it cannot be done from the repo: there is no
+   Vercel CLI installed and no `.vercel` link, so this is a dashboard change.
+   Verify with `npm run check:host`, which fails until it is done.
+2. **Deploy.** The `§3.4` comparison cluster is committed but not live.
+3. `§2.1/2.2` Verify GSC + Bing, then set `GOOGLE_SITE_VERIFICATION` and
    `BING_SITE_VERIFICATION` in Vercel and redeploy.
-3. `§2.3` Set `POSTHOG_KEY` to turn analytics on. Until it is set, no
+4. `§2.3` Set `POSTHOG_KEY` to turn analytics on. Until it is set, no
    third-party script loads at all.
-4. Confirm the privacy policy wording (now says "website analytics") before
+5. Confirm the privacy policy wording (now says "website analytics") before
    PostHog goes live.
-5. **Consider a credentialed reviewer for the guides.** They are bylined to the
+6. **Consider a credentialed reviewer for the guides.** They are bylined to the
    Dietly team and say plainly that no physician or dietitian reviewed them,
    which is honest but is not the strongest E-E-A-T signal available. A named
    reviewer with a registration number is the upgrade. Inventing one is not —
@@ -80,13 +182,6 @@ scale on a domain with no ranking history is how a site earns a sitewide
 quality problem rather than a hundred entry points. Revisit when `build-media`
 has rendered our own assets and there is original per-exercise copy — the
 `lib/tools.ts` registry pattern is the shape it should take.
-
-**Comparison pages (`§3.4`).** These need verified, current facts about named
-competitors' features and pricing. I do not have them, and a comparison table
-that misstates a rival's product is both a legal exposure and the fastest way
-to be distrusted by the raters and models the page is written for. Give me a
-list of the competitors you are actually compared to, with what you know about
-each, and this becomes a half-day of work.
 
 **Off-domain corroboration (`§4.4`).** Product Hunt, Reddit, roundup outreach,
 Wikidata. Not code, and not something to automate — it needs a person with an
@@ -301,7 +396,7 @@ author with real credentials, a visible last-reviewed date, and citations to pri
 sources. Do not publish unattributed AI-written health copy — it is the fastest route to
 a Helpful Content demotion.
 
-### 3.4 Comparison and alternatives pages
+### 3.4 Comparison and alternatives pages — **shipped**
 
 When someone asks an LLM "what's the best AI body scan app", the model answers from
 roundups and comparison pages. We should be in that corpus: `/vs/[competitor]` for the
@@ -309,6 +404,17 @@ handful of apps we actually get compared to, plus a `/best-ai-body-scan-apps` st
 roundup that is honest enough to be useful. Be accurate about competitors — a comparison
 table that overstates our side is the one thing that gets a page distrusted by both
 raters and models.
+
+**Built.** Five `/vs/` pages, a `/vs` hub and `/best-ai-body-scan-apps`, all
+driven from `app/lib/competitors.ts`. That file's header documents the
+verification rule every future entry has to follow; read it before adding one.
+The competitors chosen are the three a searcher actually weighs a food-and-
+training app against (Fitbod, MacroFactor, MyFitnessPal), the photo-first
+calorie app closest to our camera pitch (Cal AI), and the one genuine
+photo-body-measurement product (Bodygram). Candidates deliberately left out:
+the small photo-physique-score apps that dominate these SERPs, because almost
+nothing they publish about themselves is checkable, and naming them mostly
+sends them traffic.
 
 ---
 
@@ -419,8 +525,11 @@ The remaining calculators, the four editorial pieces (§3.3), and the first ~100
 pages behind the measurement gate (§3.2).
 
 **Phase 4 — ongoing.**
-Comparison pages (§3.4), off-domain corroboration (§4.4), expand exercise pages only if
-phase-3 indexation holds, quarterly re-audit.
+~~Comparison pages (§3.4)~~ — shipped 2026-09-18. Off-domain corroboration (§4.4),
+expand exercise pages only if phase-3 indexation holds, quarterly re-audit. Add the
+comparison cluster's own re-verification to that quarterly pass: competitor prices are
+the fastest-decaying facts on the site, and `tests/competitors.test.ts` only catches
+them after a full year.
 
 ---
 

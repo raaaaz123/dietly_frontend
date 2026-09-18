@@ -101,7 +101,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   // Matches --bg. The browser chrome on mobile takes this colour, so a light
   // value here put a white bar above a black page.
-  themeColor: "#0A0A0A",
+  themeColor: "#0D0D0D",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,

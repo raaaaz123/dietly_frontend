@@ -2,6 +2,8 @@ import { MetadataRoute } from "next";
 import { SITE_URL } from "./lib/site";
 import { TOOLS } from "./lib/tools";
 import { GUIDES } from "./lib/guides";
+import { COMPETITORS, ROUNDUP_UPDATED } from "./lib/competitors";
+import { CATEGORIES, KIT, INDEXABLE, CATALOGUE_FETCHED } from "./lib/exercises";
 
 /**
  * Generated from the tool registry plus a short list of fixed pages.
@@ -39,6 +41,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...TOOLS.map((t) => page(`/${t.slug}`, t.lastModified, "monthly", 0.9)),
     page("/guides", "2026-09-15", "monthly", 0.8),
     ...GUIDES.map((g) => page(`/guides/${g.slug}`, g.updated, "monthly", 0.8)),
+    page("/vs", "2026-09-18", "monthly", 0.8),
+    ...COMPETITORS.map((c) => page(`/vs/${c.slug}`, c.updated, "monthly", 0.8)),
+    page("/best-ai-body-scan-apps", ROUNDUP_UPDATED, "monthly", 0.8),
+    page("/exercises", CATALOGUE_FETCHED, "weekly", 0.9),
+    ...CATEGORIES.map((c) =>
+      page(`/exercises/muscle/${c.slug}`, CATALOGUE_FETCHED, "weekly", 0.8),
+    ),
+    ...KIT.map((k) => page(`/exercises/equipment/${k.slug}`, CATALOGUE_FETCHED, "weekly", 0.8)),
+    // Only the movements that carry written coaching. The rest render
+    // `noindex, follow`, and a sitemap that lists a noindex URL is a sitemap
+    // asking to be ignored.
+    ...INDEXABLE.map((e) => page(`/exercises/${e.slug}`, CATALOGUE_FETCHED, "monthly", 0.6)),
     page("/support", "2026-09-13", "monthly", 0.7),
     page("/privacy", "2026-09-13", "yearly", 0.4),
     page("/terms", "2026-09-13", "yearly", 0.4),

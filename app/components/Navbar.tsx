@@ -21,6 +21,10 @@ const links = [
   // calculators are the site's organic entry points, and a visitor who arrived
   // on one has otherwise no route to the other seven.
   { label: "Free tools", href: "/tools" },
+  // The second link that leaves the homepage, and it earns the slot: 507
+  // movements across 15 indexable hubs is the largest surface on the site, and
+  // a visitor who arrived on a muscle page has otherwise no route to the rest.
+  { label: "Exercises", href: "/exercises" },
   { label: "FAQ", href: "/#faq" },
 ];
 

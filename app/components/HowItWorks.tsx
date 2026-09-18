@@ -29,19 +29,19 @@ export default function HowItWorks() {
       <div className="wrap">
         <div className="max-w-2xl">
           <p className="eyebrow">How it works</p>
-          <h2 className="h2 mt-5">
+          <h2 className="h2 mt-3.5">
             A number that means something, and a plan that moves it.
           </h2>
         </div>
 
-        <ol className="mt-12 grid gap-4 md:grid-cols-3 md:gap-5">
+        <ol className="mt-8 grid gap-3 md:grid-cols-3 md:gap-4">
           {steps.map((step) => (
-            <li key={step.n} className="card card-hover p-7">
-              <span className="font-mono text-[13px] font-semibold text-accent-deep">
+            <li key={step.n} className="card card-hover p-6">
+              <span className="font-mono text-[13px] font-semibold text-fg-faint">
                 {step.n}
               </span>
-              <h3 className="h3 mt-4">{step.title}</h3>
-              <p className="mt-2.5 text-[15px] leading-relaxed text-fg-muted">
+              <h3 className="h3 mt-3">{step.title}</h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
                 {step.body}
               </p>
             </li>

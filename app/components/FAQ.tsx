@@ -34,19 +34,19 @@ export default function FAQ() {
   return (
     <section id="faq" className="section pt-0">
       <div className="wrap">
-        <div className="max-w-2xl">
+        <div className="max-w-2xl md:mx-auto md:text-center">
           <p className="eyebrow">FAQ</p>
-          <h2 className="h2 mt-5">Before you download.</h2>
+          <h2 className="h2 mt-3.5">Before you download.</h2>
         </div>
 
-        <div className="mt-10 max-w-3xl divide-y divide-[var(--border)] border-y border-[var(--border)]">
+        <div className="mt-7 max-w-3xl md:mx-auto divide-y divide-[var(--border)] border-y border-[var(--border)]">
           {faqs.map((faq) => (
-            <details key={faq.q} className="group py-5">
+            <details key={faq.q} className="group py-4">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-[16px] font-bold text-fg md:text-[17px]">
                 {faq.q}
                 <span
                   aria-hidden
-                  className="shrink-0 text-xl leading-none font-normal text-accent-deep transition-transform group-open:rotate-45"
+                  className="shrink-0 text-xl leading-none font-normal text-fg-faint transition-transform group-open:rotate-45"
                 >
                   +
                 </span>

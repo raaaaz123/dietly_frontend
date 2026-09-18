@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { EXERCISE_COUNT } from "../lib/site";
 
 /**
@@ -13,7 +14,12 @@ import { EXERCISE_COUNT } from "../lib/site";
  * had a word on this site.
  */
 
-const items = [
+const items: {
+  title: string;
+  body: string;
+  href?: string;
+  linkLabel?: string;
+}[] = [
   {
     title: "The weekly scan",
     body: "One photo, scored out of 100, with your body-fat estimate and the weak point named. Rescan weekly and watch the trend.",
@@ -25,6 +31,10 @@ const items = [
   {
     title: "Your whole week, openable",
     body: `Every day of the program is there, not just today. Guided sessions with a demo clip for every movement, from a catalogue of ${EXERCISE_COUNT} exercises.`,
+    // The one tile that describes something with a page of its own. Linking it
+    // is the whole route from the landing page into the exercise cluster.
+    href: "/exercises",
+    linkLabel: "Browse the exercise library",
   },
   {
     title: "Change any session, in a sentence",
@@ -47,16 +57,24 @@ export default function Inside() {
       <div className="wrap">
         <div className="max-w-2xl">
           <p className="eyebrow">Inside the app</p>
-          <h2 className="h2 mt-5">Training first. Food alongside it.</h2>
+          <h2 className="h2 mt-3.5">Training first. Food alongside it.</h2>
         </div>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
+        <div className="mt-8 grid gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-3">
           {items.map((item) => (
-            <div key={item.title} className="card card-hover p-7">
+            <div key={item.title} className="card card-hover p-6">
               <h3 className="h3">{item.title}</h3>
-              <p className="mt-2.5 text-[15px] leading-relaxed text-fg-muted">
+              <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
                 {item.body}
               </p>
+              {item.href && (
+                <Link
+                  href={item.href}
+                  className="mt-3 inline-block text-[14px] font-semibold text-accent-deep hover:underline"
+                >
+                  {item.linkLabel} &rarr;
+                </Link>
+              )}
             </div>
           ))}
         </div>

@@ -15,7 +15,24 @@
 
 # next.js
 /.next/
+# ...and the symlink of the same name. `/.next/` with a trailing slash
+# matches a directory only, so once `.next` became a link to
+# `.next.nosync` git started offering to commit it.
+/.next
 /out/
+# The real build directory. `.next` is a symlink to it.
+#
+# This tree lives under ~/Documents, which is synced by iCloud Drive, and a
+# Next build writes tens of thousands of small files into `.next`. iCloud tries
+# to sync them mid-build, which corrupts the output: routes start 500ing with
+# "Cannot find module './NNNN.js'", the CSS asset 404s, and conflict
+# directories named "cache 2" appear inside `.next`. A single `rm -rf .next`
+# took over eight minutes because every file had to be materialised first.
+#
+# macOS excludes any path ending in `.nosync` from iCloud, so the build output
+# goes there and `.next` points at it. Delete both if you ever move this repo
+# out of a synced folder.
+/.next.nosync/
 
 # production
 /build

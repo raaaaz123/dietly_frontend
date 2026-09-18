@@ -52,7 +52,7 @@ export default function PhoneShot({
   if (!frame) {
     return (
       <div
-        className={`relative overflow-hidden rounded-[2.2rem] shadow-[0_24px_70px_-30px_rgba(0,0,0,0.9)] ${className}`}
+        className={`relative inline-flex overflow-hidden rounded-[2.2rem] shadow-[0_24px_70px_-30px_rgba(0,0,0,0.9)] ${className}`}
       >
         {picture}
       </div>

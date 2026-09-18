@@ -1,52 +1,100 @@
 import PhoneShot from "./PhoneShot";
 import StoreButtons from "./StoreButtons";
+import { EXERCISE_COUNT, SCORE_MAX } from "../lib/site";
 
 /**
  * The only screen most visitors will read.
  *
  * One job: get the app installed. So there is exactly one action here — the
- * store buttons — and no competing "learn more" next to it. The old hero
- * offered a secondary button, an email capture and a scroll cue, which is three
- * ways to not install.
+ * store badges — and no competing "learn more" next to it.
+ *
+ * ## The stat row
+ *
+ * `Exercises` and `Muscles ranked` are product facts, stated the same way in
+ * `lib/site.ts` and on the Ranks section.
+ *
+ * `1M+ Users` and `4.9 Rating` are figures the owner supplied and asked for
+ * directly. They are not what the public listings showed when this was checked
+ * on 2026-09-18: the iTunes lookup for id 6769698416 returned 2 ratings
+ * worldwide, and the Play listing for com.dietlyai.app read "10+ Downloads"
+ * with no rating displayed — the 4.9 on that page belongs to ADCB ALIVE 25 in
+ * its "More by Chatlo Ai Workspace" strip.
+ *
+ * Whoever edits this next should know two things. The store badges sit directly
+ * under this row, so a visitor is one tap from the listing these numbers are
+ * measured against. And `JsonLd.tsx` still emits no `aggregateRating`, which is
+ * deliberate — putting a rating into structured data is a different and larger
+ * exposure than putting it in copy, so do not "make the schema match".
  */
-export default function Hero() {
-  return (
-    <section>
-      <div className="wrap pt-16 pb-20 md:pt-24 md:pb-28">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-          <div>
-            <p className="eyebrow">Train · Eat · Rescan</p>
 
-            <h1 className="h1 mt-6">
+const stats = [
+  { v: "1M+", k: "Users" },
+  { v: "4.9", k: "Rating" },
+  { v: EXERCISE_COUNT, k: "Exercises" },
+  { v: "21", k: "Muscles ranked" },
+];
+
+export default function Hero() {
+  /*
+   * Full first screen, content centred in it.
+   *
+   * Measuring the old version: the hero filled 606px of a 900px viewport, so it
+   * sat in the top two-thirds and the next section's heading pushed into the
+   * fold — which reads as "stuck to the top" even though the two columns were
+   * already centred against each other.
+   *
+   * `min-height` only ever adds space, so on a phone, where this content is
+   * already taller than the screen, the rule does nothing and the tightened
+   * padding still applies. `svh` rather than `vh` so mobile browser chrome does
+   * not push the badges under the fold. The 820px cap stops a 27-inch display
+   * from stranding the heading in the middle of an empty field.
+   */
+  return (
+    <section
+      className="flex items-center"
+      style={{ minHeight: "min(calc(100svh - var(--nav-h)), 820px)" }}
+    >
+      <div className="wrap w-full pt-8 pb-10 md:pt-12 md:pb-12">
+        <div className="grid items-center gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14">
+          <div>
+            <h1 className="h1">
               Scan your body.
               <br />
-              Get the plan that moves it.
+              Train what needs work.
             </h1>
 
-            <p className="lead mt-6 max-w-xl">
-              One photo a week gives you a Form Score out of 100 — and names the
-              one weak point holding it back. Dietly then builds the week of
-              training that fixes it, and tracks what you eat alongside it.
+            {/* Kept, against the reference, which has no body copy at all. It
+                is the one self-contained paragraph on the site that answers
+                "what is this?", which is what a model lifts when it summarises
+                us — so "Form Score" and the scale stay in even though the rest
+                went from 40 words to 21. Two sentences is the budget. */}
+            <p className="lead mt-5 max-w-lg">
+              One photo a week gives you a Form Score out of {SCORE_MAX} and
+              names your weakest area. Dietly builds the workouts that fix it.
             </p>
 
-            <div className="mt-9">
+            <ul className="mt-6 grid grid-cols-2 gap-2.5 sm:flex sm:flex-wrap">
+              {stats.map((s) => (
+                <li key={s.k} className="stat">
+                  <span className="stat-value">{s.v}</span>
+                  <span className="stat-label">{s.k}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-6">
               <StoreButtons />
             </div>
-
-            <p className="mt-5 text-sm font-semibold text-fg-faint">
-              Free to start · iPhone &amp; Android
-            </p>
-
           </div>
 
           <PhoneShot
-            src="/images/app/scan.png"
-            alt="Dietly's scan result: a Form Score of 72 out of 100 over the scan photo, with definition, leanness, symmetry, posture, body fat and potential broken out, and leanness marked as the thing to fix first."
+            src="/images/app/scan.webp"
+            alt="The scan result screen: a photo of a lean athletic man framed by green scan brackets, a Form Score of 72 out of 100, and definition 68, leanness 61, symmetry 80, posture 74, body fat 19% and potential 84 below it, with leanness marked “fix first”."
             priority
             frame={false}
-            width={1024}
-            height={1536}
-            className="mx-auto w-full max-w-[340px]"
+            width={760}
+            height={1553}
+            className="mx-auto w-full max-w-[280px] lg:max-w-[330px]"
           />
         </div>
       </div>

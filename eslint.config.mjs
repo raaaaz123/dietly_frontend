@@ -14,6 +14,10 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    // The real build directory. `.next` is a symlink to it so that iCloud
+    // leaves the build output alone (see .gitignore), but eslint resolves the
+    // symlink and would otherwise lint every emitted chunk.
+    ".next.nosync/**",
     "out/**",
     "build/**",
     "next-env.d.ts",

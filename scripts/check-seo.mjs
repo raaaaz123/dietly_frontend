@@ -40,15 +40,43 @@ const GUIDE_SLUGS = readFileSync("app/lib/guides.ts", "utf8")
 EXPECTED["guides"] = "/guides";
 for (const [, slug] of GUIDE_SLUGS) EXPECTED[`guides/${slug}`] = `/guides/${slug}`;
 
+// Comparison pages are a dynamic route, but every slug is prerendered by
+// `generateStaticParams`, so the built HTML lands beside the others.
+const VS_SLUGS = readFileSync("app/lib/competitors.ts", "utf8")
+  .matchAll(/^\s{4}slug: "([a-z0-9-]+)",$/gm);
+EXPECTED["vs"] = "/vs";
+EXPECTED["best-ai-body-scan-apps"] = "/best-ai-body-scan-apps";
+for (const [, slug] of VS_SLUGS) EXPECTED[`vs/${slug}`] = `/vs/${slug}`;
+
+// The exercise cluster. Only the hubs and facets are asserted indexable — the
+// individual movement pages are deliberately `noindex, follow` until somebody
+// authors written coaching for them (see `isIndexable` in lib/exercises), so
+// asserting a canonical on 507 of them would assert the opposite of the design.
+const EX = JSON.parse(readFileSync("app/lib/exercises.generated.json", "utf8"));
+const exSlugify = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const exCategories = [...new Set(EX.exercises.map((e) => e.category))]
+  .filter(Boolean)
+  .filter((n) => EX.exercises.filter((e) => e.category === n).length >= 8);
+EXPECTED["exercises"] = "/exercises";
+for (const name of exCategories) {
+  EXPECTED[`exercises/muscle/${exSlugify(name)}`] = `/exercises/muscle/${exSlugify(name)}`;
+}
+for (const k of ["bodyweight", "minimal", "gym"]) {
+  EXPECTED[`exercises/equipment/${k}`] = `/exercises/equipment/${k}`;
+}
+
 // A registry that stops matching the regex above would silently check nothing,
 // and a check that silently checks nothing is worse than no check.
 const toolCount = Object.keys(EXPECTED).filter(
   (k) => k.endsWith("-calculator"),
 ).length;
 const guideCount = Object.keys(EXPECTED).filter((k) => k.startsWith("guides/")).length;
-if (toolCount < 8 || guideCount < 4) {
+const vsCount = Object.keys(EXPECTED).filter((k) => k.startsWith("vs/")).length;
+const exCount = Object.keys(EXPECTED).filter((k) => k.startsWith("exercises/")).length;
+if (toolCount < 8 || guideCount < 4 || vsCount < 5 || exCount < 10) {
   console.error(
-    `Found ${toolCount} tools and ${guideCount} guides in the registries — the slug pattern in this script has drifted.`,
+    `Found ${toolCount} tools, ${guideCount} guides, ${vsCount} comparisons and ` +
+      `${exCount} exercise hubs in the registries — a slug pattern in this script has drifted.`,
   );
   process.exit(1);
 }
@@ -104,6 +132,113 @@ for (const name of Object.keys(EXPECTED).filter((k) => k.startsWith("guides/")))
   // attribute names are case-insensitive, so both spellings are correct output.
   if (!/<time datetime="\d{4}-\d{2}-\d{2}"/i.test(html)) {
     failures.push(`${name}: missing a machine-readable updated date`);
+  }
+}
+
+// A comparison page's whole defence is that its claims about someone else's
+// product are dated and sourced. Both of those are easy to lose by editing the
+// shell, and losing them turns the page from "checkable" into "assertion".
+for (const name of Object.keys(EXPECTED).filter((k) => k.startsWith("vs/"))) {
+  const file = `${DIR}/${name}.html`;
+  if (!existsSync(file)) continue;
+  const html = readFileSync(file, "utf8");
+  if (!/<time datetime="\d{4}-\d{2}-\d{2}"/i.test(html)) {
+    failures.push(`${name}: missing the machine-readable "facts checked" date`);
+  }
+  if (!html.includes("is not affiliated with")) {
+    failures.push(`${name}: missing the trademark / non-affiliation notice`);
+  }
+  if (!/Where these .* facts came from/.test(html)) {
+    failures.push(`${name}: missing the rendered sources list`);
+  }
+  // The rival has to win somewhere. See the note at the top of
+  // `app/lib/competitors.ts` for why this is a build failure and not a
+  // stylistic preference.
+  if (!/Where .* is better/.test(html)) {
+    failures.push(`${name}: missing the section on where the competitor is better`);
+  }
+}
+
+// The roundup names our own app among the products it ranks. Saying so is the
+// only thing that makes the format honest, so it is not optional.
+{
+  const file = `${DIR}/best-ai-body-scan-apps.html`;
+  if (existsSync(file)) {
+    const html = readFileSync(file, "utf8");
+    if (!html.includes("We make one of these")) {
+      failures.push("best-ai-body-scan-apps: missing the conflict-of-interest disclosure");
+    }
+  }
+}
+
+// Every indexable page needs its own share card. /tools, /guides and /vs each
+// shipped without one and silently fell back to the homepage image, so a share
+// of the calculator hub said nothing about calculators.
+for (const [name, expected] of Object.entries(EXPECTED)) {
+  if (expected === null) continue;
+  const file = `${DIR}/${name}.html`;
+  if (!existsSync(file)) continue;
+  const html = readFileSync(file, "utf8");
+  if (!/<meta property="og:image"/.test(html)) {
+    failures.push(`${name}: no og:image — add an opengraph-image.tsx for this route`);
+  }
+}
+
+// A calculator that renders an FAQ must emit the matching `FAQPage`, and every
+// answer in that markup must be visible on the page. /macro-calculator and
+// /body-fat-calculator predate the tool registry and were the two that rendered
+// questions while emitting nothing; the reverse mistake — markup describing
+// answers a visitor cannot see — is the one that earns a manual action.
+for (const name of Object.keys(EXPECTED).filter((k) => k.endsWith("-calculator"))) {
+  const file = `${DIR}/${name}.html`;
+  if (!existsSync(file)) continue;
+  const html = readFileSync(file, "utf8");
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)];
+  const faq = blocks
+    .map(([, j]) => { try { return JSON.parse(j); } catch { return null; } })
+    .find((d) => d && d["@type"] === "FAQPage");
+  if (!faq) {
+    failures.push(`${name}: renders an FAQ but emits no FAQPage schema`);
+    continue;
+  }
+  // Compare decoded text, not raw HTML. React escapes an apostrophe to
+  // `&#x27;`, so a raw substring match reported /protein-calculator's "anabolic
+  // window" answer as missing when it was rendered perfectly well.
+  const decode = (t) =>
+    t
+      .replace(/&#x27;|&#39;/g, "'")
+      .replace(/&quot;/g, '"')
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&nbsp;/g, " ")
+      .replace(/&amp;/g, "&")
+      .replace(/\s+/g, " ");
+  const visible = decode(html.replace(/<script.*?<\/script>/gs, " ").replace(/<[^>]+>/g, " "));
+  for (const entry of faq.mainEntity ?? []) {
+    const answer = decode(entry.acceptedAnswer?.text ?? "");
+    if (!visible.includes(answer.slice(0, 40))) {
+      failures.push(`${name}: FAQPage answer not visible on the page — "${entry.name}"`);
+    }
+  }
+}
+
+// A movement page with no written coaching must not be indexable, and the
+// sitemap must not list it. Both are easy to undo by "fixing" the robots tag.
+{
+  const thin = EX.exercises.filter(
+    (e) => !(e.instructions.length >= 2 || (e.overview ?? "").length > 120),
+  );
+  const sample = thin.slice(0, 20);
+  for (const e of sample) {
+    const file = `${DIR}/exercises/${e.slug}.html`;
+    if (!existsSync(file)) continue;
+    const html = readFileSync(file, "utf8");
+    const robots = html.match(/<meta name="robots" content="([^"]+)"/)?.[1] ?? "";
+    if (!robots.includes("noindex")) {
+      failures.push(
+        `exercises/${e.slug}: has no written steps but is indexable — thin pages must be noindex`,
+      );
+    }
   }
 }
 

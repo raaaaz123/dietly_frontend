@@ -7,21 +7,21 @@ export default function Cta() {
   return (
     <section id="get" className="section pt-0">
       <div className="wrap">
-        <div className="rounded-[28px] border border-border bg-elevated px-7 py-14 text-center md:px-16 md:py-20">
+        <div className="rounded-[24px] border border-border bg-elevated px-6 py-10 text-center md:px-14 md:py-14">
           <div>
             <h2 className="h2 mx-auto max-w-2xl">
               Your first scan takes about ten seconds.
             </h2>
-            <p className="lead mx-auto mt-5 max-w-xl">
+            <p className="lead mx-auto mt-4 max-w-xl">
               Get your score, see what&apos;s holding it back, and start the week
               built to fix it.
             </p>
 
-            <div className="mt-9 flex justify-center">
+            <div className="mt-7 flex justify-center">
               <StoreButtons fullWidthMobile={false} />
             </div>
 
-            <p className="mt-5 text-sm font-semibold text-fg-faint">
+            <p className="mt-4 text-[13px] font-semibold text-fg-faint">
               Free to start · Cancel any time
             </p>
           </div>

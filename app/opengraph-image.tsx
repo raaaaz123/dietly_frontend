@@ -35,7 +35,7 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#0A0A0A",
+          background: "#0D0D0D",
           padding: 80,
           fontFamily: "sans-serif",
         }}
@@ -62,7 +62,7 @@ export default function OpengraphImage() {
           </div>
           <div
             style={{
-              color: "#D2F53C",
+              color: "#F0EEE9",
               fontSize: 76,
               fontWeight: 800,
               lineHeight: 1.05,

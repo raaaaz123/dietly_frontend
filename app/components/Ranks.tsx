@@ -32,16 +32,16 @@ export default function Ranks() {
   return (
     <section id="ranks" className="section pt-0">
       <div className="wrap">
-        <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+        <div className="grid items-center gap-9 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12">
           <div className="order-2 lg:order-1">
             <p className="eyebrow">Strength, not just shape</p>
-            <h2 className="h2 mt-5">
+            <h2 className="h2 mt-3.5">
               Every muscle gets a rank —
               <br />
               so you can see which ones are behind.
             </h2>
 
-            <dl className="mt-9 grid gap-6">
+            <dl className="mt-7 grid gap-5">
               {rows.map((row) => (
                 <div key={row.k}>
                   <dt className="text-[16px] font-bold text-fg">{row.k}</dt>
@@ -53,20 +53,18 @@ export default function Ranks() {
             </dl>
           </div>
 
-          <div className="order-1 lg:order-2">
-            <div className="card overflow-hidden p-4 sm:p-6">
-              <Image
-                src="/images/app/muscle-map.png"
-                alt="Front and back body maps with the trained muscles lit in lime — chest, lats, quads and glutes brightest."
-                width={1000}
-                height={1000}
-                sizes="(max-width: 1024px) 92vw, 520px"
-                className="h-auto w-full"
-              />
-              <p className="mt-3 text-center text-[13px] font-semibold text-fg-faint">
-                A week of pushing, drawn on the body that did it.
-              </p>
-            </div>
+          {/* The capture arrives with its own device bezel, so it is placed
+              bare rather than inside the bordered card this used to sit in —
+              a phone drawn inside a card inside a phone reads as a mistake. */}
+          <div className="order-1 flex justify-center lg:order-2">
+            <Image
+              src="/images/app/muscle-map.webp"
+              alt="The muscle ranks screen: front and back body maps with the trained muscles lit in green, above a list giving chest advanced, back intermediate, quads advanced and hamstrings novice, with hamstrings flagged as lagging."
+              width={760}
+              height={1551}
+              sizes="(max-width: 1024px) 72vw, 340px"
+              className="h-auto w-full max-w-[300px] lg:max-w-[340px]"
+            />
           </div>
         </div>
       </div>
