@@ -25,7 +25,7 @@ export default function GuidesPage() {
   const itemList = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Dietly guides",
+    name: "Dietly Fit guides",
     itemListElement: GUIDES.map((g, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -48,7 +48,7 @@ export default function GuidesPage() {
               The reasoning behind the app
             </h1>
             <p className="text-[17px] text-fg-muted max-w-[620px] leading-relaxed">
-              Dietly is built on a few specific claims about measuring physiques
+              Dietly Fit is built on a few specific claims about measuring physiques
               and training around what the measurement says. These explain them —
               including the parts where the evidence is thinner than the
               marketing usually admits.

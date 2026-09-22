@@ -28,7 +28,7 @@ function InviteContent() {
       
       <h1 className="text-3xl font-black mb-3 text-fg">You&apos;ve been invited!</h1>
       <p className="text-muted max-w-sm mx-auto mb-8">
-        Download the Dietly Ai app to claim your special offer and get started on your health journey.
+        Download the Dietly Fit Ai app to claim your special offer and get started on your health journey.
       </p>
 
       {ref && (

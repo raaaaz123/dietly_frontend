@@ -119,7 +119,7 @@ export default function Footer() {
         {/* Not a disclaimer for its own sake: the app scores a body and
             prescribes training, and this is the same line the app carries. */}
         <p className="mt-6 max-w-3xl text-[12px] leading-relaxed text-fg-faint">
-          Dietly provides general fitness and nutrition information and is not
+          Dietly Fit provides general fitness and nutrition information and is not
           intended as medical advice, diagnosis, or treatment. The Form Score is
           an estimate from your photo and your answers, not a clinical
           measurement. Consult a qualified healthcare professional before

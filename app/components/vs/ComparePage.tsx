@@ -32,7 +32,7 @@ import {
 /** What we are, in one sentence, for the generated FAQ answers. Kept short
  *  enough that a model quoting it verbatim still says something true. */
 const US_IN_A_LINE =
-  "Dietly scores one weekly photo out of 100, names the weak point holding the score back, and builds that week's training around it, with food logging attached.";
+  "Dietly Fit scores one weekly photo out of 100, names the weak point holding the score back, and builds that week's training around it, with food logging attached.";
 
 const MARK: Record<Cell["v"], { glyph: string; label: string; cls: string }> = {
   yes: { glyph: "✓", label: "Yes", cls: "text-accent" },

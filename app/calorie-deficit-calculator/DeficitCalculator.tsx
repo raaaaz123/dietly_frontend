@@ -218,7 +218,7 @@ export default function DeficitCalculator() {
 
               <ToolCta>
                 A deficit only works if you can tell whether you are in one.
-                Dietly holds your weekly trend against this target and adjusts it
+                Dietly Fit holds your weekly trend against this target and adjusts it
                 when the trend says the estimate was off — and keeps protein high
                 enough that what you lose is fat.
               </ToolCta>

@@ -62,7 +62,7 @@ export default function StoreButtons({
       <a
         href={APP_STORE_URL}
         className="store-badge"
-        aria-label="Download Dietly on the App Store"
+        aria-label="Download Dietly Fit on the App Store"
       >
         {/* Plain <img>: next/image refuses SVG without `dangerouslyAllowSVG`,
             and turning that on site-wide to render one trusted vendor asset is
@@ -79,7 +79,7 @@ export default function StoreButtons({
       <a
         href={PLAY_STORE_URL}
         className="store-badge"
-        aria-label="Get Dietly on Google Play"
+        aria-label="Get Dietly Fit on Google Play"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img

@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 
 export const metadata = {
   title: 'Delete Your Account & Data',
-  description: 'How to permanently delete your Dietly account and all of the data attached to it.',
+  description: 'How to permanently delete your Dietly Fit account and all of the data attached to it.',
   alternates: { canonical: '/delete-account' },
 };
 
@@ -29,16 +29,16 @@ export default function DeleteAccount() {
         
         <div className="prose prose-gray dark:prose-invert max-w-none space-y-6">
           <p className="text-lg">
-            At Dietly AI, we believe you should have complete control over your personal data. 
+            At Dietly Fit, we believe you should have complete control over your personal data. 
             If you wish to delete your account and all associated data, you can do so at any time.
           </p>
 
           <h2 className="text-2xl font-bold mt-12 mb-4">Option 1: Delete via the App (Fastest)</h2>
           <p>
-            You can instantly and permanently delete your account directly within the Dietly AI mobile application:
+            You can instantly and permanently delete your account directly within the Dietly Fit mobile application:
           </p>
           <ol className="list-decimal pl-6 space-y-2 mt-4">
-            <li>Open the Dietly AI app on your device.</li>
+            <li>Open the Dietly Fit app on your device.</li>
             <li>Tap on your <strong>Profile</strong> tab.</li>
             <li>Scroll to the bottom of the page.</li>
             <li>Tap <strong>Delete Account</strong>.</li>
@@ -55,7 +55,7 @@ export default function DeleteAccount() {
           <ul className="list-disc pl-6 space-y-2 mt-4">
             <li>Email us at: <a href="mailto:support@dietly.life" className="text-blue-600 dark:text-blue-400 hover:underline">support@dietly.life</a></li>
             <li>Subject: <strong>Account Deletion Request</strong></li>
-            <li>Body: Please include the email address associated with your Dietly AI account.</li>
+            <li>Body: Please include the email address associated with your Dietly Fit account.</li>
           </ul>
           <p>
             We will process your request and permanently delete your data within 7 business days.

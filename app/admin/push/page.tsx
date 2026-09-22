@@ -375,7 +375,7 @@ function RunNow({ onDone }: { onDone: () => void }) {
 
 function TestSend() {
   const [uid, setUid] = useState("");
-  const [title, setTitle] = useState("Dietly test push");
+  const [title, setTitle] = useState("Dietly Fit test push");
   const [body, setBody] = useState("If this appeared, push works on this device.");
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<unknown>(null);

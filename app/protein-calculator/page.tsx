@@ -116,7 +116,7 @@ export default function Page() {
           <p>
             Almost nobody fails at protein because they picked the wrong figure.
             They fail because finding out at 11pm that they are 60g short is
-            useless. Dietly logs a meal from a photo, a sentence or a voice note
+            useless. Dietly Fit logs a meal from a photo, a sentence or a voice note
             and shows the gap left in your day while there is still a meal left
             to fix it — and sets the target from your goal and the training plan
             it built, rather than from a generic percentage.

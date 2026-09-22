@@ -233,7 +233,7 @@ export default function LbmCalculator() {
 
               <ToolCta>
                 Lean mass is the number that should move, and the scale cannot
-                see it. Dietly scores a weekly photo out of 100 and names the
+                see it. Dietly Fit scores a weekly photo out of 100 and names the
                 weak point, so you can tell whether the shape is changing even in
                 a week the scale does not.
               </ToolCta>

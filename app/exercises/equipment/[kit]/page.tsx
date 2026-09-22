@@ -93,7 +93,7 @@ export default async function Page({
               {c.name} exercises
             </h1>
             <p className="text-[17px] text-fg-muted max-w-[640px] leading-relaxed">
-              {items.length} movements from Dietly&rsquo;s training catalogue
+              {items.length} movements from Dietly Fit&rsquo;s training catalogue
               that need nothing more than this. {c.blurb} Each one carries a
               demo clip, the muscle it targets and a set, rep and rest scheme
               to start from.

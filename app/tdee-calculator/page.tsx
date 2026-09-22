@@ -123,11 +123,11 @@ export default function Page() {
         </div>
 
         <div>
-          <H2>Where Dietly picks up</H2>
+          <H2>Where Dietly Fit picks up</H2>
           <p>
             The two-week feedback loop above is the whole job, and it is the part
             people abandon — it needs consistent logging and a trend you can
-            actually read. Dietly logs a meal from a photo, a sentence or a voice
+            actually read. Dietly Fit logs a meal from a photo, a sentence or a voice
             note, holds the weekly trend against your target, and moves the
             target when the trend says the estimate was wrong. The training plan
             is built from a weekly photo scan rather than from your calorie

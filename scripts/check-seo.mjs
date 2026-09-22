@@ -108,9 +108,9 @@ for (const [name, expected] of Object.entries(EXPECTED)) {
   if (robots.includes("noindex")) {
     failures.push(`${name}: is noindex but should be indexable`);
   }
-  // The title template appends " | Dietly"; a page title that also ends in it
-  // rendered "… | Dietly | Dietly" on every sub-page for months.
-  if ((title.match(/\| Dietly/g) ?? []).length > 1) {
+  // The title template appends " | Dietly Fit"; a page title that also ends in it
+  // rendered "… | Dietly Fit | Dietly Fit" on every sub-page for months.
+  if ((title.match(/\| Dietly Fit/g) ?? []).length > 1) {
     failures.push(`${name}: brand appears twice in title "${title}"`);
   }
   if (title.length > 65) {

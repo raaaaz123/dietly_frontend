@@ -11,11 +11,11 @@
  */
 
 export const SITE_URL = "https://dietly.life";
-export const SITE_NAME = "Dietly";
-export const TAGLINE = "Scan your body. Get the plan that moves it.";
+export const SITE_NAME = "Dietly Fit";
+export const TAGLINE = "Log the work. Scan the result. Train what needs it.";
 
 export const DESCRIPTION =
-  "Dietly turns one weekly photo into a Form Score out of 100, names the weak point holding it back, and builds the week of training that fixes it. Food logging and an AI coach included.";
+  "Log every lift. One weekly photo scores your physique out of 100 and names the weak point holding it back, then Dietly Fit builds the week that fixes it.";
 
 /** Platform facts, mirrored from the App Store listing. */
 export const PLATFORM = "iOS";

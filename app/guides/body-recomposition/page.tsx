@@ -154,7 +154,7 @@ export default function Page() {
 
       <H2>Where a weekly scan fits</H2>
       <p>
-        The measurement problem above is the whole reason Dietly is built around
+        The measurement problem above is the whole reason Dietly Fit is built around
         a photo rather than a weight. One scan a week, scored out of 100 with
         the weak point named, gives you a number that responds to composition
         rather than to mass — and the training plan for the following week is

@@ -108,7 +108,7 @@ export const TOOLS: Tool[] = [
   {
     slug: "one-rep-max-calculator",
     name: "1RM Calculator",
-    title: "One Rep Max Calculator — 1RM & Training Percentages",
+    title: "One Rep Max Calculator — 1RM Percentages",
     description:
       "Estimate your one-rep max from any set, see how four standard formulas disagree, and get the working weights for every percentage of it.",
     blurb: "Your estimated 1RM, the spread between formulas, and your working weights.",

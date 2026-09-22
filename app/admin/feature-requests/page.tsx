@@ -207,7 +207,7 @@ export default function FeatureRequestsPage() {
                 <div className="text-[11px] text-muted break-all">
                   {r.email ? (
                     <a
-                      href={`mailto:${r.email}?subject=Your%20Dietly%20request`}
+                      href={`mailto:${r.email}?subject=Your%20Dietly%20Fit%20request`}
                       className="hover:text-fg transition-colors"
                     >
                       {r.email}

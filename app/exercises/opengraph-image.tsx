@@ -2,7 +2,7 @@ import { hubOgImage, size, contentType } from "../components/hubOg";
 import { EXERCISES } from "../lib/exercises";
 
 export { size, contentType };
-export const alt = "Exercise library — Dietly";
+export const alt = "Exercise library — Dietly Fit";
 
 export default function Image() {
   return hubOgImage({

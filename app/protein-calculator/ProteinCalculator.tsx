@@ -111,7 +111,7 @@ export default function ProteinCalculator() {
 
               <ToolCta>
                 Hitting {out.grams}g a day is the hard part, not knowing the
-                number. Dietly logs a meal from a photo and shows the protein gap
+                number. Dietly Fit logs a meal from a photo and shows the protein gap
                 left in your day, so you find out at lunch rather than at
                 midnight.
               </ToolCta>

@@ -26,7 +26,7 @@ export const metadata: Metadata = {
  * the ask. The two in the middle are new because the two things added since
  * the pivot — real captures of the shipping app, and a rank for every muscle —
  * are the two hardest to believe from prose alone. The page it replaced ran to
- * eight sections and 719 lines, most of it arguing for the calorie app Dietly
+ * eight sections and 719 lines, most of it arguing for the calorie app Dietly Fit
  * used to be — a hydration tracker, a streak wall, a macro breakdown and three
  * separate screenshot galleries, none of which describe the product now.
  *

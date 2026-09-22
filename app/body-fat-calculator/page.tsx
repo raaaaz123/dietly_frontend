@@ -39,7 +39,7 @@ const FAQS = [
 import { SITE_URL } from "../lib/site";
 
 export const metadata: Metadata = {
-  // No "| Dietly" suffix: the root layout's title template appends it already.
+  // No "| Dietly Fit" suffix: the root layout's title template appends it already.
   title: "Body Fat Calculator — US Navy Method",
   description: "Estimate your body fat percentage from three tape measurements using the US Navy method. Free, no signup, and honest about its margin of error.",
   keywords: ["body fat calculator", "us navy body fat method", "fat percentage calculator", "fitness tools", "fat loss tracker"],
@@ -59,7 +59,7 @@ export default function BodyFatCalculatorPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Dietly Body Fat Calculator",
+    "name": "Dietly Fit Body Fat Calculator",
     "url": `${SITE_URL}/body-fat-calculator`,
     "applicationCategory": "HealthApplication",
     "browserRequirements": "Requires JavaScript",
@@ -143,7 +143,7 @@ export default function BodyFatCalculatorPage() {
                 </ul>
               </div>
 
-              {/* Was a pitch for the calorie app Dietly sold before the pivot \u2014 "our
+              {/* Was a pitch for the calorie app Dietly Fit sold before the pivot \u2014 "our
                   AI agent recognizes your meals from a photo". The product is a training
                   app now, and this page's visitor is measuring a physique, not a plate. */}
               <div>
@@ -152,7 +152,7 @@ export default function BodyFatCalculatorPage() {
                   Fat loss needs a consistent calorie deficit and enough protein to hold on to muscle while you are in it. That part is arithmetic, and the calculators here will get you the numbers.
                 </p>
                 <p className="mt-4">
-                  The harder question is what to train while the weight comes off, because a deficit is exactly when muscle is easiest to lose. <strong>Dietly</strong> scores one photo a week out of 100, names the area holding the score back, and builds that week around it \u2014 so the tape measure has something to show in a month.
+                  The harder question is what to train while the weight comes off, because a deficit is exactly when muscle is easiest to lose. <strong>Dietly Fit</strong> scores one photo a week out of 100, names the area holding the score back, and builds that week around it \u2014 so the tape measure has something to show in a month.
                 </p>
               </div>
               <ToolFaq faqs={FAQS} />

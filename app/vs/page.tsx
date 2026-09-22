@@ -7,9 +7,9 @@ import { JsonLdScript } from "../components/tools/ToolPage";
 import { SITE_NAME, SITE_URL } from "../lib/site";
 import { COMPETITORS } from "../lib/competitors";
 
-const TITLE = "Dietly Compared — Honest App Comparisons";
+const TITLE = "Dietly Fit Compared — Honest App Comparisons";
 const DESCRIPTION =
-  "How Dietly compares with Fitbod, MacroFactor, MyFitnessPal, Cal AI and Bodygram — with every competitor fact taken from that company's own pages and dated.";
+  "How Dietly Fit compares with Fitbod, MacroFactor, MyFitnessPal, Cal AI and Bodygram — with every competitor fact taken from that company's own pages and dated.";
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -28,7 +28,7 @@ export default function ComparisonsHub() {
   const itemList = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Dietly comparisons",
+    name: "Dietly Fit comparisons",
     itemListElement: COMPETITORS.map((c, i) => ({
       "@type": "ListItem",
       position: i + 1,

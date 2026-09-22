@@ -98,7 +98,7 @@ export default function Page() {
             each tell you more than the scale.
           </p>
           <p className="mt-4">
-            Dietly is built on that premise: a weekly photo scored out of 100
+            Dietly Fit is built on that premise: a weekly photo scored out of 100
             across definition, leanness, symmetry, posture, body fat and
             potential, with the weak point named and a week of training built to
             fix it. The target is a shape, and the scale is one input among

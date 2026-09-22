@@ -48,7 +48,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "progress-photos-guide",
-    title: "How to Take Progress Photos That Are Actually Comparable",
+    title: "How to Take Comparable Progress Photos",
     heading: "How to take progress photos worth comparing",
     description:
       "Lighting, distance, pose, time of day and the small things that make two photos comparable. A repeatable setup so the difference you see is a real change, not a change in conditions.",

@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params;
   const clean = code.toUpperCase();
   return {
-    title: { absolute: "You've been invited to Dietly" },
+    title: { absolute: "You've been invited to Dietly Fit" },
     description:
       "Join their ladder. Ranked by what you actually lift for your bodyweight — not by who posts the most.",
     alternates: { canonical: `${SITE_URL}/f/${clean}` },
     openGraph: {
-      title: "You've been invited to Dietly",
+      title: "You've been invited to Dietly Fit",
       description: "Join their ladder — ranked by what you actually lift.",
       url: `${SITE_URL}/f/${clean}`,
     },
@@ -71,7 +71,7 @@ export default async function FriendInvite({ params }: Props) {
             {clean.slice(0, 4)} {clean.slice(4)}
           </code>
           <p className="text-xs text-muted mt-3">
-            Already have Dietly? Training → Friends → Add a friend, and type this in.
+            Already have Dietly Fit? Training → Friends → Add a friend, and type this in.
           </p>
         </div>
       )}

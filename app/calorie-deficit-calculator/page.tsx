@@ -120,7 +120,7 @@ export default function Page() {
             of the same shape.
           </p>
           <p className="mt-4">
-            That is the whole argument behind how Dietly works: the weekly scan
+            That is the whole argument behind how Dietly Fit works: the weekly scan
             scores your physique and names the weak point, the training plan is
             built around fixing it, and the calorie target serves the plan rather
             than replacing it. The number this page gives you is the starting

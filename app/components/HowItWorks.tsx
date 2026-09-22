@@ -9,7 +9,7 @@ const steps = [
   {
     n: "01",
     title: "Take one photo",
-    body: "A few seconds, once a week. Dietly scores it out of 100 and estimates your body fat and the ceiling you can reach.",
+    body: "A few seconds, once a week. Dietly Fit scores it out of 100 and estimates your body fat and the ceiling you can reach.",
   },
   {
     n: "02",

@@ -153,7 +153,7 @@ export default function Page() {
           be findable.
         </p>
         <p className="mt-4">
-          Dietly does this part automatically — the weekly scan keeps the series,
+          Dietly Fit does this part automatically — the weekly scan keeps the series,
           scores it out of 100 across leanness, definition, symmetry, posture,
           body fat and potential, and names the weak point that the next week of
           training is then built around. The setup above still matters; the app

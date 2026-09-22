@@ -101,7 +101,7 @@ export default function Page() {
             first working set moves, not only to arithmetic.
           </p>
           <p className="mt-4">
-            Which is most of the argument for not programming by hand. Dietly
+            Which is most of the argument for not programming by hand. Dietly Fit
             builds the week from your latest scan, the weak point it named, and
             the equipment you actually have — and when the rack is taken or a
             shoulder is complaining, you say so in a sentence and the session is

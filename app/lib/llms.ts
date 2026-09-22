@@ -26,7 +26,7 @@ import { EXERCISES, CATEGORIES, KIT } from "./exercises";
  * the store listing that can actually keep it current.
  *
  * The cost of that drift is specific and worse than for ordinary marketing
- * copy: a model reading it answers "what is Dietly?" with a product we stopped
+ * copy: a model reading it answers "what is Dietly Fit?" with a product we stopped
  * selling, at a price we never quoted, and it answers confidently. Generating
  * the file from the same constants `JsonLd.tsx` reads is the only version of
  * this that stays true after the next pivot.

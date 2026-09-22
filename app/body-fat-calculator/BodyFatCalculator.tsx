@@ -189,7 +189,7 @@ export default function BodyFatCalculator() {
 
                 <div className="mt-auto pt-8 border-t border-border">
                   <p className="text-[13px] text-fg-muted leading-relaxed mb-4">
-                    Knowing your body fat is just the baseline. Lowering it requires precise nutrition tracking. Let Dietly&apos;s AI log your meals automatically from a single photo.
+                    Knowing your body fat is just the baseline. Lowering it requires precise nutrition tracking. Let Dietly Fit&apos;s AI log your meals automatically from a single photo.
                   </p>
                   <Link href="/#download" className="block w-full py-3.5 bg-accent text-accent-ink text-center text-[12px] font-bold tracking-[1.5px] rounded-xl hover:shadow-[0_0_20px_rgba(31,138,67,0.3)] transition-all">
                     START LOSING FAT FREE

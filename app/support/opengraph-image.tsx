@@ -1,7 +1,7 @@
 import { hubOgImage, size, contentType } from "../components/hubOg";
 
 export { size, contentType };
-export const alt = "Support — Dietly";
+export const alt = "Support — Dietly Fit";
 
 /**
  * /support was the only page on the site with no share card at all.
@@ -16,7 +16,7 @@ export const alt = "Support — Dietly";
 export default function Image() {
   return hubOgImage({
     kicker: "Support",
-    heading: "Help with Dietly",
+    heading: "Help with Dietly Fit",
     footnote: "Subscriptions, account deletion, billing · dietly.life",
   });
 }

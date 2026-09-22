@@ -32,7 +32,7 @@ export async function generateMetadata({
   const c = category(slug);
   if (!c) return {};
   const title = `${c.name} Exercises — ${c.items.length} Movements With Demos`;
-  const description = `Every ${c.name.toLowerCase()} movement in Dietly's catalogue — ${c.items.length} of them, each with a demo clip, the muscle it targets, the equipment it needs and a starting set and rep scheme.`;
+  const description = `Every ${c.name.toLowerCase()} movement in Dietly Fit's catalogue — ${c.items.length} of them, each with a demo clip, the muscle it targets, the equipment it needs and a starting set and rep scheme.`;
   return {
     title: { absolute: title.length > 65 ? `${c.name} Exercises — ${c.items.length} Movements` : title },
     description,
@@ -98,7 +98,7 @@ export default async function Page({
             </h1>
             <p className="text-[17px] text-fg-muted max-w-[640px] leading-relaxed">
               {items.length} movements that train the {c.name.toLowerCase()},
-              from Dietly&rsquo;s training catalogue. Each one carries a demo
+              from Dietly Fit&rsquo;s training catalogue. Each one carries a demo
               clip, the muscle it targets and a set, rep and rest scheme to
               start from.
             </p>

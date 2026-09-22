@@ -17,7 +17,7 @@ import { guide, type Guide } from "../../lib/guides";
  * the page is medical advice. Those live here so no article can ship without
  * them.
  *
- * On authorship: these are written and reviewed by the Dietly team, and say so.
+ * On authorship: these are written and reviewed by the Dietly Fit team, and say so.
  * They are deliberately **not** bylined to an invented dietitian or doctor.
  * Fabricating credentials is the one shortcut in this space that is both
  * effective in the short run and completely indefensible. If a credentialed

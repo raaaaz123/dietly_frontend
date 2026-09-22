@@ -49,8 +49,8 @@ export type Competitor = {
   slug: string;
   /** The product's name, spelled the way its owner spells it. */
   name: string;
-  /** Absolute <title> — these pages opt out of the "%s | Dietly" template,
-   *  because "Dietly vs Fitbod | Dietly" says the brand twice to no one's
+  /** Absolute <title> — these pages opt out of the "%s | Dietly Fit" template,
+   *  because "Dietly Fit vs Fitbod | Dietly Fit" says the brand twice to no one's
    *  benefit. Keep under 65 characters. */
   title: string;
   description: string;
@@ -113,9 +113,9 @@ export const COMPETITORS: Competitor[] = [
   {
     slug: "fitbod",
     name: "Fitbod",
-    title: "Dietly vs Fitbod: Body Scan vs Workout Generator",
+    title: "Dietly Fit vs Fitbod: Body Scan vs Workout Generator",
     description:
-      "Fitbod builds each workout from your lifting history; Dietly builds the week from a photo of your physique. What each one measures, what they cost, and which to pick.",
+      "Fitbod builds each workout from your lifting history; Dietly Fit builds the week from a photo of your physique. What each one measures, what they cost, and which to pick.",
     blurb: "The best-known AI workout generator. It plans from your logs; we plan from your body.",
     keywords: ["dietly vs fitbod", "fitbod alternative", "ai workout app comparison"],
     checked: "2026-09-18",
@@ -164,15 +164,15 @@ export const COMPETITORS: Competitor[] = [
     ],
     ourEdge: [
       "Fitbod cannot see you. It optimises the training, not the physique the training is for — so a lagging area stays lagging unless you notice it yourself and tell the app.",
-      "Dietly closes that loop: the scan names the weak point, the week is built around it, and next week's scan tells you whether it moved.",
+      "Dietly Fit closes that loop: the scan names the weak point, the week is built around it, and next week's scan tells you whether it moved.",
       "Food is in the same app, with targets set from the goal rather than a generic number.",
     ],
     pickThem:
       "Pick Fitbod if you want the best per-session programming available and you would rather judge your own physique than have an app score it.",
     pickUs:
-      "Pick Dietly if the question you actually have is \"what should I be working on?\" — and you want a weekly measurement that answers it.",
+      "Pick Dietly Fit if the question you actually have is \"what should I be working on?\" — and you want a weekly measurement that answers it.",
     together:
-      "They are not mutually exclusive. A reasonable setup is Fitbod for the sessions and Dietly's weekly scan as the measurement, though you will pay for both.",
+      "They are not mutually exclusive. A reasonable setup is Fitbod for the sessions and Dietly Fit's weekly scan as the measurement, though you will pay for both.",
     sources: [
       { label: "Fitbod — FAQs (pricing, trial, features)", href: "https://fitbod.me/faqs/" },
     ],
@@ -181,9 +181,9 @@ export const COMPETITORS: Competitor[] = [
   {
     slug: "macrofactor",
     name: "MacroFactor",
-    title: "Dietly vs MacroFactor: Scan-Led Plan vs Adaptive Macros",
+    title: "Dietly Fit vs MacroFactor: Scan-Led Plan vs Adaptive Macros",
     description:
-      "MacroFactor's algorithm adapts your calorie targets from your own logging; Dietly scores a weekly photo and builds training around it. Prices, features and which fits.",
+      "MacroFactor's algorithm adapts your calorie targets from your own logging; Dietly Fit scores a weekly photo and builds training around it. Prices, features and which fits.",
     blurb: "The serious tracker's tracker. Its maths is better than ours; it cannot see you.",
     keywords: [
       "dietly vs macrofactor",
@@ -237,15 +237,15 @@ export const COMPETITORS: Competitor[] = [
     ],
     ourEdge: [
       "MacroFactor answers \"how much should I eat?\" precisely. It does not answer \"what does my physique need?\" — nothing in it looks at you.",
-      "Dietly's week is built from the weak point a scan named, and re-scanning is how you find out whether the last four weeks worked.",
+      "Dietly Fit's week is built from the weak point a scan named, and re-scanning is how you find out whether the last four weeks worked.",
       "One subscription covers the scan, the training and the food logging.",
     ],
     pickThem:
       "Pick MacroFactor if your bottleneck is nutrition accuracy — you are dieting, the scale has stalled, and you want targets that correct themselves.",
     pickUs:
-      "Pick Dietly if your bottleneck is the training: you are eating roughly right and want the week decided by what your physique currently needs.",
+      "Pick Dietly Fit if your bottleneck is the training: you are eating roughly right and want the week decided by what your physique currently needs.",
     together:
-      "If you are deep in a cut and can afford both, MacroFactor for the calories and Dietly for the scan and the sessions is a genuinely strong pairing.",
+      "If you are deep in a cut and can afford both, MacroFactor for the calories and Dietly Fit for the scan and the sessions is a genuinely strong pairing.",
     sources: [
       {
         label: "MacroFactor help centre — how subscriptions and bundles work",
@@ -258,9 +258,9 @@ export const COMPETITORS: Competitor[] = [
   {
     slug: "myfitnesspal",
     name: "MyFitnessPal",
-    title: "Dietly vs MyFitnessPal: Training Plan vs Food Diary",
+    title: "Dietly Fit vs MyFitnessPal: Training Plan vs Food Diary",
     description:
-      "MyFitnessPal is the biggest food database in the category; Dietly is a training app that scores a weekly photo. What each does, current pricing, and which one you need.",
+      "MyFitnessPal is the biggest food database in the category; Dietly Fit is a training app that scores a weekly photo. What each does, current pricing, and which one you need.",
     blurb: "The default food diary. Enormous database, no opinion about your training.",
     keywords: [
       "dietly vs myfitnesspal",
@@ -314,15 +314,15 @@ export const COMPETITORS: Competitor[] = [
     ],
     ourEdge: [
       "MyFitnessPal is a diary. It records what you did; it does not decide what you should do next, and it has no view on your training at all.",
-      "Dietly is a training app first: the scan produces a score and a weak point, the week follows from it, and food logging exists to keep that plan fed rather than as the product itself.",
+      "Dietly Fit is a training app first: the scan produces a score and a weak point, the week follows from it, and food logging exists to keep that plan fed rather than as the product itself.",
       "If you want a number told to you rather than a spreadsheet of your own history, this is the difference.",
     ],
     pickThem:
       "Pick MyFitnessPal if you want to count calories accurately and nothing else — it is the best free tool for that and it is not close.",
     pickUs:
-      "Pick Dietly if you want the training decided for you from a measurement of your physique, with food logging attached.",
+      "Pick Dietly Fit if you want the training decided for you from a measurement of your physique, with food logging attached.",
     together:
-      "Plenty of people log in MyFitnessPal out of habit and use Dietly for the scan and the plan. That works.",
+      "Plenty of people log in MyFitnessPal out of habit and use Dietly Fit for the scan and the plan. That works.",
     sources: [
       { label: "MyFitnessPal — Premium pricing", href: "https://www.myfitnesspal.com/premium" },
       { label: "MyFitnessPal — product features", href: "https://www.myfitnesspal.com/" },
@@ -332,9 +332,9 @@ export const COMPETITORS: Competitor[] = [
   {
     slug: "cal-ai",
     name: "Cal AI",
-    title: "Dietly vs Cal AI: Physique Scan vs Photo Calorie Count",
+    title: "Dietly Fit vs Cal AI: Physique Scan vs Photo Calorie Count",
     description:
-      "Both point a camera at something and return a number — but Cal AI photographs your dinner and Dietly photographs you. What each measures, what is free, and which you want.",
+      "Both point a camera at something and return a number — but Cal AI photographs your dinner and Dietly Fit photographs you. What each measures, what is free, and which you want.",
     blurb: "Photograph your dinner, or photograph yourself. Two different products.",
     keywords: ["dietly vs cal ai", "cal ai alternative", "ai calorie counter app"],
     checked: "2026-09-18",
@@ -384,22 +384,22 @@ export const COMPETITORS: Competitor[] = [
     ],
     ourEdge: [
       "Cal AI counts the input. It has no view on training, and nothing in it looks at the body the calories are for.",
-      "Dietly's camera is pointed the other way: the weekly scan produces the score and the weak point, and the training week follows from them.",
+      "Dietly Fit's camera is pointed the other way: the weekly scan produces the score and the weak point, and the training week follows from them.",
       "Our pricing is on the App Store and Google Play listings, where a price can actually be kept current, rather than set per user behind a paywall.",
     ],
     pickThem:
       "Pick Cal AI if you want the fastest way to log a meal from a photo and you already have your training handled.",
     pickUs:
-      "Pick Dietly if you want the training itself decided from a weekly measurement of your physique, with good-enough food logging included.",
+      "Pick Dietly Fit if you want the training itself decided from a weekly measurement of your physique, with good-enough food logging included.",
     sources: [{ label: "Cal AI — product site", href: "https://www.calai.app/" }],
   },
 
   {
     slug: "bodygram",
     name: "Bodygram",
-    title: "Dietly vs Bodygram: Physique Score vs Body Measurements",
+    title: "Dietly Fit vs Bodygram: Physique Score vs Body Measurements",
     description:
-      "Bodygram turns a phone scan into 35 body measurements and a composition estimate. Dietly turns a photo into a score and a training week. What each is actually for.",
+      "Bodygram turns a phone scan into 35 body measurements and a composition estimate. Dietly Fit turns a photo into a score and a training week. What each is actually for.",
     blurb: "Measurements and composition from a phone scan — but no plan attached to them.",
     keywords: [
       "dietly vs bodygram",
@@ -454,13 +454,13 @@ export const COMPETITORS: Competitor[] = [
     ],
     ourEdge: [
       "Bodygram gives you numbers and stops. Nothing in it tells you what to do on Tuesday.",
-      "Dietly exists to close that gap: the score names a weak point, the weak point builds the week, and the next scan checks the work.",
+      "Dietly Fit exists to close that gap: the score names a weak point, the weak point builds the week, and the next scan checks the work.",
       "The output is deliberately one number and one instruction, because thirty-five measurements is more data than most people convert into a decision.",
     ],
     pickThem:
       "Pick Bodygram if you want accurate body measurements — for clothing, for a client, or because you track circumferences seriously.",
     pickUs:
-      "Pick Dietly if you want the measurement to produce a training week rather than a report.",
+      "Pick Dietly Fit if you want the measurement to produce a training week rather than a report.",
     sources: [{ label: "Bodygram — product site", href: "https://bodygram.com/" }],
   },
 ];
@@ -481,8 +481,8 @@ export const ROUNDUP_SLUG = "best-ai-body-scan-apps";
 export function competitorMetadata(slug: string) {
   const c = competitor(slug);
   return {
-    // Absolute: the layout template appends " | Dietly", and "Dietly vs Fitbod
-    // | Dietly" spends eight characters of a 65-character budget saying the
+    // Absolute: the layout template appends " | Dietly Fit", and "Dietly Fit vs Fitbod
+    // | Dietly Fit" spends eight characters of a 65-character budget saying the
     // brand a second time.
     title: { absolute: c.title },
     description: c.description,

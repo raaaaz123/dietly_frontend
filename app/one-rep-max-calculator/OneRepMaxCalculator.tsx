@@ -112,7 +112,7 @@ export default function OneRepMaxCalculator() {
 
               <ToolCta>
                 Knowing the max is the easy part — programming around it week
-                after week is the work. Dietly builds the week from your last
+                after week is the work. Dietly Fit builds the week from your last
                 scan and your available equipment, and rewrites any session when
                 the rack is taken or the shoulder is sore.
               </ToolCta>

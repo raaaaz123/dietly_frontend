@@ -12,7 +12,7 @@ import { api } from "../../lib/api";
  * boolean called `onboarding_paywall_closable`.
  *
  * Hard is a real business decision with real consequences: it converts better
- * per install, and it makes Dietly a paid app in Apple's eyes, so the terms,
+ * per install, and it makes Dietly Fit a paid app in Apple's eyes, so the terms,
  * restore-purchases and privacy links on the paywall have to be correct or it
  * is a 3.1.2 rejection. The app keeps one safety valve regardless — if the
  * store returns no plans, the paywall stays closable, because a store outage
@@ -182,7 +182,7 @@ export default function AppConfigPage() {
           <div className="mt-4 border border-amber-500/30 bg-amber-500/5 rounded-xl p-4">
             <p className="text-xs text-amber-400 font-bold mb-2">BEFORE YOU SHIP THIS</p>
             <ul className="space-y-1 text-xs text-muted">
-              <li>· Dietly becomes a paid app in Apple&apos;s eyes — terms, privacy and restore
+              <li>· Dietly Fit becomes a paid app in Apple&apos;s eyes — terms, privacy and restore
                 links on the paywall must be correct, or it is a 3.1.2 rejection</li>
               <li>· Existing installs that already got past onboarding are unaffected</li>
               <li>· The app keeps one safety valve: if the store returns no plans, the paywall

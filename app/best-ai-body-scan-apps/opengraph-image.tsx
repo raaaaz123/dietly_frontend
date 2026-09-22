@@ -10,7 +10,7 @@ const icon = `data:image/png;base64,${readFileSync(
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "The best AI body scan apps, honestly — Dietly";
+export const alt = "The best AI body scan apps, honestly — Dietly Fit";
 
 export default function Image() {
   return new ImageResponse(

@@ -43,7 +43,7 @@ export default function JsonLd() {
   /**
    * The publisher, as an entity.
    *
-   * This is what lets a search engine — and a model — resolve "Dietly" to a
+   * This is what lets a search engine — and a model — resolve "Dietly Fit" to a
    * real company with listings it can cross-check, rather than to a string that
    * happens to appear on a page. `sameAs` is the whole point of it; the store
    * listings are the corroboration.

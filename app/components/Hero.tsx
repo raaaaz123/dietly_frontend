@@ -70,7 +70,7 @@ export default function Hero() {
                 went from 40 words to 21. Two sentences is the budget. */}
             <p className="lead mt-5 max-w-lg">
               One photo a week gives you a Form Score out of {SCORE_MAX} and
-              names your weakest area. Dietly builds the workouts that fix it.
+              names your weakest area. Dietly Fit builds the workouts that fix it.
             </p>
 
             <ul className="mt-6 grid grid-cols-2 gap-2.5 sm:flex sm:flex-wrap">

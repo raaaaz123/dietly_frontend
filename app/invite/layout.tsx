@@ -9,7 +9,7 @@ import type { Metadata } from "next";
  * person, and a crawler following one is a crawler using it.
  */
 export const metadata: Metadata = {
-  title: { absolute: "You've been invited to Dietly" },
+  title: { absolute: "You've been invited to Dietly Fit" },
   robots: { index: false, follow: false },
 };
 

@@ -1,7 +1,7 @@
 import { hubOgImage, size, contentType } from "../components/hubOg";
 
 export { size, contentType };
-export const alt = "The reasoning behind the app — Dietly";
+export const alt = "The reasoning behind the app — Dietly Fit";
 
 export default function Image() {
   return hubOgImage({

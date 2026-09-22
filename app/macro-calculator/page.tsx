@@ -40,8 +40,8 @@ const FAQS = [
 ];
 
 export const metadata: Metadata = {
-  // No "| Dietly" suffix here: the root layout's title template already appends
-  // it, so writing it again rendered "... | Dietly | Dietly" and spent the
+  // No "| Dietly Fit" suffix here: the root layout's title template already appends
+  // it, so writing it again rendered "... | Dietly Fit | Dietly Fit" and spent the
   // characters that get truncated in a result page on the brand twice.
   title: "Macro Calculator — TDEE & Macros for Your Goal",
   description: "Work out your daily calories and your protein, carb and fat split for fat loss, muscle gain or maintenance. Free, no signup, Mifflin-St Jeor.",
@@ -65,7 +65,7 @@ export default function MacroCalculatorPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Dietly Macro & TDEE Calculator",
+    "name": "Dietly Fit Macro & TDEE Calculator",
     "url": `${SITE_URL}/macro-calculator`,
     "applicationCategory": "HealthApplication",
     "browserRequirements": "Requires JavaScript",
@@ -144,7 +144,7 @@ export default function MacroCalculatorPage() {
                 </ul>
               </div>
 
-              {/* This section used to pitch the calorie-counting app Dietly was before
+              {/* This section used to pitch the calorie-counting app Dietly Fit was before
                   the pivot \u2014 "snap a photo of your meal, our AI vision recognises the
                   food" \u2014 on the site's highest-traffic page. The product is a training
                   app now, and food logging exists to support the plan. */}
@@ -154,7 +154,7 @@ export default function MacroCalculatorPage() {
                   A macro target tells you what to eat. It does not tell you what to train, and for most people that is the half that decides whether the physique actually changes.
                 </p>
                 <p className="mt-4">
-                  <strong>Dietly</strong> starts at the other end: one photo a week is scored out of 100, the scan names the weak point holding the number down, and the week of training is built around fixing it. Food logging is in the same app, with targets set from your goal rather than a generic number \u2014 so these macros have somewhere to go.
+                  <strong>Dietly Fit</strong> starts at the other end: one photo a week is scored out of 100, the scan names the weak point holding the number down, and the week of training is built around fixing it. Food logging is in the same app, with targets set from your goal rather than a generic number \u2014 so these macros have somewhere to go.
                 </p>
               </div>
               <ToolFaq faqs={FAQS} />

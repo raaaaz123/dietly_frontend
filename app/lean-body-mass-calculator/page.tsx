@@ -105,7 +105,7 @@ export default function Page() {
             The honest problem with all of this is measurement. A DEXA every
             month is impractical, calipers are operator-dependent, and tape
             measurements change more slowly than motivation does. That gap is
-            what Dietly&rsquo;s weekly scan is for: one photo, scored out of 100
+            what Dietly Fit&rsquo;s weekly scan is for: one photo, scored out of 100
             across definition, leanness, symmetry, posture, body fat and
             potential, shot the same way each week so the comparison is
             meaningful. It is an estimate rather than a measurement — but it is

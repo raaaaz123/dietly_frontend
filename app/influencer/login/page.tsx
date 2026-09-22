@@ -279,7 +279,7 @@ export default function InfluencerLogin() {
     <div className="min-h-screen bg-bg flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <p className="text-accent font-mono text-xs font-bold tracking-widest mb-8">VITAL · CREATOR PORTAL</p>
-        <h1 className="text-3xl font-black tracking-tight text-fg mb-2">Earn with Dietly</h1>
+        <h1 className="text-3xl font-black tracking-tight text-fg mb-2">Earn with Dietly Fit</h1>
         <p className="text-sm text-muted mb-8">
           Share your referral link. Earn commission on every subscriber you bring. Withdraw once payment is confirmed.
         </p>

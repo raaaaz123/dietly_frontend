@@ -6,7 +6,7 @@ import Image from "next/image";
  * This replaces `PhoneMock`, which drew an approximation of the score screen
  * in CSS because — as its own header admitted — every screenshot available at
  * the time was either half skeleton, a paywall, or a picture of the calorie
- * app Dietly used to be. The captures under `/images/app` are the shipping
+ * app Dietly Fit used to be. The captures under `/images/app` are the shipping
  * build on a 17 Pro Max, taken from a seeded account, so the drawing is no
  * longer the honest option: it is now the *less* accurate one.
  *

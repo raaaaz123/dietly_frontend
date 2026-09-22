@@ -140,7 +140,7 @@ export default function IdealWeightCalculator() {
 
               <ToolCta>
                 A weight worth aiming at depends on what the weight is made of.
-                Dietly scores a weekly photo out of 100 and names the weak point,
+                Dietly Fit scores a weekly photo out of 100 and names the weak point,
                 so the target is a shape rather than a number on a scale.
               </ToolCta>
             </Reveal>

@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "Dietly's privacy policy. We do not sell or share your personal health data with any third party. Full details on data collection, use, and your rights.",
+    "Dietly Fit's privacy policy. We do not sell or share your personal health data with any third party. Full details on data collection, use, and your rights.",
   alternates: { canonical: "https://dietly.life/privacy" },
   robots: { index: true, follow: true },
 };
@@ -23,7 +23,7 @@ export default function PrivacyPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold text-fg">Overview</h2>
             <p>
-              Dietly (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is operated by Rexatech. This Privacy Policy explains what information we collect when you use the Dietly mobile application and website (collectively, the &quot;Service&quot;), how we use it, and the choices you have regarding your information.
+              Dietly Fit (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is operated by Rexatech. This Privacy Policy explains what information we collect when you use the Dietly Fit mobile application and website (collectively, the &quot;Service&quot;), how we use it, and the choices you have regarding your information.
             </p>
             <p className="font-semibold text-fg">
               We do not sell, rent, or share your personal information with any third party for their own marketing or commercial purposes. Ever.
@@ -122,7 +122,7 @@ export default function PrivacyPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold text-fg">7. Children&apos;s Privacy</h2>
             <p>
-              Dietly is not directed to children under the age of 13 (or 16 in the EU/UK). We do not knowingly collect personal information from children. If we learn that we have collected information from a child without parental consent, we will delete it promptly. If you believe a child has provided us personal information, contact us at <a href="mailto:rexatechin@gmail.com" className="text-accent hover:underline">rexatechin@gmail.com</a>.
+              Dietly Fit is not directed to children under the age of 13 (or 16 in the EU/UK). We do not knowingly collect personal information from children. If we learn that we have collected information from a child without parental consent, we will delete it promptly. If you believe a child has provided us personal information, contact us at <a href="mailto:rexatechin@gmail.com" className="text-accent hover:underline">rexatechin@gmail.com</a>.
             </p>
           </section>
 

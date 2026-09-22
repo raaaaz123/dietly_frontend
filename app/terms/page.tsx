@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "Dietly terms of service. Read about acceptable use, subscription billing, medical disclaimer, and your rights as a user.",
+    "Dietly Fit terms of service. Read about acceptable use, subscription billing, medical disclaimer, and your rights as a user.",
   alternates: { canonical: "https://dietly.life/terms" },
   robots: { index: true, follow: true },
 };
@@ -23,7 +23,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold text-fg">1. Agreement to Terms</h2>
             <p>
-              These Terms of Service (&quot;Terms&quot;) govern your access to and use of the Dietly mobile application and website (collectively, the &quot;Service&quot;), operated by Rexatech (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;). By downloading, installing, or using the Service, you agree to be bound by these Terms. If you do not agree, do not use the Service.
+              These Terms of Service (&quot;Terms&quot;) govern your access to and use of the Dietly Fit mobile application and website (collectively, the &quot;Service&quot;), operated by Rexatech (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;). By downloading, installing, or using the Service, you agree to be bound by these Terms. If you do not agree, do not use the Service.
             </p>
           </section>
 
@@ -37,7 +37,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold text-fg">3. Medical Disclaimer</h2>
             <p>
-              Dietly is designed for general informational and wellness purposes only. The AI-generated coaching, nutritional estimates, and workout suggestions are not medical advice and do not constitute a doctor-patient relationship. Always consult a qualified healthcare professional before making significant changes to your diet or exercise routine, especially if you have a medical condition, are pregnant, or are taking medication.
+              Dietly Fit is designed for general informational and wellness purposes only. The AI-generated coaching, nutritional estimates, and workout suggestions are not medical advice and do not constitute a doctor-patient relationship. Always consult a qualified healthcare professional before making significant changes to your diet or exercise routine, especially if you have a medical condition, are pregnant, or are taking medication.
             </p>
             <p>
               Do not disregard professional medical advice or delay seeking it because of something you read or heard in the Service.
@@ -57,7 +57,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold text-fg">5. Subscriptions and Billing</h2>
             <p>
-              Dietly offers both free and paid (&quot;Pro&quot;) tiers. Paid subscriptions are billed in advance on a recurring basis (weekly, monthly, or annually, depending on the plan you choose) through the Apple App Store or Google Play Store.
+              Dietly Fit offers both free and paid (&quot;Pro&quot;) tiers. Paid subscriptions are billed in advance on a recurring basis (weekly, monthly, or annually, depending on the plan you choose) through the Apple App Store or Google Play Store.
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Subscriptions automatically renew unless you cancel at least 24 hours before the end of the current billing period.</li>

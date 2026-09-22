@@ -22,7 +22,7 @@ export default function Page() {
 
       <H2>What a physique score is actually measuring</H2>
       <p>
-        Most scoring systems, Dietly&rsquo;s included, decompose the number into
+        Most scoring systems, Dietly Fit&rsquo;s included, decompose the number into
         components rather than producing one opaque figure. The ones that matter
         visually are:
       </p>
@@ -167,9 +167,9 @@ export default function Page() {
         for programming, not a verdict on you.
       </p>
 
-      <H2>How Dietly does it</H2>
+      <H2>How Dietly Fit does it</H2>
       <p>
-        Dietly scores one photo a week out of 100 across the six components
+        Dietly Fit scores one photo a week out of 100 across the six components
         above, names the single weak point holding the score back, and builds
         the following week of training around fixing it — with the equipment you
         actually have. The score exists to decide the plan. That is the only

@@ -10,7 +10,7 @@ import { EXERCISES, CATEGORIES, KIT, INDEXABLE } from "../lib/exercises";
 
 const TITLE = "Exercise Library — 500+ Movements With Demos";
 const DESCRIPTION =
-  "Every movement in Dietly's training catalogue, grouped by the muscle it works and the equipment it needs, each with a demo clip, a target muscle and a starting set and rep scheme.";
+  "Every movement in Dietly Fit's training catalogue, grouped by the muscle it works and the equipment it needs, each with a demo clip, a target muscle and a starting set and rep scheme.";
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -47,7 +47,7 @@ export default function ExercisesHub() {
               {EXERCISES.length} movements, with a demo for every one
             </h1>
             <p className="text-[17px] text-fg-muted max-w-[640px] leading-relaxed">
-              The catalogue Dietly builds its weeks from. Browse by the muscle a
+              The catalogue Dietly Fit builds its weeks from. Browse by the muscle a
               movement works or by the equipment you actually have — every entry
               carries a demo clip, the muscle it targets and a sensible set,
               rep and rest scheme to start from.

@@ -5,11 +5,11 @@ import Footer from "../components/Footer";
 export const metadata: Metadata = {
   title: "Support",
   description:
-    "Get help with Dietly. Browse common questions about subscriptions, account deletion, AI coaching, and billing, or email our support team directly.",
+    "Get help with Dietly Fit. Browse common questions about subscriptions, account deletion, AI coaching, and billing, or email our support team directly.",
   alternates: { canonical: "https://dietly.life/support" },
   openGraph: {
-    title: "Support | Dietly",
-    description: "Get help with Dietly. Browse FAQs or email our support team.",
+    title: "Support | Dietly Fit",
+    description: "Get help with Dietly Fit. Browse FAQs or email our support team.",
     url: "https://dietly.life/support",
   },
 };
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: "How do I cancel my subscription?",
-    a: "On iOS, open the Settings app, tap your Apple ID at the top, go to Subscriptions, find Dietly, and tap Cancel Subscription. On Android, open the Google Play Store, tap your profile icon, go to Payments & subscriptions > Subscriptions, find Dietly, and tap Cancel.",
+    a: "On iOS, open the Settings app, tap your Apple ID at the top, go to Subscriptions, find Dietly Fit, and tap Cancel Subscription. On Android, open the Google Play Store, tap your profile icon, go to Payments & subscriptions > Subscriptions, find Dietly Fit, and tap Cancel.",
   },
   {
     q: "How do I delete my account and all my data?",
@@ -36,7 +36,7 @@ const faqs = [
     a: "Restore your purchase from the app: Profile > Settings > Restore Purchases. If that doesn't work, email us with your Apple ID or Google account email and we'll sort it out.",
   },
   {
-    q: "Can I use Dietly on multiple devices?",
+    q: "Can I use Dietly Fit on multiple devices?",
     a: "Yes. Sign in with the same account on any device and your data syncs automatically.",
   },
 ];

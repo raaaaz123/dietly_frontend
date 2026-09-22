@@ -20,7 +20,7 @@ export function toolJsonLd(slug: string, extra?: Record<string, unknown>) {
   return {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: `Dietly ${t.name}`,
+    name: `Dietly Fit ${t.name}`,
     url: `${SITE_URL}/${t.slug}`,
     description: t.description,
     applicationCategory: "HealthApplication",

@@ -18,15 +18,15 @@ export const faqs = [
   },
   {
     q: "Do I need a gym?",
-    a: "No. Tell Dietly what you have — bodyweight, a couple of dumbbells, or a full rack — and the plan is built for that. You can swap any movement for one that fits your kit.",
+    a: "No. Tell Dietly Fit what you have — bodyweight, a couple of dumbbells, or a full rack — and the plan is built for that. You can swap any movement for one that fits your kit.",
   },
   {
     q: "Is this just another calorie counter?",
-    a: "No. The training plan is the product; food logging supports it. You can log a meal by photo, sentence or voice in a few seconds, but Dietly is built around what you do in the gym.",
+    a: "No. The training plan is the product; food logging supports it. You can log a meal by photo, sentence or voice in a few seconds, but Dietly Fit is built around what you do in the gym.",
   },
   {
     q: "What does it cost?",
-    a: "Free to start. Dietly Pro unlocks unlimited scans, your full weekly plan, unlimited logging and the AI coach, and you can cancel any time from your Apple ID or Google Play settings.",
+    a: "Free to start. Dietly Fit Pro unlocks unlimited scans, your full weekly plan, unlimited logging and the AI coach, and you can cancel any time from your Apple ID or Google Play settings.",
   },
 ];
 

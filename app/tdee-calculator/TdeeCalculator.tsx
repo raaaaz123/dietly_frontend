@@ -144,7 +144,7 @@ export default function TdeeCalculator() {
 
               <ToolCta>
                 A maintenance number is a starting estimate, not a measurement.
-                Dietly tracks what you actually eat and train, and moves the
+                Dietly Fit tracks what you actually eat and train, and moves the
                 target when your weekly trend says the estimate was off.
               </ToolCta>
             </Reveal>

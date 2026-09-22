@@ -228,7 +228,7 @@ export default function MacroCalculator() {
 
                 <div className="mt-10 pt-8 border-t border-border">
                   <p className="text-[13px] text-fg-muted leading-relaxed mb-4">
-                    Tracking <strong className="text-fg">{results.calories} calories</strong> manually is exhausting. Let Dietly&apos;s AI vision track it for you with just a photo.
+                    Tracking <strong className="text-fg">{results.calories} calories</strong> manually is exhausting. Let Dietly Fit&apos;s AI vision track it for you with just a photo.
                   </p>
                   <Link href="/#download" className="block w-full py-3.5 bg-accent text-accent-ink text-center text-[12px] font-bold tracking-[1.5px] rounded-xl hover:shadow-[0_0_20px_rgba(31,138,67,0.3)] transition-all">
                     START TRACKING FREE

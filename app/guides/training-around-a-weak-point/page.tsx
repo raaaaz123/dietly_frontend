@@ -140,7 +140,7 @@ export default function Page() {
         everything equally.
       </p>
       <p className="mt-4">
-        This loop is what Dietly automates: the weekly scan names the weak point,
+        This loop is what Dietly Fit automates: the weekly scan names the weak point,
         the following week is built around it with the equipment you have, and
         the next scan tells you whether it moved. The judgement above still
         applies — the app just removes the part where you have to make it about

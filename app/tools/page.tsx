@@ -80,7 +80,7 @@ export default function ToolsPage() {
               These give you a starting number. Holding to it for six months is
               the part that actually decides anything —{" "}
               <Link href="/" className="underline hover:text-fg transition-colors">
-                that is what Dietly is for
+                that is what Dietly Fit is for
               </Link>
               .
             </p>
