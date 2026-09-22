@@ -65,6 +65,19 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     creator: "@dietlyapp",
   },
+  // The Safari smart app banner. On iOS this renders a native install strip
+  // above the page, and it is the shortest path that exists from a search
+  // result to an install: a visitor who lands on /exercises/barbell-squat from
+  // Google gets an Open/View button without having to find a store link in the
+  // page. Every organic page we ship is an install surface, and until now none
+  // of them said so to Safari.
+  //
+  // `app-argument` is the URL the app receives if it is already installed,
+  // which lets the app open the same content rather than its home screen.
+  itunes: {
+    appId: APP_STORE_ID,
+    appArgument: SITE,
+  },
   // Verification tokens for Search Console and Bing Webmaster Tools. Read from
   // the server environment rather than committed: they are not secret, but they
   // are per-property, and a token checked into the repo is a token nobody

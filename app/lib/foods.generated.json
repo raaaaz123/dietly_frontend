@@ -1,0 +1,24 @@
+{
+ "fetchedAt": "2026-09-22",
+ "foods": [
+  {
+   "slug": "roti",
+   "name": "Roti (chapati)",
+   "aka": ["chapati", "phulka"],
+   "portion": { "label": "1 roti", "grams": 40 },
+   "fdcId": 171844,
+   "usdaDescription": "Bread, chapati or roti, plain, commercially prepared",
+   "dataType": "SR Legacy",
+   "per100g": {
+    "kcal": 297,
+    "protein": 11.2,
+    "carbs": 46.4,
+    "fat": 7.45,
+    "fiber": null,
+    "sugar": null,
+    "satFat": null,
+    "sodium": null
+   }
+  }
+ ]
+}

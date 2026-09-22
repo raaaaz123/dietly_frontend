@@ -10,6 +10,147 @@ those need Search Console and a keyword tool before we act on them.
 
 ---
 
+## Status — 2026-09-22 (rev 3)
+
+Audited against the **live** site and the **live store listings**, not against this
+file. The picture has changed since rev 2 in one good way and one bad one: the
+technical foundation is now essentially sound, and the store listings turn out to be
+the weakest link in the whole funnel — a channel rev 1 and rev 2 never looked at.
+
+### What got fixed since rev 2
+
+`§1.2` **the host split is resolved.** The apex is primary and serves its own
+robots.txt:
+
+```
+https://dietly.life/            200
+https://www.dietly.life/        307 -> https://dietly.life/
+https://dietly.life/robots.txt  200, 759 bytes
+```
+
+Canonicals, the sitemap and llms.txt all now name a host that answers rather than
+one that bounces. **One flag is left:** the www redirect is still **307 (temporary)**,
+which tells Google not to pass authority through it. `npm run check:host` fails on
+exactly that and prints the Vercel fix. It is a dashboard toggle, not a code change.
+
+**The whole content surface is deployed.** `/vs/*`, `/best-ai-body-scan-apps`, the
+guides, the eight calculators and the exercise hubs all return 200 on the apex. The
+sitemap carries 43 URLs — rev 2 was written while the comparison cluster was still
+repo-only.
+
+**Vercel Analytics is live** (`/_vercel/insights/script.js` returns 200), so raw
+traffic is finally visible. PostHog is still dark — `POSTHOG_KEY` is unset, so
+`store_click` fires nowhere and the organic→install number rev 2 called "the one to
+run the programme on" still does not exist.
+
+### Shipped in this pass
+
+**The exercise cluster can now rank.** It was deployed but inert: all 507 published
+movements arrived with empty prose, so `isIndexable` returned false for every one of
+them and all 507 detail pages rendered `noindex, follow`. 507 pages of crawl budget,
+zero entry points.
+
+- `app/lib/coaching.ts` — hand-authored coaching for **16 movements**: overview,
+  four-plus steps, form cues and a *Common mistakes* section, written per movement.
+  It is a separate file because `npm run fetch:exercises` rewrites the generated JSON
+  wholesale, and prose written into that file would vanish on the next catalogue
+  refresh — pulling those pages back out of the index with nothing in the diff to
+  say why. `exercises.ts` merges it over the snapshot by slug.
+- Those 16 flip to indexable and enter the sitemap automatically (**43 → 59 URLs**),
+  and each now emits `HowTo` because it has real steps to describe.
+- **A *Common mistakes* section renders on the detail page.** This is the section
+  almost every competing exercise page omits, and it is the most quotable thing on
+  the page — which is what §4.3 is asking for.
+- **Hub ordering fixed.** Every catalogue row ships at `priority: 0`, so the app's
+  "popular" sort silently degraded to alphabetical: every hub led with `3/4 Sit-up`
+  and `45 Degree Bicycle Twisting Crunch`, and the barbell squat sat 300 rows down.
+  Those hubs are the cluster's main internal links, so alphabetical order was
+  spending our crawl budget and our link equity on the least useful pages we own.
+  `rankOf` supplies a fallback rank — authored coaching first, then compound lifts,
+  demoting stretches and articulation drills. A real priority from the API still wins.
+- **Machine-written names cleaned up.** The catalogue spells it `Bycicle`, writes
+  `3 4 Sit up` and `All Fours Squad Stretch`. The name is the `<h1>`, the `<title>`
+  and the anchor text on every link in, so a misspelling is the string we are asking
+  to rank for. Nobody searches for `Bycicle`.
+- **The Safari smart app banner** (`apple-itunes-app`) now renders sitewide. It was
+  absent entirely, which meant every organic landing page — the whole point of this
+  programme — had no native path to an install. This is the shortest route that
+  exists from a search result to the App Store.
+- **`tests/coaching.test.ts`** (4 tests) asserts every rule in the `coaching.ts`
+  header: slugs resolve, overviews clear 180 characters, four-plus steps, three-plus
+  cues and mistakes, and no two entries share a twelve-word run. It caught two of my
+  own entries that stated a mistake without saying why it mattered.
+- **`check-seo.mjs`'s thin-content guard now reads the rendered HTML**, not the
+  generated JSON. It had to: coaching lives outside the snapshot now, so the JSON
+  called pages "thin" that render a full set of steps. Reading the HTML is also the
+  stricter question — it checks what we published rather than what we intended — and
+  it now fails in **both** directions, including the silent one where somebody
+  authors steps and the page stays `noindex`.
+
+`npm test` is 30 tests green; `npm run build` compiles 619 static pages and
+`check:seo` passes 46 routes.
+
+### The finding that matters most — we ship under three different names
+
+This is new, it is not a code problem, and it is probably costing more installs than
+everything else in this file combined. Measured today from the iTunes lookup API and
+the Play listing:
+
+| Surface | Name |
+|---|---|
+| Website | **Dietly Fit** |
+| App Store (iOS) | **Dietly: Body Scan & Workout** |
+| Play Store (Android) | **Dietly AI: Snap Calories** |
+
+The Play listing is still selling the **pre-pivot product**. "Snap Calories" is photo
+calorie logging — the thing the app moved away from, the same drift `§4.1` found in
+`llms.txt` and fixed there. Anyone who follows a Play badge from this site lands on a
+listing for a different app than the one the page described.
+
+Three consequences, in order of cost:
+
+1. **Brand search is split three ways.** Nobody can build search authority for a name
+   that is never written the same way twice, and store search is a *brand-name-heavy*
+   channel.
+2. **It is the single biggest blocker to AI citation.** §4.4 is explicit that models
+   weight cross-source agreement — "Keep the App Store and Play listings' wording
+   consistent with `lib/site.ts`. Cross-source agreement is what makes a model
+   confident enough to name us." Right now the three sources a model can check about
+   us disagree about what we are called and what we do.
+3. It makes the `/vs/*` pages harder to trust: they compare "Dietly Fit" against
+   rivals whose store listings are internally consistent.
+
+**Other store facts, measured:**
+
+- **iOS: 0 ratings, 0 reviews.** Ratings are a direct input to both store ranking and
+  conversion, and zero is the worst possible starting position — it reads as
+  abandoned. `dietly-rating-prompt-placement` already records where the prompt belongs.
+- **Play: 10+ downloads.** Effectively a dead listing.
+- **No app preview video** on iOS (7 screenshots, 5 iPad, no video).
+- **Seller shows as "Rasheed Maliyekkal"**, not Rexatech — while the site's
+  `Organization` schema, `authors`, `creator` and `publisher` all say Rexatech. That
+  is the entity signal §4.2 exists to build, contradicted on the store page.
+- Localised EN/DE/ES, which matches the app. Good, and worth keeping in step.
+
+### Still needs a human — in priority order
+
+1. **Rename the Play listing.** It sells a product we do not make. Everything else in
+   this file is an optimisation; this is a correction. Align all three surfaces on one
+   name — `Dietly Fit` is the one the site and `lib/site.ts` already use.
+2. **`§1.2` the last flag.** Vercel → Domains: make `www.dietly.life` a **308**, not a
+   307. `npm run check:host` goes green when it is done.
+3. **`§2.1/2.2` GSC + Bing.** Still not verified — no verification meta tag is served,
+   so `GOOGLE_SITE_VERIFICATION` and `BING_SITE_VERIFICATION` are unset in Vercel. We
+   still cannot see a single query we rank for. This has been the top unfinished item
+   since rev 1 and it blocks every prioritisation decision below §3.
+4. **`§2.3` set `POSTHOG_KEY`.** Until then there is no organic→install number.
+   Confirm the privacy wording first.
+5. **Get the first ratings.** See §7.2.
+6. **Change the App Store seller name** to Rexatech, so the entity matches the site.
+7. Consider a credentialed reviewer for the guides (carried from rev 2).
+
+---
+
 ## Status — 2026-09-18 (rev 2)
 
 ### Phase 1 — shipped
@@ -531,9 +672,154 @@ comparison cluster's own re-verification to that quarterly pass: competitor pric
 the fastest-decaying facts on the site, and `tests/competitors.test.ts` only catches
 them after a full year.
 
+### Phase 5 — what to do next (from here, 2026-09-22)
+
+Ordered so that nothing waits on something further down the list.
+
+**This week — the four things only a human can do.** None is a code change and
+every one of them blocks work below it:
+
+1. Rename the **Play listing** off "Snap Calories" (§7.1). It advertises a product we
+   no longer make.
+2. Flip the www redirect to **308** (§1.2). `npm run check:host` verifies it.
+3. Verify **GSC + Bing**, set the two env vars, redeploy, submit the sitemap. Then run
+   `npm run indexnow` — it refuses to run until §1.2 is fixed, so do it in this order.
+4. Set **`POSTHOG_KEY`**. Confirm the privacy wording first.
+
+Until 3 and 4 are done, every priority below is still a guess — which is the same
+sentence rev 1 wrote about §2, and the reason it is still true is that nobody has done
+it yet.
+
+**Weeks 1–2 — turn on the store.**
+The rating prompt on the plan reveal (§7.2). The app preview video and the first two
+screenshots (§7.3). These are the highest-return work available, because they lift the
+conversion rate of every install this programme will ever send.
+
+**Weeks 2–6 — widen the exercise cluster, on evidence.**
+16 movements now carry coaching. Do **not** bulk-author the remaining 491. Wait for GSC
+to say whether those 16 get indexed and earn impressions, then extend in batches of
+~20, always through `coaching.ts` so the quality gate and its tests apply. The
+catalogue is also a filtered slice that is missing obvious head terms — there is no
+`dumbbell bench press`, no plain `plank`, no plain `push-up` — so widening the
+*published* catalogue may matter more than widening the prose over the current 507.
+
+**Weeks 4–10 — the first CPP, and the clusters the data points at.**
+A Custom Product Page fed by `/exercises` (§7.4), and whichever §3 cluster PostHog says
+produces store clicks. Let the number choose, not this file.
+
+**Ongoing.** The quarterly re-audit, now covering the store listings too: they drift
+faster than the site, nothing in CI can see them, and rev 3 found three names in three
+places precisely because nobody had looked since the pivot.
+
 ---
 
-## 7. What we measure
+## 7. App installs — the channel this plan never had
+
+Every previous revision of this file optimised the path *to* the site and stopped at
+the store button. But the conversion that matters is an install, and the store listing
+is where most of that conversion is won or lost. It is also, per the rev 3 audit, the
+weakest part of the funnel: a website in good technical health pointing at two store
+listings, one of which advertises the wrong product.
+
+Store search and web search are separate indexes with separate rules. Work here does
+not substitute for §1–§6; it compounds with it, because organic pages are what feed
+the listing traffic in the first place.
+
+### 7.1 Fix the identity first — nothing else here works until it is done
+
+Covered in rev 3 above, restated because it gates everything in this section: one
+name, on all three surfaces. **`Dietly Fit`.**
+
+Apple gives 30 characters for the name and 30 for the subtitle, and **both are
+indexed for store search**. Play gives 50 for the title and 80 for the short
+description, and extracts keywords from the full description because it has no
+keyword field.
+
+A worked proposal, with counts. These are drafts to react to, not finished copy —
+and the keyword choices are **unverified** until somebody reads them against a real
+store-keyword tool, exactly as §3's search volumes are:
+
+| Field | Limit | Proposal | Count |
+|---|---|---|---|
+| iOS name | 30 | `Dietly Fit: Body Scan & Gym` | 27 |
+| iOS subtitle | 30 | `AI Workout Plan & Physique` | 26 |
+| Play title | 50 | `Dietly Fit: AI Gym Workout Log & Body Scan` | 42 |
+| Play short desc | 80 | `Scan your body, get a Form Score, and train the weak point it finds.` | 68 |
+
+The iOS **keyword field** is 100 characters, comma-separated, **no spaces after
+commas** (a space costs a character), no plurals, and never repeat a word already in
+the name or subtitle — Apple indexes those fields together, so repeating wastes the
+scarcest space on the listing. A starting set, 99 characters:
+
+```
+workout,gym,tracker,lifting,strength,trainer,fitness,muscle,physique,bodyfat,macro,calorie,coach
+```
+
+Note what is *not* in it: `scan`, `body`, `AI`, `plan`, `log` and `Dietly` all already
+appear in the proposed name or subtitle.
+
+### 7.2 Ratings — the highest-leverage fix on the store page
+
+**iOS is at 0 ratings.** No amount of keyword work overcomes that: it suppresses
+conversion on a listing a user has already reached, and it is an input to store
+ranking. Every install this programme earns is being converted at the worst rate the
+listing will ever have.
+
+- Fire `SKStoreReviewController` **after a moment that went well** — the plan reveal
+  is the right one, per `dietly-rating-prompt-placement`. Not on launch, not on a
+  progress screen.
+- Apple allows three prompts per user per year; `askOnce` currently fires once ever,
+  which is safe but leaves two-thirds of the allowance unused.
+- Reply to every review, especially the bad ones. Replies are public and are read by
+  the next person deciding whether to install.
+- Do not buy ratings. Beyond the policy risk, fake reviews read as fake to exactly the
+  audience that reads reviews, and this is the same restraint the plan already applies
+  in refusing a fabricated `aggregateRating` in the schema.
+
+### 7.3 Creative — where conversion actually moves
+
+- **An app preview video.** There is none. It is the largest single conversion lever
+  on an App Store page and we already produce exercise clips, so the raw material
+  exists. Fifteen to thirty seconds: photo → score → the week it builds.
+- **The first two screenshots carry the listing.** Most people never scroll. They
+  should show the Form Score and the generated week, each with a caption that states
+  the benefit — not bare device frames.
+- **A/B test the icon** through Product Page Optimization in App Store Connect. It is
+  free, it is Apple's own tooling, and the icon is the one asset every impression sees.
+- **Custom Product Pages.** Up to 35 per app, each with its own URL and its own
+  screenshots. This is the direct join between §3 and this section: a CPP whose
+  screenshots lead with the exercise library, linked from the `/exercises` cluster,
+  converts better than the generic page because it continues the page the visitor was
+  already reading.
+
+### 7.4 Close the loop between the site and the store
+
+- **The smart app banner is now live** (rev 3). It turns all 59 indexable pages into
+  install surfaces on iOS rather than just the pages with a store button on them.
+- **Measure the handoff.** `store_click` already carries its source path, so the
+  moment `POSTHOG_KEY` is set we learn which cluster produces installs — calculators,
+  guides, comparisons or exercises. That number should decide where §3 effort goes
+  next, replacing the **unverified** volume guesses this plan still runs on.
+- **Keep the App Store description and `lib/site.ts` in step.** The description is
+  currently accurate and well written — it is the only one of the three surfaces that
+  is. It should be the reference the other two are brought in line with.
+
+### 7.5 What not to do
+
+- **Do not chase head terms like "workout app" or "fitness".** Those belong to apps
+  with millions of ratings, and a listing with zero cannot rank for them. Long-tail,
+  specific phrases — "physique score", "body scan workout plan", "weak point training"
+  — are winnable and describe what the app actually does.
+- **Do not localise further yet.** EN/DE/ES already exceeds what the current install
+  volume justifies; more locales multiply the metadata to keep accurate without
+  addressing why the English listing is not converting.
+- **Do not buy installs to seed the ranking.** Retention is the signal the stores
+  weight, and bought installs do not retain — the ranking bump decays and the
+  retention damage persists.
+
+---
+
+## 8. What we measure
 
 | Metric | Source | Why |
 |---|---|---|
@@ -542,6 +828,10 @@ them after a full year.
 | Impressions & average position per cluster | GSC | Tells us which §3 cluster to invest in next. |
 | Share of AI answers naming Dietly | Manual, monthly | Ask ChatGPT/Claude/Perplexity a fixed set of ~15 prompts ("best AI body scan app", "how to score my physique from a photo") and log whether we are named and what they say about us. Crude, but it is the only read available on this channel. |
 | Facts models get wrong about us | Same prompt set | Directly measures whether §4.1 worked. |
+| Store impressions → installs | App Store Connect / Play Console | The store-side conversion rate. §7.2 and §7.3 are judged on this and nothing else. |
+| Ratings count and average | Both consoles | At 0 on iOS, this is the number gating every other store metric. |
+| Installs attributed to a landing page | PostHog `store_click` + console | Joins §3 to §7: tells us which content cluster actually produces installs, not just sessions. |
+| The three names agreeing | Manual, quarterly | Cheap to check, invisible when it breaks, and rev 3 found it broken across all three surfaces. |
 
 Realistic expectation: phase 1 shows up in GSC within 2–4 weeks. New content takes
 2–4 months to rank. AI citation lags organic ranking, because most grounding runs against

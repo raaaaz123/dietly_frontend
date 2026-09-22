@@ -26,6 +26,28 @@ export const contentType = "image/png";
 
 export function toolOgImage(slug: string) {
   const t = tool(slug);
+  return ogCard({ eyebrow: "Free tool", heading: t.name, sub: t.blurb, path: t.slug });
+}
+
+/**
+ * The same card, for a route that is not in the tool registry.
+ *
+ * Added for `/workouts`, whose pages are plans rather than calculators. Kept as
+ * one renderer rather than two because `check-seo.mjs` asserts every indexable
+ * route has a card, and the fastest way to satisfy that guard badly would be a
+ * second card that looks like a different site.
+ */
+export function ogCard({
+  eyebrow,
+  heading,
+  sub,
+  path,
+}: {
+  eyebrow: string;
+  heading: string;
+  sub: string;
+  path: string;
+}) {
   return new ImageResponse(
     (
       <div
@@ -54,7 +76,7 @@ export function toolOgImage(slug: string) {
               textTransform: "uppercase",
             }}
           >
-            Free tool
+            {eyebrow}
           </div>
         </div>
 
@@ -68,7 +90,7 @@ export function toolOgImage(slug: string) {
               letterSpacing: -2,
             }}
           >
-            {t.name}
+            {heading}
           </div>
           <div
             style={{
@@ -80,7 +102,7 @@ export function toolOgImage(slug: string) {
               maxWidth: 900,
             }}
           >
-            {t.blurb}
+            {sub}
           </div>
         </div>
 
@@ -92,7 +114,7 @@ export function toolOgImage(slug: string) {
             fontWeight: 600,
           }}
         >
-          dietly.life/{t.slug}
+          dietly.life/{path}
         </div>
       </div>
     ),

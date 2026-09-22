@@ -257,6 +257,17 @@ export default async function Page({
               </section>
             )}
 
+            {e.mistakes.length > 0 && (
+              <section className="mt-10">
+                <h2 className="text-[24px] font-bold text-fg font-body tracking-tight mb-5">
+                  Common mistakes
+                </h2>
+                <ul className="space-y-3 text-[16px] leading-[1.75] text-fg-muted list-disc pl-5">
+                  {e.mistakes.map((m) => <li key={m}>{m}</li>)}
+                </ul>
+              </section>
+            )}
+
             <div className="glass-card mt-12 rounded-2xl border-l-4 !border-l-accent bg-bg-elevated/30 p-7">
               <h2 className="text-[18px] font-bold text-fg mb-3">
                 Where this fits in a week

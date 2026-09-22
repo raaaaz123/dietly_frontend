@@ -31,10 +31,18 @@ export async function generateMetadata({
   const { category: slug } = await params;
   const c = category(slug);
   if (!c) return {};
-  const title = `${c.name} Exercises — ${c.items.length} Movements With Demos`;
-  const description = `Every ${c.name.toLowerCase()} movement in Dietly Fit's catalogue — ${c.items.length} of them, each with a demo clip, the muscle it targets, the equipment it needs and a starting set and rep scheme.`;
+  // Titled "<Muscle> Workout" rather than "<Muscle> Exercises", and carrying
+  // both words.
+  //
+  // Google Trends, worldwide, week to 2026-09-22: "back workout" indexes at 19
+  // against "chest workout" 16, "abs workout" 14 and "leg workout" 14 — each
+  // of them ahead of the "<muscle> exercises" phrasing these pages were
+  // originally written for. The page serves both intents identically, so the
+  // title should lead with the one more people type and keep the other.
+  const title = `${c.name} Workout — ${c.items.length} Exercises With Demos`;
+  const description = `Every ${c.name.toLowerCase()} exercise in Dietly Fit's catalogue — ${c.items.length} movements for your ${c.name.toLowerCase()} workout, each with a demo clip, the muscle it targets, the equipment it needs and a starting set and rep scheme.`;
   return {
-    title: { absolute: title.length > 65 ? `${c.name} Exercises — ${c.items.length} Movements` : title },
+    title: { absolute: title.length > 65 ? `${c.name} Workout — ${c.items.length} Exercises` : title },
     description,
     keywords: [`${c.name.toLowerCase()} exercises`, `${c.name.toLowerCase()} workout`, "exercise library"],
     alternates: { canonical: `/exercises/muscle/${c.slug}` },
@@ -94,13 +102,13 @@ export default async function Page({
               <Link href="/exercises" className="hover:text-fg transition-colors">Exercises</Link>
             </nav>
             <h1 className="text-[clamp(30px,5vw,48px)] font-bold leading-[1.06] tracking-[-1.5px] text-fg font-body mb-5">
-              {c.name} exercises
+              {c.name} workout
             </h1>
             <p className="text-[17px] text-fg-muted max-w-[640px] leading-relaxed">
-              {items.length} movements that train the {c.name.toLowerCase()},
-              from Dietly Fit&rsquo;s training catalogue. Each one carries a demo
-              clip, the muscle it targets and a set, rep and rest scheme to
-              start from.
+              {items.length} {c.name.toLowerCase()} exercises from Dietly
+              Fit&rsquo;s training catalogue, to build a {c.name.toLowerCase()}{" "}
+              workout from. Each one carries a demo clip, the muscle it targets
+              and a set, rep and rest scheme to start from.
             </p>
           </Reveal>
 

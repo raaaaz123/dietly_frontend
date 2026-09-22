@@ -127,6 +127,103 @@ export const TOOLS: Tool[] = [
     lastModified: "2026-09-15",
     related: ["body-fat-calculator", "lean-body-mass-calculator", "tdee-calculator"],
   },
+  {
+    slug: "bmi-calculator",
+    name: "BMI Calculator",
+    title: "BMI Calculator — Body Mass Index",
+    description:
+      "Calculate your Body Mass Index from height and weight, see the WHO category, and read the honest account of what BMI cannot tell you about a trained body.",
+    blurb: "Your BMI and its WHO band — plus why it misreads muscular people.",
+    keywords: ["bmi calculator", "body mass index", "bmi calculator kg", "bmi chart"],
+    lastModified: "2026-09-22",
+    related: ["body-fat-calculator", "waist-to-height-ratio-calculator", "ideal-weight-calculator"],
+  },
+  {
+    slug: "bmr-calculator",
+    name: "BMR Calculator",
+    title: "BMR Calculator — Basal Metabolic Rate",
+    description:
+      "Work out the calories your body burns at complete rest using the Mifflin-St Jeor equation, and see how BMR differs from TDEE and maintenance calories.",
+    blurb: "The calories you burn doing nothing at all — the base every target is built on.",
+    keywords: ["bmr calculator", "basal metabolic rate", "mifflin st jeor", "bmr calculator kg"],
+    lastModified: "2026-09-22",
+    related: ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator"],
+  },
+  {
+    slug: "ffmi-calculator",
+    name: "FFMI Calculator",
+    title: "FFMI Calculator — Fat-Free Mass Index",
+    description:
+      "Calculate your Fat-Free Mass Index and height-normalised FFMI from weight, height and body fat — the measure of how much muscle you carry for your frame.",
+    blurb: "How much muscle you carry for your frame, and how much room is left.",
+    keywords: ["ffmi calculator", "fat free mass index", "natural ffmi", "muscle potential"],
+    lastModified: "2026-09-22",
+    related: ["lean-body-mass-calculator", "body-fat-calculator", "bmi-calculator"],
+  },
+  {
+    slug: "waist-to-height-ratio-calculator",
+    name: "Waist-to-Height Calculator",
+    title: "Waist-to-Height Ratio Calculator",
+    description:
+      "Divide your waist by your height to get the ratio that predicts central body fat better than BMI does, with the 0.5 threshold and how to measure correctly.",
+    blurb: "One tape measure, one division — and a better risk signal than BMI.",
+    keywords: [
+      "waist to height ratio",
+      "waist to height ratio calculator",
+      "waist height ratio chart",
+      "waist to height ratio for men",
+    ],
+    lastModified: "2026-09-22",
+    related: ["bmi-calculator", "body-fat-calculator", "lean-body-mass-calculator"],
+  },
+  {
+    slug: "calories-burned-calculator",
+    name: "Calories Burned Calculator",
+    title: "Calories Burned Calculator — 35 Activities",
+    description:
+      "Calories burned walking, running, cycling, lifting or on the treadmill, from published MET values — with both the gross figure and the smaller honest one.",
+    blurb: "What an activity actually costs, sourced from the Compendium rather than guessed.",
+    keywords: [
+      "calories burned calculator",
+      "calories burned walking",
+      "calories burned running",
+      "calories burned steps",
+    ],
+    lastModified: "2026-09-22",
+    related: ["tdee-calculator", "calorie-deficit-calculator", "bmr-calculator"],
+  },
+  {
+    slug: "creatine-calculator",
+    name: "Creatine Calculator",
+    title: "Creatine Calculator — Dose by Bodyweight",
+    description:
+      "Your creatine monohydrate maintenance dose from bodyweight, whether a loading phase is worth doing, and what the evidence actually supports.",
+    blurb: "Your daily dose in grams, and why loading is optional.",
+    keywords: [
+      "creatine calculator",
+      "creatine dosage",
+      "how much creatine should i take",
+      "creatine loading",
+    ],
+    lastModified: "2026-09-22",
+    related: ["protein-calculator", "lean-body-mass-calculator", "macro-calculator"],
+  },
+  {
+    slug: "food-scanner",
+    name: "Food Photo Scanner",
+    title: "AI Food Scanner — Calories From a Photo",
+    description:
+      "Photograph a meal or pick one from your gallery and get an estimate of its calories, protein, carbs and fat. Free, no signup, no account.",
+    blurb: "Photograph a meal and get its calories and macros back.",
+    keywords: [
+      "ai food scanner",
+      "calories from photo",
+      "food photo calorie counter",
+      "scan food for calories",
+    ],
+    lastModified: "2026-09-22",
+    related: ["macro-calculator", "protein-calculator", "calories-burned-calculator"],
+  },
 ];
 
 export const TOOL_BY_SLUG = new Map(TOOLS.map((t) => [t.slug, t]));

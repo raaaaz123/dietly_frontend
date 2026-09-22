@@ -506,3 +506,78 @@ p { text-wrap: pretty; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.16); border-radius: 999px; border: 3px solid var(--bg); }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.26); }
+
+/* ─── Print ───────────────────────────────────────────────────────────────
+   Answers `gym workout plan pdf download free`, which recurs across both the
+   Trends export and the autocomplete harvest. People asking for a PDF want a
+   sheet they can take to the gym, and a browser's "Save as PDF" produces one
+   — so the job is to make the printed page worth keeping rather than to
+   generate and host a file.
+
+   The site is dark. Printing it unchanged costs a cartridge and returns grey
+   text on grey, so everything is forced to black on white here. `print-hide`
+   removes the chrome that means nothing on paper; `print-keep` stops a
+   session being split across a page break mid-exercise. */
+@media print {
+  :root {
+    --bg: #ffffff;
+    --bg-elevated: #ffffff;
+    --surface: #ffffff;
+    --fg: #000000;
+    --fg-muted: #1a1a1a;
+    --fg-faint: #444444;
+    --border: #cccccc;
+    --accent: #000000;
+  }
+
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  /* Navbar, footer, CTAs, the app pitch — none of it survives contact with
+     paper, and all of it costs a page. */
+  nav[aria-label="Breadcrumb"],
+  .print-hide,
+  header,
+  footer,
+  .btn,
+  .glass-card.\!border-l-accent {
+    display: none !important;
+  }
+
+  main {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Reveal sets inline opacity during its animation. A print fired mid-fade
+     would otherwise put a half-transparent session on the page. */
+  main div[style*="opacity"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .print-keep {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  a {
+    text-decoration: none !important;
+    color: #000 !important;
+  }
+
+  /* A printed plan is read away from the screen, so a bare "Barbell Squat"
+     loses the link to its demo. Spelling the URL out keeps the page useful on
+     paper — only for movement links, not for every link on the page. */
+  .print-url a[href^="/exercises/"]::after {
+    content: " (dietly.life" attr(href) ")";
+    font-size: 9pt;
+    color: #555;
+  }
+
+  @page {
+    margin: 14mm;
+  }
+}

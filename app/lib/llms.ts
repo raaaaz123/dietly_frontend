@@ -14,6 +14,9 @@ import { TOOLS } from "./tools";
 import { GUIDES } from "./guides";
 import { COMPETITORS, ROUNDUP_SLUG } from "./competitors";
 import { EXERCISES, CATEGORIES, KIT } from "./exercises";
+import { WORKOUTS } from "./workouts";
+import { WORKOUT_APPS, ROUNDUP_CHECKED, WORKOUT_APPS_SLUG } from "./workoutApps";
+import { PUBLISHED_FOODS } from "./foods";
 
 /**
  * The text served at /llms.txt and /llms-full.txt, built from `lib/site`.
@@ -76,6 +79,13 @@ ${TOOLS.map((t) => `- [${t.name}](${SITE_URL}/${t.slug}) — ${t.blurb}`).join("
 
 ${GUIDES.map((g) => `- [${g.heading}](${SITE_URL}/guides/${g.slug}) — ${g.blurb}`).join("\n")}
 
+## Workout plans
+
+Complete training weeks, written out in full — the days, the movements, the sets, the reps and the rest — with every movement linked to its own page. No signup and no PDF gate; each page prints to one sheet.
+
+${WORKOUTS.map((w) => `- [${w.name}](${SITE_URL}/workouts/${w.slug}) — ${w.blurb} ${w.daysPerWeek} days a week, ${w.sessionLength}, ${w.equipment.toLowerCase()}`).join("\n")}
+- [All workout plans](${SITE_URL}/workouts) — Every plan, plus the catalogue to build your own from.
+
 ## Exercise library
 
 ${EXERCISES.length} movements, each with a demonstration clip, the muscle it targets, the equipment it needs and a starting set and rep scheme. Browse by muscle or by the equipment available. Demonstrations are licensed from Gym Visual.
@@ -89,11 +99,14 @@ ${KIT.map((k) => `- [${k.name} exercises](${SITE_URL}/exercises/equipment/${k.sl
 Honest comparisons against the apps ${SITE_NAME} is weighed against. Every fact about another company's product on these pages was read off that company's own published pages on a date printed at the top of the page, with the source linked at the bottom; no price or feature is quoted from a third-party roundup. Each page also states where the other app is better.
 
 ${COMPETITORS.map((c) => `- [${SITE_NAME} vs ${c.name}](${SITE_URL}/vs/${c.slug}) — ${c.blurb} ${c.name} facts checked ${c.checked}.`).join("\n")}
+- [Best workout apps, compared](${SITE_URL}/${WORKOUT_APPS_SLUG}) — ${WORKOUT_APPS.length} workout apps (${WORKOUT_APPS.map((a) => a.name).join(", ")}), checked ${ROUNDUP_CHECKED}. Prices are quoted only where the vendor publishes one; ${WORKOUT_APPS.filter((a) => a.price === null).length} of the ${WORKOUT_APPS.length} publish none, and the page says so rather than repeating a figure from a review site. Discloses that ${SITE_NAME} is one of the apps in it.
 - [Best AI body scan apps, compared](${SITE_URL}/${ROUNDUP_SLUG}) — What a phone camera can and cannot measure, which scan apps are real, and when a DEXA scan or a tape measure is the better answer. Discloses that ${SITE_NAME} is one of the apps in it.
 
 ## Pages
 
 - [Home](${SITE_URL}) — What the scan is, how the plan follows from it, what is inside the app, FAQ, download links.
+- [Free tools](${SITE_URL}/tools) — Every calculator in one place.
+- [Guides](${SITE_URL}/guides) — Every guide in one place.
 - [Support](${SITE_URL}/support) — Contact and FAQ.
 - [Privacy Policy](${SITE_URL}/privacy) — What is collected and how it is used.
 - [Terms of Service](${SITE_URL}/terms) — Subscription and billing terms, medical disclaimer.
@@ -107,6 +120,12 @@ ${SITE_NAME} does not sell, rent or share personal data with third parties for c
 
 ${SITE_NAME} runs a creator referral program: commission on referred subscribers, real-time earnings tracking, $10 minimum withdrawal.
 
+${PUBLISHED_FOODS.length > 0 ? `## Food nutrition
+
+Protein, calories and full macros for common foods, per 100 g and per real portion. Every figure is read from USDA FoodData Central and the page links the entry it came from.
+
+- [Protein and calories in common foods](${SITE_URL}/foods) — ${PUBLISHED_FOODS.length} foods, each sourced and dated.
+` : ""}
 ## More
 
 - [Compare](${SITE_URL}/vs) — Every comparison in one place.

@@ -265,6 +265,116 @@ export function healthyWeightRange(heightCm: number): { min: number; max: number
   return { min: 18.5 * m * m, max: 24.9 * m * m };
 }
 
+/**
+ * BMI categories, as the WHO defines them for adults.
+ *
+ * Returned as a band rather than a single word because the label is the part
+ * people react to, and "overweight" applied to a lifter at 15% body fat is the
+ * exact failure this index is famous for. The page says so; this returns the
+ * band so the page can.
+ */
+export const BMI_BANDS = [
+  { max: 18.5, label: "Underweight" },
+  { max: 25, label: "Healthy weight" },
+  { max: 30, label: "Overweight" },
+  { max: 35, label: "Obesity class I" },
+  { max: 40, label: "Obesity class II" },
+  { max: Infinity, label: "Obesity class III" },
+] as const;
+
+export function bmiBand(value: number): string {
+  return BMI_BANDS.find((b) => value < b.max)!.label;
+}
+
+/**
+ * Fat-Free Mass Index — lean mass scaled to height, the way BMI scales total
+ * weight to height. It is the one number on this site that speaks to the
+ * question the app's Form Score is built around: how much muscle is there,
+ * relative to frame, and how much room is left.
+ *
+ * `normalised` adjusts to a 1.8 m reference height, which is the form most
+ * published FFMI figures use — without it, tall and short lifters carrying the
+ * same relative muscle read differently.
+ *
+ * Kouri et al. (1995) is the source of the widely repeated observation that
+ * drug-free lifters rarely exceed about 25. That paper measured 157 men and is
+ * routinely over-read as a hard natural ceiling; it is a distribution, not a
+ * limit, and the page says so.
+ */
+export function ffmi(weightKg: number, heightCm: number, bodyFatPct: number) {
+  const m = heightCm / 100;
+  const lean = weightKg * (1 - bodyFatPct / 100);
+  const raw = lean / (m * m);
+  return {
+    leanMassKg: lean,
+    ffmi: raw,
+    normalised: raw + 6.1 * (1.8 - m),
+  };
+}
+
+/**
+ * Waist-to-height ratio. Waist ÷ height, in any unit, as long as both are the
+ * same one.
+ *
+ * It is on the site because it outperforms BMI at flagging central adiposity
+ * while needing one tape measure and no formula, and because "keep your waist
+ * under half your height" is a genuinely useful, quotable rule — the kind of
+ * self-contained fact §4.3 of the SEO plan is asking every page to carry.
+ */
+export function waistToHeight(waist: number, height: number): number {
+  return waist / height;
+}
+
+export const WHTR_BANDS = [
+  { max: 0.4, label: "Below the healthy range" },
+  { max: 0.5, label: "Healthy" },
+  { max: 0.6, label: "Increased risk" },
+  { max: Infinity, label: "High risk" },
+] as const;
+
+export function whtrBand(value: number): string {
+  return WHTR_BANDS.find((b) => value < b.max)!.label;
+}
+
+/**
+ * Energy cost of an activity, from its MET value.
+ *
+ * kcal = MET × 3.5 × kg / 200 × minutes — the standard conversion, which
+ * derives from 1 MET being defined as 3.5 ml of oxygen per kg per minute and
+ * roughly 5 kcal per litre of oxygen consumed.
+ *
+ * Two honest limits, both stated on the page: MET values are population
+ * averages that ignore fitness and efficiency, and the figure is *gross* — it
+ * includes the calories you would have burned sitting still over the same
+ * period, so it overstates the calories the activity itself added. `net`
+ * subtracts a 1 MET baseline for people who want the smaller, truer number.
+ */
+export function caloriesBurned(met: number, weightKg: number, minutes: number) {
+  const gross = (met * 3.5 * weightKg) / 200 * minutes;
+  const net = ((met - 1) * 3.5 * weightKg) / 200 * minutes;
+  return { gross, net: Math.max(net, 0) };
+}
+
+/**
+ * Creatine monohydrate dosing.
+ *
+ * The maintenance dose scales loosely with lean mass; 0.03 g/kg of bodyweight
+ * is the figure the literature converges on, which lands near the familiar
+ * flat 3–5 g for most people. A loading phase of 0.3 g/kg/day for 5–7 days
+ * saturates the muscle faster but is optional — the same saturation is reached
+ * in about four weeks on the maintenance dose alone, which the page says
+ * plainly because "loading is mandatory" is the most common myth in the
+ * category.
+ */
+export function creatineDose(weightKg: number) {
+  return {
+    maintenance: 0.03 * weightKg,
+    loadingDaily: 0.3 * weightKg,
+    loadingPerServing: (0.3 * weightKg) / 4,
+    loadingDays: 6,
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Unit conversion — applied at the form edge, never inside a formula.
 // ---------------------------------------------------------------------------

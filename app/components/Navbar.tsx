@@ -24,6 +24,7 @@ const links = [
   // The second link that leaves the homepage, and it earns the slot: 507
   // movements across 15 indexable hubs is the largest surface on the site, and
   // a visitor who arrived on a muscle page has otherwise no route to the rest.
+  { label: "Workouts", href: "/workouts" },
   { label: "Exercises", href: "/exercises" },
   { label: "FAQ", href: "/#faq" },
 ];

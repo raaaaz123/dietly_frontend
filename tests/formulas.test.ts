@@ -10,21 +10,27 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  bmr,
-  tdee,
   applyDeficit,
-  weeklyChangeKg,
-  proteinTarget,
+  bmi,
+  bmiBand,
+  bmr,
+  boerLeanBodyMass,
+  caloriesBurned,
+  creatineDose,
+  feetInchesToCm,
+  ffmi,
+  healthyWeightRange,
+  idealWeight,
+  lbToKg,
+  leanBodyMass,
   macroSplit,
   navyBodyFat,
-  leanBodyMass,
-  boerLeanBodyMass,
   oneRepMax,
-  idealWeight,
-  bmi,
-  healthyWeightRange,
-  lbToKg,
-  feetInchesToCm,
+  proteinTarget,
+  tdee,
+  waistToHeight,
+  weeklyChangeKg,
+  whtrBand,
 } from "../app/lib/formulas.ts";
 
 const close = (actual: number, expected: number, tol = 0.5) =>
@@ -149,4 +155,83 @@ test("BMI and healthy range", () => {
 test("unit conversion", () => {
   close(lbToKg(220), 99.79, 0.01);
   close(feetInchesToCm(5, 11), 180.34, 0.01);
+});
+
+// ---------------------------------------------------------------------------
+// The tools added 2026-09-22.
+// ---------------------------------------------------------------------------
+
+test("BMI bands sit on the WHO cut-offs", () => {
+  // The boundaries are the whole point of the band function, so they are what
+  // gets tested — a band that is right in the middle and wrong at 25.0 would
+  // look fine in every casual check.
+  assert.equal(bmiBand(18.4), "Underweight");
+  assert.equal(bmiBand(18.5), "Healthy weight");
+  assert.equal(bmiBand(24.9), "Healthy weight");
+  assert.equal(bmiBand(25), "Overweight");
+  assert.equal(bmiBand(29.9), "Overweight");
+  assert.equal(bmiBand(30), "Obesity class I");
+  assert.equal(bmiBand(35), "Obesity class II");
+  assert.equal(bmiBand(40), "Obesity class III");
+  assert.equal(bmiBand(70), "Obesity class III");
+});
+
+test("FFMI: lean mass, index and height normalisation", () => {
+  // 80 kg at 15% body fat = 68 kg lean; 1.8 m => 68 / 3.24 = 20.99
+  const r = ffmi(80, 180, 15);
+  assert.ok(Math.abs(r.leanMassKg - 68) < 1e-9);
+  assert.ok(Math.abs(r.ffmi - 20.99) < 0.01);
+  // At exactly the 1.8 m reference height, normalisation must be a no-op.
+  assert.ok(Math.abs(r.normalised - r.ffmi) < 1e-9);
+});
+
+test("FFMI normalisation lifts shorter lifters and lowers taller ones", () => {
+  // Same relative build, different heights: raw FFMI flatters the shorter
+  // lifter, and the normalised figure is what published numbers use.
+  const short = ffmi(65, 165, 15);
+  const tall = ffmi(95, 195, 15);
+  assert.ok(short.normalised > short.ffmi, "1.65 m should be adjusted upward");
+  assert.ok(tall.normalised < tall.ffmi, "1.95 m should be adjusted downward");
+});
+
+test("waist-to-height ratio is unit-agnostic", () => {
+  // The rule "keep your waist under half your height" only works because the
+  // units cancel. If they ever stop cancelling, the whole page is wrong.
+  const metric = waistToHeight(85, 180);
+  const imperial = waistToHeight(85 / 2.54, 180 / 2.54);
+  assert.ok(Math.abs(metric - imperial) < 1e-12);
+  assert.ok(Math.abs(metric - 0.4722) < 0.001);
+});
+
+test("waist-to-height bands turn at 0.5", () => {
+  assert.equal(whtrBand(0.39), "Below the healthy range");
+  assert.equal(whtrBand(0.49), "Healthy");
+  assert.equal(whtrBand(0.5), "Increased risk");
+  assert.equal(whtrBand(0.61), "High risk");
+});
+
+test("calories burned: gross exceeds net by exactly one MET", () => {
+  const { gross, net } = caloriesBurned(8, 75, 60);
+  // 8 METs, 75 kg, 60 min => 8 * 3.5 * 75 / 200 * 60 = 630
+  assert.ok(Math.abs(gross - 630) < 0.001);
+  // The difference is one MET over the same time and weight: 78.75 kcal.
+  assert.ok(Math.abs(gross - net - 78.75) < 0.001);
+});
+
+test("calories burned never returns a negative net figure", () => {
+  // Desk work is 1.5 METs; anything at or below 1 MET must floor at zero
+  // rather than reporting that sitting still burned negative calories.
+  assert.equal(caloriesBurned(1, 75, 60).net, 0);
+  assert.equal(caloriesBurned(0.9, 75, 60).net, 0);
+});
+
+test("creatine dose scales with bodyweight", () => {
+  const r = creatineDose(80);
+  assert.ok(Math.abs(r.maintenance - 2.4) < 1e-9);
+  assert.ok(Math.abs(r.loadingDaily - 24) < 1e-9);
+  // Loading is split across four servings a day.
+  assert.ok(Math.abs(r.loadingPerServing - 6) < 1e-9);
+  // Loading must be an order of magnitude above maintenance, or the phase is
+  // pointless — this pins the 10x relationship the page describes.
+  assert.ok(r.loadingDaily / r.maintenance === 10);
 });

@@ -100,6 +100,64 @@ export const GUIDES: Guide[] = [
     readingMinutes: 7,
     related: ["what-is-a-physique-score", "body-recomposition"],
   },
+
+  {
+    slug: "skinny-fat",
+    title: "Skinny Fat: What It Is and How to Fix It",
+    heading: "Skinny fat, and the only way out of it",
+    description:
+      "Why you can be a normal weight with a high body fat percentage, why eating less makes it worse, and the one approach that actually changes the shape rather than the number.",
+    blurb:
+      "Normal weight, soft shape. Why cutting harder is the wrong answer, and what works.",
+    keywords: [
+      "skinny fat",
+      "skinny fat meaning",
+      "skinny fat to muscular",
+      "normal weight obesity",
+    ],
+    published: "2026-09-23",
+    updated: "2026-09-23",
+    readingMinutes: 8,
+    related: ["body-recomposition", "what-is-a-physique-score"],
+  },
+  {
+    slug: "progressive-overload",
+    title: "Progressive Overload: The Only Rule That Matters",
+    heading: "Progressive overload, in practice",
+    description:
+      "What progressive overload actually means, the five ways to apply it beyond adding weight, how fast to add load, and what to do when the bar stops moving.",
+    blurb:
+      "The one principle behind every programme that works — and five ways to apply it.",
+    keywords: [
+      "progressive overload",
+      "progressive overload meaning",
+      "how to progress in the gym",
+      "double progression",
+    ],
+    published: "2026-09-23",
+    updated: "2026-09-23",
+    readingMinutes: 7,
+    related: ["how-long-to-build-muscle", "training-around-a-weak-point"],
+  },
+  {
+    slug: "how-long-to-build-muscle",
+    title: "How Long Does It Take to Build Muscle?",
+    heading: "How long it actually takes to build muscle",
+    description:
+      "What the research says about realistic rates of muscle gain by training age, when you will see it in the mirror versus on the scale, and why the first visible change is usually fat loss.",
+    blurb:
+      "Realistic rates by training year, and when the mirror catches up with the work.",
+    keywords: [
+      "how long to build muscle",
+      "how long does it take to build muscle",
+      "muscle growth rate",
+      "newbie gains",
+    ],
+    published: "2026-09-23",
+    updated: "2026-09-23",
+    readingMinutes: 8,
+    related: ["progressive-overload", "body-recomposition"],
+  },
 ];
 
 export const GUIDE_BY_SLUG = new Map(GUIDES.map((g) => [g.slug, g]));

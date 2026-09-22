@@ -46,6 +46,7 @@ const VS_SLUGS = readFileSync("app/lib/competitors.ts", "utf8")
   .matchAll(/^\s{4}slug: "([a-z0-9-]+)",$/gm);
 EXPECTED["vs"] = "/vs";
 EXPECTED["best-ai-body-scan-apps"] = "/best-ai-body-scan-apps";
+EXPECTED["best-workout-apps"] = "/best-workout-apps";
 for (const [, slug] of VS_SLUGS) EXPECTED[`vs/${slug}`] = `/vs/${slug}`;
 
 // The exercise cluster. Only the hubs and facets are asserted indexable — the
@@ -57,6 +58,17 @@ const exSlugify = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-
 const exCategories = [...new Set(EX.exercises.map((e) => e.category))]
   .filter(Boolean)
   .filter((n) => EX.exercises.filter((e) => e.category === n).length >= 8);
+// The workout cluster. Registered from the source file so a new plan is
+// covered by the canonical, title-length and og:image guards automatically —
+// the same reason the tool and guide registries are read rather than listed.
+const WORKOUT_SLUGS = [
+  ...readFileSync("app/lib/workouts.ts", "utf8").matchAll(/^    slug: "([a-z0-9-]+)",$/gm),
+].map((m) => m[1]);
+EXPECTED["workouts"] = "/workouts";
+for (const slug of WORKOUT_SLUGS) {
+  EXPECTED[`workouts/${slug}`] = `/workouts/${slug}`;
+}
+
 EXPECTED["exercises"] = "/exercises";
 for (const name of exCategories) {
   EXPECTED[`exercises/muscle/${exSlugify(name)}`] = `/exercises/muscle/${exSlugify(name)}`;
@@ -224,19 +236,33 @@ for (const name of Object.keys(EXPECTED).filter((k) => k.endsWith("-calculator")
 
 // A movement page with no written coaching must not be indexable, and the
 // sitemap must not list it. Both are easy to undo by "fixing" the robots tag.
+//
+// This reads the *rendered page* rather than the generated JSON. It used to
+// read the JSON, which was right while the snapshot was the only source of
+// prose — but coaching is now authored in `app/lib/coaching.ts` and merged
+// over the snapshot, so the JSON says "thin" about pages that render a full
+// set of steps. Asking the HTML is both correct across that change and a
+// stricter question: it checks what we actually published, not what we meant
+// to. A page may only be indexable if a reader can see steps on it.
 {
-  const thin = EX.exercises.filter(
-    (e) => !(e.instructions.length >= 2 || (e.overview ?? "").length > 120),
-  );
-  const sample = thin.slice(0, 20);
-  for (const e of sample) {
-    const file = `${DIR}/exercises/${e.slug}.html`;
-    if (!existsSync(file)) continue;
+  const pages = EX.exercises
+    .map((e) => `${DIR}/exercises/${e.slug}.html`)
+    .filter((f) => existsSync(f));
+  for (const file of pages) {
     const html = readFileSync(file, "utf8");
+    const slug = file.slice(`${DIR}/exercises/`.length, -".html".length);
     const robots = html.match(/<meta name="robots" content="([^"]+)"/)?.[1] ?? "";
-    if (!robots.includes("noindex")) {
+    const hasSteps = /<h2[^>]*>\s*How to do it\s*<\/h2>/.test(html);
+    if (!hasSteps && !robots.includes("noindex")) {
       failures.push(
-        `exercises/${e.slug}: has no written steps but is indexable — thin pages must be noindex`,
+        `exercises/${slug}: has no written steps but is indexable — thin pages must be noindex`,
+      );
+    }
+    // The other direction matters too: authoring steps and leaving the page
+    // noindex is silent wasted work, and nothing else would ever report it.
+    if (hasSteps && robots.includes("noindex")) {
+      failures.push(
+        `exercises/${slug}: has written steps but is still noindex — it should be allowed to rank`,
       );
     }
   }
