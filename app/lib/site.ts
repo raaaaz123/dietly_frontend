@@ -25,7 +25,7 @@ export const APP_STORE_URL = `https://apps.apple.com/app/id${APP_STORE_ID}`;
 
 /** Verified live — both stores carry the app. */
 export const PLAY_STORE_URL =
-  "https://play.google.com/store/apps/details?id=com.dietlyai.app";
+  "https://play.google.com/store/apps/details?id=com.stronger.ai";
 
 /**
  * IndexNow ownership key (`§2.2`).

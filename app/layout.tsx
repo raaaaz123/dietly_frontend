@@ -112,7 +112,7 @@ export const metadata: Metadata = {
       app_store_id: APP_STORE_ID,
     },
     android: {
-      package: "com.dietlyai.app",
+      package: "com.stronger.ai",
     },
   },
 };

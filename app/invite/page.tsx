@@ -46,7 +46,7 @@ function InviteContent() {
           Download for iOS
         </a>
         <a 
-          href="https://play.google.com/store/apps/details?id=com.dietlyai.app" 
+          href="https://play.google.com/store/apps/details?id=com.stronger.ai" 
           className="bg-elevated text-fg border border-border font-bold py-4 rounded-xl hover:bg-ghost transition-colors"
         >
           Download for Android
