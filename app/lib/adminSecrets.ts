@@ -32,10 +32,10 @@
 /** The values committed to `.env.example`. Treated as "not set" in production. */
 const PLACEHOLDERS = new Set(["vital-admin-dev-key", "admin", "change-me", ""]);
 
+// Sign-in is the admin key itself now (see adminSession.keyValid), so the old
+// ADMIN_USERNAME / ADMIN_PASSWORD pair is no longer read or required.
 const DEV_DEFAULTS = {
   ADMIN_API_KEY: "vital-admin-dev-key",
-  ADMIN_USERNAME: "admin",
-  ADMIN_PASSWORD: "admin",
 } as const;
 
 type SecretName = keyof typeof DEV_DEFAULTS;

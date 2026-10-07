@@ -19,7 +19,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 interface AuthCtx {
   isAdmin: boolean;
   loading: boolean;
-  signIn: (username: string, password: string) => Promise<void>;
+  signIn: (key: string) => Promise<void>;
   signOut: () => void;
 }
 
@@ -55,15 +55,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const signIn = async (username: string, password: string) => {
+  const signIn = async (key: string) => {
     const res = await fetch("/api/admin/session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ key }),
     });
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.detail ?? "Invalid username or password");
+      throw new Error(err.detail ?? "Invalid admin key");
     }
     setIsAdmin(true);
   };

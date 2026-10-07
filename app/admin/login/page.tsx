@@ -6,8 +6,7 @@ import { useAuth } from "../../lib/auth";
 export default function AdminLogin() {
   const { signIn } = useAuth();
   const router = useRouter();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [key, setKey] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -16,7 +15,7 @@ export default function AdminLogin() {
     setError("");
     setLoading(true);
     try {
-      await signIn(username, password);
+      await signIn(key);
       router.replace("/admin/dashboard");
     } catch (err: unknown) {
       setError((err as Error).message ?? "Sign-in failed");
@@ -35,33 +34,20 @@ export default function AdminLogin() {
           Admin login
         </h1>
         <p className="text-sm text-muted mb-8">
-          Enter your admin credentials to continue.
+          Enter the admin API key to continue.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-bold text-muted tracking-widest mb-2">
-              USERNAME
-            </label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              autoComplete="username"
-              className="w-full bg-elevated border border-border rounded-xl px-4 py-3 text-fg text-sm outline-none focus:border-accent transition-colors"
-              placeholder="admin"
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-bold text-muted tracking-widest mb-2">
-              PASSWORD
+              ADMIN KEY
             </label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={key}
+              onChange={(e) => setKey(e.target.value)}
               required
+              autoFocus
               autoComplete="current-password"
               className="w-full bg-elevated border border-border rounded-xl px-4 py-3 text-fg text-sm outline-none focus:border-accent transition-colors"
               placeholder="••••••••"

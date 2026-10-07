@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import {
   clearCookie,
-  credentialsValid,
+  keyValid,
   hasSession,
   issueCookie,
 } from "../../../lib/adminSession";
@@ -10,7 +10,8 @@ import { notConfiguredResponse } from "../../../lib/adminSecrets";
 /**
  * Sign in, sign out, and "am I still signed in". See `app/lib/adminSession.ts`.
  *
- * Sign-in is where an unconfigured deployment surfaces: `credentialsValid` and
+ * Sign-in checks the typed key against `ADMIN_API_KEY`. It is also where an
+ * unconfigured deployment surfaces: `keyValid` and
  * `issueCookie` both throw rather than fall back to the published defaults, so
  * this answers 503 naming the missing variable instead of accepting
  * `admin`/`admin` and issuing a forgeable cookie. `GET` needs no such branch —
@@ -18,7 +19,7 @@ import { notConfiguredResponse } from "../../../lib/adminSecrets";
  */
 
 export async function POST(req: NextRequest) {
-  let body: { username?: string; password?: string };
+  let body: { key?: string };
   try {
     body = await req.json();
   } catch {
@@ -26,10 +27,8 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    if (!credentialsValid(body.username ?? "", body.password ?? "")) {
-      // One message for both halves — saying which was wrong tells an attacker
-      // when they have found a real username.
-      return Response.json({ detail: "Invalid username or password" }, { status: 401 });
+    if (!keyValid(body.key ?? "")) {
+      return Response.json({ detail: "Invalid admin key" }, { status: 401 });
     }
 
     const res = Response.json({ ok: true });

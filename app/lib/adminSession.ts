@@ -79,17 +79,12 @@ function matches(a: string, b: string): boolean {
 }
 
 /**
- * Both halves checked, and both throw rather than default when unconfigured.
- *
- * `ADMIN_PASSWORD` used to fall back to `admin`, so a deployment that forgot
- * it accepted `admin`/`admin` — a worse hole than the key fallback the audit
- * named, because it needs no knowledge of the repo at all.
+ * Sign-in is the admin API key itself: whoever holds `ADMIN_API_KEY` can
+ * already call the backend's admin API, so it is the one credential to check.
+ * Throws rather than defaults when the key is unconfigured (see adminSecrets).
  */
-export function credentialsValid(username: string, password: string): boolean {
-  return (
-    matches((username ?? "").trim(), secret("ADMIN_USERNAME")) &&
-    matches(password ?? "", secret("ADMIN_PASSWORD"))
-  );
+export function keyValid(key: string): boolean {
+  return matches((key ?? "").trim(), secret("ADMIN_API_KEY"));
 }
 
 export function issueCookie(): string {
