@@ -50,6 +50,7 @@ type Stats = {
   missing_video: number;
   /** Published *and* clipless — what the "unpublish without video" job clears. */
   published_no_video: number;
+  unpublished_with_video?: number;
 };
 
 type ListResponse = {
@@ -198,6 +199,7 @@ export default function ExercisesPage() {
 
       <MediaJobs
         publishedNoVideo={stats?.published_no_video ?? 0}
+        unpublishedWithVideo={stats?.unpublished_with_video ?? 0}
         onChanged={() => load(true)}
       />
 

@@ -80,10 +80,13 @@ type MigrateStatus = {
 
 export default function MediaJobs({
   publishedNoVideo,
+  unpublishedWithVideo,
   onChanged,
 }: {
   /** Live rows with no clip, from the catalogue stats the page already loads. */
   publishedNoVideo: number;
+  /** Hidden rows that already have a clip in our bucket. */
+  unpublishedWithVideo: number;
   onChanged: () => void;
 }) {
   const [migrate, setMigrate] = useState<MigrateStatus | null>(null);
@@ -95,6 +98,7 @@ export default function MediaJobs({
   /// Arms the unpublish button. A bulk write over the whole catalogue is not
   /// something a misplaced click should do, and `confirm()` blocks the tab.
   const [armed, setArmed] = useState(false);
+  const [publishArmed, setPublishArmed] = useState(false);
 
   /// Set while a run is in progress so the catalogue is reloaded once — and
   /// only once — when it stops.
@@ -214,6 +218,27 @@ export default function MediaJobs({
       onChanged();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not unpublish those rows");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function publishWithVideo() {
+    setBusy(true);
+    setError(null);
+    setNote(null);
+    setPublishArmed(false);
+    try {
+      const r = await api.post<{ published?: number }>("/exercises/admin/publish-with-video");
+      const n = r?.published ?? 0;
+      setNote(
+        n === 0
+          ? "Nothing to do — every exercise with a video is already published."
+          : `Published ${n.toLocaleString()} exercise${n === 1 ? "" : "s"} with a video.`
+      );
+      onChanged();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Could not publish those rows");
     } finally {
       setBusy(false);
     }
@@ -406,6 +431,29 @@ export default function MediaJobs({
           </div>
 
           <div className="shrink-0 flex items-center gap-2">
+            {publishArmed && (
+              <button
+                onClick={() => setPublishArmed(false)}
+                className="text-xs px-3 py-2 rounded-lg border border-border hover:border-border-strong text-muted hover:text-fg transition-colors"
+              >
+                Cancel
+              </button>
+            )}
+            <button
+              onClick={() => (publishArmed ? publishWithVideo() : setPublishArmed(true))}
+              disabled={busy || running || migrating || unpublishedWithVideo === 0}
+              className={`text-xs px-3 py-2 rounded-lg border disabled:opacity-40 transition-colors ${
+                publishArmed
+                  ? "border-accent/50 text-accent hover:bg-accent/10"
+                  : "border-border hover:border-border-strong text-fg"
+              }`}
+            >
+              {unpublishedWithVideo === 0
+                ? "All with video published"
+                : publishArmed
+                  ? `Yes — publish ${unpublishedWithVideo.toLocaleString()}`
+                  : `Publish ${unpublishedWithVideo.toLocaleString()} with video`}
+            </button>
             {armed && (
               <button
                 onClick={() => setArmed(false)}
