@@ -24,6 +24,8 @@ type Config = {
   plan_generation_open: boolean;
   coach_open: boolean;
   subscription_enforced: boolean;
+  exit_offer_discount_manual: boolean;
+  exit_offer_discount_percent: number;
   updated_at?: string | null;
   updated_by?: string | null;
 };
@@ -92,8 +94,9 @@ export default function AppConfigPage() {
       // other with whatever each of them happened to have loaded.
       const changed: Partial<Config> = {};
       for (const k of Object.keys(draft) as (keyof Config)[]) {
-        if (typeof draft[k] === "boolean" && draft[k] !== config?.[k]) {
-          (changed as Record<string, boolean>)[k] = draft[k] as boolean;
+        const v = draft[k];
+        if ((typeof v === "boolean" || typeof v === "number") && v !== config?.[k]) {
+          (changed as Record<string, boolean | number>)[k] = v;
         }
       }
       const res = await api.put<Config>("/app-config/admin", changed);
@@ -122,6 +125,9 @@ export default function AppConfigPage() {
   }
 
   const isDirty = JSON.stringify(draft) !== JSON.stringify(config);
+  const manual = draft.exit_offer_discount_manual === true;
+  const pct = draft.exit_offer_discount_percent ?? 50;
+  const pctValid = Number.isInteger(pct) && pct >= 1 && pct <= 90;
   const hard = draft.onboarding_paywall_closable === false;
 
   return (
@@ -192,6 +198,74 @@ export default function AppConfigPage() {
         )}
       </div>
 
+      {/* The exit offer's "N% OFF" badge: measured from store prices, or typed in. */}
+      <div className="bg-elevated border border-border rounded-2xl p-5 mb-6">
+        <p className="font-semibold text-fg text-sm">Exit offer discount</p>
+        <p className="text-xs text-muted mt-0.5 mb-4">
+          The percentage shown on the exit offer. It only changes the label; the price charged is
+          still the exit offer product&apos;s price in App Store Connect.
+        </p>
+
+        <div className="grid sm:grid-cols-2 gap-3">
+          <button
+            onClick={() => setDraft({ ...draft, exit_offer_discount_manual: false })}
+            className={`text-left rounded-2xl border p-4 transition-colors ${
+              !manual
+                ? "border-accent/50 bg-accent/10"
+                : "border-border bg-bg hover:border-border-strong"
+            }`}
+          >
+            <p className={`text-sm font-bold ${!manual ? "text-accent" : "text-fg"}`}>Auto</p>
+            <p className="text-xs text-muted mt-1 leading-relaxed">
+              Worked out on the phone from the normal and exit offer prices in that
+              storefront, so it is always the real saving.
+            </p>
+          </button>
+
+          <button
+            onClick={() => setDraft({ ...draft, exit_offer_discount_manual: true })}
+            className={`text-left rounded-2xl border p-4 transition-colors ${
+              manual
+                ? "border-amber-500/50 bg-amber-500/10"
+                : "border-border bg-bg hover:border-border-strong"
+            }`}
+          >
+            <p className={`text-sm font-bold ${manual ? "text-amber-400" : "text-fg"}`}>Manual</p>
+            <p className="text-xs text-muted mt-1 leading-relaxed">
+              Show a fixed percentage everywhere. Good for rounding, like 49% showing as 50%.
+            </p>
+          </button>
+        </div>
+
+        {manual && (
+          <div className="mt-4">
+            <label className="flex items-center gap-3">
+              <input
+                type="number"
+                min={1}
+                max={90}
+                step={1}
+                value={Number.isNaN(pct) ? "" : pct}
+                onChange={(e) =>
+                  setDraft({ ...draft, exit_offer_discount_percent: parseInt(e.target.value, 10) })
+                }
+                className="w-24 bg-bg border border-border rounded-xl px-3 py-2 text-sm text-fg"
+              />
+              <span className="text-sm text-fg font-semibold">% OFF</span>
+            </label>
+            {!pctValid ? (
+              <p className="text-xs text-red-400 mt-2">Enter a whole number from 1 to 90.</p>
+            ) : (
+              <p className="text-xs text-amber-400 mt-2 leading-relaxed">
+                Keep it close to the real saving. A badge bigger than the actual price cut
+                misleads buyers and can get the app rejected (guideline 3.1.2). The badge only
+                shows when the exit offer really is cheaper.
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+
       <div className="space-y-3 mb-8">
         {TOGGLES.map((t) => {
           const value = draft[t.key] as boolean;
@@ -227,7 +301,7 @@ export default function AppConfigPage() {
       <div className="flex flex-col sm:flex-row items-center gap-4">
         <button
           onClick={save}
-          disabled={saving || !isDirty}
+          disabled={saving || !isDirty || (manual && !pctValid)}
           className="bg-accent text-accent-ink text-sm font-bold px-6 py-3 rounded-xl hover:opacity-90 disabled:opacity-40 transition-opacity"
         >
           {saving ? "Saving…" : "Save changes"}
