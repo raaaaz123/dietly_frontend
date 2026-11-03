@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import StoreButtons from "../StoreButtons";
 import { ReactNode } from "react";
 
 /**
@@ -240,12 +240,13 @@ export function ToolCta({ children }: { children: ReactNode }) {
   return (
     <div className="mt-8 pt-6 border-t border-border">
       <p className="text-[13px] text-fg-muted leading-relaxed mb-4">{children}</p>
-      <Link
-        href="/#download"
-        className="block w-full py-3.5 bg-accent text-accent-ink text-center text-[12px] font-bold tracking-[1.5px] rounded-xl hover:shadow-[0_0_20px_rgba(31,138,67,0.3)] transition-all"
-      >
-        GET DIETLY FREE
-      </Link>
+      {/* Was a "GET DIETLY FREE" link to /#download, an anchor the homepage
+          does not have, so it dropped people at the top of the homepage. The
+          app is also not free past the trial. The store badges go straight
+          to the listing. */}
+      <div data-placement="tool_result_panel">
+        <StoreButtons height={36} />
+      </div>
     </div>
   );
 }

@@ -388,3 +388,127 @@ export const inToCm = (inches: number) => inches * CM_PER_INCH;
 export const cmToIn = (cm: number) => cm / CM_PER_INCH;
 export const feetInchesToCm = (feet: number, inches: number) =>
   inToCm(feet * 12 + inches);
+
+// ---------------------------------------------------------------------------
+// Weight loss goal date
+// ---------------------------------------------------------------------------
+
+/**
+ * Week-by-week projection to a goal weight at a fixed weekly rate.
+ *
+ * Maintenance is recomputed from the new weight every week, because it falls
+ * as you get lighter. That is the bit a flat "deficit ÷ 7700" timeline leaves
+ * out, and it is why the calorie target at the goal is lower than at the start.
+ */
+export function weightLossPlan(args: {
+  weightKg: number;
+  goalKg: number;
+  heightCm: number;
+  age: number;
+  sex: Sex;
+  activity: number;
+  kgPerWeek: number;
+}) {
+  const { weightKg, goalKg, heightCm, age, sex, activity, kgPerWeek } = args;
+  const toLose = Math.max(0, weightKg - goalKg);
+  const weeks = kgPerWeek > 0 ? Math.ceil(toLose / kgPerWeek) : 0;
+  const dailyDeficit = (kgPerWeek * KCAL_PER_KG) / 7;
+  const startMaint = tdee(bmr(weightKg, heightCm, age, sex), activity);
+  const goalMaint = tdee(bmr(goalKg, heightCm, age, sex), activity);
+  const start = applyDeficit(startMaint, -dailyDeficit, sex);
+  const end = applyDeficit(goalMaint, -dailyDeficit, sex);
+  const goalDate = new Date(Date.now() + weeks * 7 * 24 * 3600 * 1000);
+  return {
+    toLose,
+    weeks,
+    goalDate,
+    dailyDeficit,
+    startMaint,
+    goalMaint,
+    startCalories: start.calories,
+    endCalories: end.calories,
+    floored: start.floored || end.floored,
+    /** Over 1% of bodyweight a week is where muscle loss starts to climb. */
+    aggressive: kgPerWeek > weightKg * 0.01,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Barbell plate loading
+// ---------------------------------------------------------------------------
+
+export const KG_PLATES = [25, 20, 15, 10, 5, 2.5, 1.25] as const;
+export const LB_PLATES = [45, 35, 25, 10, 5, 2.5] as const;
+
+/**
+ * Plates per side to reach a target, largest first.
+ *
+ * Greedy is optimal for standard plate sets, because every plate is at least
+ * the sum it replaces. `remainder` is what could not be loaded with the
+ * smallest plate available, so the page can say "closest you can get is...".
+ */
+export function platesPerSide(target: number, bar: number, plates: readonly number[]) {
+  const perSide = Math.max(0, (target - bar) / 2);
+  let left = Math.round(perSide * 1000) / 1000;
+  const out: number[] = [];
+  for (const p of plates) {
+    while (left + 1e-9 >= p) {
+      out.push(p);
+      left = Math.round((left - p) * 1000) / 1000;
+    }
+  }
+  const loaded = bar + 2 * out.reduce((a, b) => a + b, 0);
+  return { perSide, plates: out, loaded, remainder: left * 2 };
+}
+
+// ---------------------------------------------------------------------------
+// US Army body fat (one-site tape, Army Directive 2023-11)
+// ---------------------------------------------------------------------------
+
+/**
+ * The Army's 2023 abdomen-only tape formula, in pounds and inches.
+ *
+ *   men:   -26.97 - 0.12 x weight + 1.99 x abdomen
+ *   women:  -9.15 - 0.015 x weight + 1.27 x abdomen
+ */
+export function armyBodyFat(weightLb: number, abdomenIn: number, sex: Sex): number {
+  const v =
+    sex === "male"
+      ? -26.97 - 0.12 * weightLb + 1.99 * abdomenIn
+      : -9.15 - 0.015 * weightLb + 1.27 * abdomenIn;
+  return Math.max(2, Math.round(v));
+}
+
+/** Maximum allowable body fat by age group, AR 600-9 (2023). */
+export function armyBodyFatLimit(age: number, sex: Sex): number {
+  const male = [20, 22, 24, 26];
+  const female = [30, 32, 34, 36];
+  const i = age <= 20 ? 0 : age <= 27 ? 1 : age <= 39 ? 2 : 3;
+  return (sex === "male" ? male : female)[i];
+}
+
+// ---------------------------------------------------------------------------
+// Daily water
+// ---------------------------------------------------------------------------
+
+/**
+ * Daily fluid to drink, in millilitres.
+ *
+ * 35 ml/kg is the common clinical baseline. Training adds roughly 500 ml per
+ * hour of sweaty exercise, and heat adds about 500 ml more. EFSA's adequate
+ * intake (2.5 L men, 2.0 L women, of which ~20% comes from food) is shown
+ * alongside so the number has a reference point.
+ */
+export function waterIntake(args: {
+  weightKg: number;
+  sex: Sex;
+  exerciseMin: number;
+  hot: boolean;
+}) {
+  const base = 35 * args.weightKg;
+  const exercise = (args.exerciseMin / 60) * 500;
+  const heat = args.hot ? 500 : 0;
+  const total = base + exercise + heat;
+  const efsaDrinks = (args.sex === "male" ? 2500 : 2000) * 0.8;
+  return { base, exercise, heat, total, efsaDrinks };
+}

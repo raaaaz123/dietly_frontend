@@ -76,7 +76,7 @@ export const TOOLS: Tool[] = [
     blurb: "The deficit for your target rate — and an honest timeline.",
     keywords: [
       "calorie deficit calculator",
-      "weight loss calculator",
+      "calorie deficit for weight loss",
       "how long to lose weight",
       "fat loss calculator",
     ],
@@ -223,6 +223,70 @@ export const TOOLS: Tool[] = [
     ],
     lastModified: "2026-09-22",
     related: ["macro-calculator", "protein-calculator", "calories-burned-calculator"],
+  },
+  {
+    slug: "weight-loss-calculator",
+    name: "Weight Loss Calculator",
+    title: "Weight Loss Calculator: Goal Date and Daily Calories",
+    description:
+      "Enter your weight, goal and pace to see the date you will reach it, the calories to eat each day, and how that target changes as you get lighter. Free, no signup.",
+    blurb: "The date you hit your goal weight, and the calories that get you there.",
+    keywords: [
+      "weight loss calculator",
+      "goal weight calculator",
+      "weight loss date calculator",
+      "how long will it take to lose weight",
+    ],
+    lastModified: "2026-11-03",
+    related: ["calorie-deficit-calculator", "tdee-calculator", "protein-calculator"],
+  },
+  {
+    slug: "plate-calculator",
+    name: "Plate Calculator",
+    title: "Barbell Plate Calculator: kg and lb",
+    description:
+      "Type the weight you want on the bar and see exactly which plates go on each side. Works in kg and lb, with Olympic, women's and training bars.",
+    blurb: "Which plates go on each side of the bar, in kg or lb.",
+    keywords: [
+      "plate calculator",
+      "barbell plate calculator",
+      "barbell weight calculator",
+      "plate loading calculator",
+    ],
+    lastModified: "2026-11-03",
+    related: ["one-rep-max-calculator", "protein-calculator", "creatine-calculator"],
+  },
+  {
+    slug: "army-body-fat-calculator",
+    name: "Army Body Fat Calculator",
+    title: "Army Body Fat Calculator: 2023 One-Site Tape Test",
+    description:
+      "Estimate your body fat with the US Army's 2023 abdomen-only tape formula and check it against the maximum for your age and sex. Free, no signup.",
+    blurb: "The Army's new one-site tape test, checked against your age limit.",
+    keywords: [
+      "army body fat calculator",
+      "army tape test calculator",
+      "army body fat standards",
+      "ar 600-9 body fat",
+    ],
+    lastModified: "2026-11-03",
+    related: ["body-fat-calculator", "waist-to-height-ratio-calculator", "lean-body-mass-calculator"],
+  },
+  {
+    slug: "water-intake-calculator",
+    name: "Water Intake Calculator",
+    title: "Water Intake Calculator: How Much Water Per Day",
+    description:
+      "How much water to drink a day from your bodyweight, training and climate, with the official reference intakes alongside. Free, no signup.",
+    blurb: "Your daily water target, adjusted for training and heat.",
+    keywords: [
+      "water intake calculator",
+      "how much water should i drink",
+      "daily water intake",
+      "water calculator",
+    ],
+    lastModified: "2026-11-03",
+    related: ["protein-calculator", "creatine-calculator", "calories-burned-calculator"],
   },
 ];
 

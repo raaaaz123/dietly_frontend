@@ -37,6 +37,8 @@ const columns = [
       { label: "Macro calculator", href: "/macro-calculator" },
       { label: "Protein calculator", href: "/protein-calculator" },
       { label: "Body fat calculator", href: "/body-fat-calculator" },
+      { label: "Weight loss calculator", href: "/weight-loss-calculator" },
+      { label: "Plate calculator", href: "/plate-calculator" },
       { label: "All calculators", href: "/tools" },
     ],
   },
