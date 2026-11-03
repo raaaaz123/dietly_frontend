@@ -230,7 +230,7 @@ export default function RoundupPage() {
               The week of training is then built around that weak point, your goal and
               the equipment you have, and next week&rsquo;s scan is how you find out
               whether it worked. Food logging is included and exists to keep the plan
-              fed. Free to start; Pro pricing is on the store listings. iOS 17 or
+              fed. Free to download, with a 7-day free trial on the yearly plan; Pro pricing is on the store listings. iOS 17 or
               later, and Android.
             </P>
             <P>

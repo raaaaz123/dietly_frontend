@@ -28,6 +28,10 @@ export default function JsonLd() {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: SITE_NAME,
+    // Search Console: "dietly ai" is the brand query that wins clicks (pos 1.5),
+    // plain "dietly" collides with a Polish meal-delivery company. Naming both
+    // tells Google they are the same app as "Dietly Fit".
+    alternateName: ["Dietly AI", "Dietly"],
     description: DESCRIPTION,
     url: SITE_URL,
     applicationCategory: "HealthApplication",
@@ -54,8 +58,17 @@ export default function JsonLd() {
     name: "Rexatech",
     url: SITE_URL,
     logo: `${SITE_URL}/dietly-icon.png`,
-    brand: { "@type": "Brand", name: SITE_NAME },
+    brand: { "@type": "Brand", name: SITE_NAME, alternateName: ["Dietly AI", "Dietly"] },
     sameAs: [APP_STORE_URL, PLAY_STORE_URL],
+  };
+
+  /** Feeds the site name Google shows above the result. */
+  const website = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    alternateName: ["Dietly AI", "Dietly"],
+    url: SITE_URL,
   };
 
   const faqPage = {
@@ -70,7 +83,7 @@ export default function JsonLd() {
 
   return (
     <>
-      {[app, organization, faqPage].map((data, i) => (
+      {[website, app, organization, faqPage].map((data, i) => (
         <script
           key={i}
           type="application/ld+json"

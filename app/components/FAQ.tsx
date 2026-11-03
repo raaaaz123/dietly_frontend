@@ -26,7 +26,7 @@ export const faqs = [
   },
   {
     q: "What does it cost?",
-    a: "Free to start. Dietly Fit Pro unlocks unlimited scans, your full weekly plan, unlimited logging and the AI coach, and you can cancel any time from your Apple ID or Google Play settings.",
+    a: "Free to download, with a 7-day free trial on the yearly plan. Dietly Fit Pro unlocks unlimited scans, your full weekly plan, unlimited logging and the AI coach, and you can cancel any time from your Apple ID or Google Play settings.",
   },
 ];
 

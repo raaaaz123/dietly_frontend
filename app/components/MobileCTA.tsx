@@ -35,7 +35,7 @@ export default function MobileCTA() {
         visible ? "translate-y-0" : "translate-y-[130%]"
       }`}
     >
-      <div className="mx-3 mb-3 rounded-[20px] border border-border bg-bg/92 p-2.5 backdrop-blur-xl shadow-[0_-8px_40px_-12px_rgba(0,0,0,0.8)]">
+      <div data-placement="sticky_bar" className="mx-3 mb-3 rounded-[20px] border border-border bg-bg/92 p-2.5 backdrop-blur-xl shadow-[0_-8px_40px_-12px_rgba(0,0,0,0.8)]">
         <StoreButtons height={38} fullWidthMobile={false} className="justify-center" />
       </div>
     </div>

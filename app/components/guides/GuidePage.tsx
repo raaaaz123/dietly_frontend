@@ -1,4 +1,6 @@
 import Link from "next/link";
+import InstallCard from "../InstallCard";
+import MobileCTA from "../MobileCTA";
 import { ReactNode } from "react";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
@@ -174,6 +176,13 @@ export default function GuidePage({
             <div className="text-fg-muted text-[16px] leading-[1.75] mt-4">{children}</div>
           </Reveal>
 
+          <InstallCard
+            className="mt-12"
+            placement="guide_end"
+            title="Put this guide to work"
+            body="Dietly Fit scores one photo a week out of 100, names the weak point, and builds your training week around it. Every set is logged as you go."
+          />
+
           <Reveal>
             <p className="mt-12 text-[12px] leading-relaxed text-fg-faint border border-border rounded-xl p-5">
               <strong className="text-fg-muted">Not medical advice.</strong>{" "}
@@ -213,6 +222,7 @@ export default function GuidePage({
         </article>
       </main>
       <Footer />
+      <MobileCTA />
     </>
   );
 }

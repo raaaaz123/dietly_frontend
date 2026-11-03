@@ -247,7 +247,7 @@ export default function Page() {
               logging is not as fast as Hevy&rsquo;s, and the free tier is not
               as generous as JEFIT&rsquo;s. It also requires you to photograph
               yourself every week, which some people will not do — and if you
-              will not, most of the value is gone. Free to start; Pro pricing is
+              will not, most of the value is gone. Free to download, with a 7-day free trial on the yearly plan; Pro pricing is
               on the store listings, which is the same thing we just criticised
               three other apps for, and it is fair to hold us to it.
             </P>

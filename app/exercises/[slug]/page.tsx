@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import StoreButtons from "../../components/StoreButtons";
+import MobileCTA from "../../components/MobileCTA";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import Reveal from "../../components/Reveal";
@@ -278,9 +280,9 @@ export default async function Page({
                 movement like this gets programmed when your {muscle.toLowerCase()} is
                 what needs the work, not because it was next on a list.
               </p>
-              <Link href="/#get" className="btn btn-primary btn-sm mt-5">
-                Get the app
-              </Link>
+              <div data-placement="exercise_card">
+                <StoreButtons className="mt-5" height={40} />
+              </div>
             </div>
 
             {related.length > 0 && (
@@ -302,6 +304,7 @@ export default async function Page({
         </article>
       </main>
       <Footer />
+      <MobileCTA />
     </>
   );
 }

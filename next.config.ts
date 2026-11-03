@@ -23,6 +23,9 @@ const nextConfig: NextConfig = {
     // job. Unset means posthog-js is never loaded at all.
     POSTHOG_KEY: process.env.POSTHOG_KEY,
     POSTHOG_HOST: process.env.POSTHOG_HOST,
+    // App Store Connect provider token for install attribution. Public by
+    // design: it appears in every campaign link Apple generates.
+    APP_STORE_PT: process.env.APP_STORE_PT,
   },
   async headers() {
     return [

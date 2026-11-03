@@ -17,12 +17,12 @@ export default function Cta() {
               built to fix it.
             </p>
 
-            <div className="mt-7 flex justify-center">
+            <div className="mt-7 flex justify-center" data-placement="footer_cta">
               <StoreButtons fullWidthMobile={false} />
             </div>
 
             <p className="mt-4 text-[13px] font-semibold text-fg-faint">
-              Free to start · Cancel any time
+              7-day free trial on yearly · Cancel any time
             </p>
           </div>
         </div>

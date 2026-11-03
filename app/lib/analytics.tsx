@@ -23,7 +23,51 @@ import { APP_STORE_URL, PLAY_STORE_URL } from "./site";
 // admin credentials that block used to carry, which is why it now names each
 // variable it inlines instead of taking whatever it is given.
 const KEY = process.env.POSTHOG_KEY;
-const HOST = process.env.POSTHOG_HOST ?? "https://eu.i.posthog.com";
+const HOST = process.env.POSTHOG_HOST ?? "https://us.i.posthog.com";
+
+/** App Store Connect provider token (`pt`). With it, the `ct` campaign we add
+ *  below shows up in App Store Connect > App Analytics > Sources as installs
+ *  per page. Without it Apple ignores `ct`, so we only add it when set. */
+const APP_STORE_PT = process.env.APP_STORE_PT;
+
+/**
+ * Crawlers that run JavaScript and so fire pageviews. Measured 2026-11-03: of
+ * 184 `/privacy` views in 60 days, 172 were Google Play's policy checker
+ * (`PlayStore-Google`), which re-fetches the privacy and delete-account URLs
+ * from the Play listing. They made the privacy page look like the second most
+ * visited page on the site. Google's renderer and Lighthouse do the same.
+ */
+const BOT_UA =
+  /PlayStore-Google|Googlebot|Google-InspectionTool|AdsBot|Mediapartners|Chrome-Lighthouse|HeadlessChrome|bot\b|crawler|spider|^Google$/i;
+
+/** A short, stable campaign name for the page a click came from. */
+function campaignFor(path: string): string {
+  const first = path.split("/").filter(Boolean)[0] ?? "home";
+  const tail = path.split("/").filter(Boolean).slice(1).join("-");
+  return `web-${first}${tail ? "-" + tail : ""}`.slice(0, 40);
+}
+
+/** Adds install attribution to a store link, once, just before it opens. */
+function withAttribution(href: string, store: "app_store" | "play_store", path: string) {
+  try {
+    const url = new URL(href);
+    const campaign = campaignFor(path);
+    if (store === "play_store" && !url.searchParams.has("referrer")) {
+      url.searchParams.set(
+        "referrer",
+        `utm_source=dietly.life&utm_medium=web&utm_campaign=${campaign}`,
+      );
+    }
+    if (store === "app_store" && APP_STORE_PT && !url.searchParams.has("ct")) {
+      url.searchParams.set("pt", APP_STORE_PT);
+      url.searchParams.set("ct", campaign);
+      url.searchParams.set("mt", "8");
+    }
+    return url.toString();
+  } catch {
+    return href;
+  }
+}
 
 /** Store links are tracked by delegation rather than by wiring a handler into
  *  each button. The store URLs appear in StoreButtons, MobileCTA, Cta and the
@@ -43,6 +87,7 @@ function storeFor(href: string): "app_store" | "play_store" | null {
 export default function Analytics() {
   useEffect(() => {
     if (!KEY) return;
+    if (BOT_UA.test(navigator.userAgent)) return;
 
     // Imported here rather than at module scope so the SDK stays out of the
     // initial bundle. It is only ever needed after hydration, and this page's
@@ -68,8 +113,13 @@ export default function Analytics() {
       const onClick = (event: MouseEvent) => {
         const link = (event.target as HTMLElement | null)?.closest?.("a");
         if (!link) return;
-        const store = storeFor(link.getAttribute("href") ?? "");
+        const href = link.getAttribute("href") ?? "";
+        const store = storeFor(href);
         if (!store) return;
+
+        // Capture phase runs before the browser follows the link, so the
+        // attributed URL is the one that opens.
+        link.setAttribute("href", withAttribution(href, store, window.location.pathname));
 
         posthog.capture("store_click", {
           store,
@@ -78,6 +128,10 @@ export default function Analytics() {
           // homepage and it is worth knowing whether the hero or the closer
           // does the work.
           label: link.getAttribute("aria-label") ?? undefined,
+          // Hero, footer CTA, sticky bar, calculator result, guide end...
+          placement:
+            link.closest("[data-placement]")?.getAttribute("data-placement") ??
+            undefined,
         });
       };
 

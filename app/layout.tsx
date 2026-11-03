@@ -29,7 +29,7 @@ const SITE_URL = SITE;
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Dietly Fit — Gym Workout Log, AI Trainer & Body Scan",
+    default: "Dietly Fit (Dietly AI): AI Body Scan & Workout Log",
     template: "%s | Dietly Fit",
   },
   description: DESCRIPTION,
@@ -45,6 +45,8 @@ export const metadata: Metadata = {
     "muscle building app",
     "macro tracker",
     "Dietly Fit",
+    "Dietly AI",
+    "Dietly app",
   ],
   authors: [{ name: "Rexatech", url: SITE_URL }],
   creator: "Rexatech",
@@ -55,13 +57,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: "Dietly Fit",
-    title: "Dietly Fit — Gym Workout Log, AI Trainer & Body Scan",
+    title: "Dietly Fit (Dietly AI): AI Body Scan & Workout Log",
     description: DESCRIPTION,
     // Images come from app/opengraph-image.tsx, which Next wires up itself.
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dietly Fit — Gym Workout Log, AI Trainer & Body Scan",
+    title: "Dietly Fit (Dietly AI): AI Body Scan & Workout Log",
     description: DESCRIPTION,
     creator: "@dietlyapp",
   },

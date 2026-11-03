@@ -238,7 +238,7 @@ export default function ComparePage({ slug }: { slug: string }) {
                     {SITE_NAME}
                   </p>
                   <p className="mt-3 text-[15px] leading-relaxed text-fg-muted">
-                    Free to start. Pro unlocks unlimited scans, the full weekly plan,
+                    Free to download, with a 7-day free trial on the yearly plan. Pro unlocks unlimited scans, the full weekly plan,
                     unlimited logging and the coach. The current price is on the App
                     Store and Google Play listings — we do not restate it here,
                     because a price copied into a second place is a price that goes

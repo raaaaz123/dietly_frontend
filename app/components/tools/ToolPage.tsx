@@ -2,6 +2,8 @@ import Link from "next/link";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import Reveal from "../Reveal";
+import InstallCard from "../InstallCard";
+import MobileCTA from "../MobileCTA";
 import { SITE_URL } from "../../lib/site";
 import { tool, type Tool } from "../../lib/tools";
 import { ReactNode } from "react";
@@ -150,6 +152,16 @@ export default function ToolPage({
 
         <Reveal delay={200}>{widget}</Reveal>
 
+        {/* Straight under the result: the visitor has just got a number and
+            this is the moment they care most about acting on it. */}
+        <div className="max-w-[800px] mx-auto px-6 md:px-12 mt-10">
+          <InstallCard
+            placement="tool_result"
+            title="Turn this number into a plan"
+            body="Dietly Fit logs every set, scores one photo a week out of 100, and builds the training week around the area holding you back."
+          />
+        </div>
+
         <section className="max-w-[800px] mx-auto px-6 md:px-12 mt-12">
           <Reveal>
             <article className="text-fg-muted leading-relaxed space-y-8">
@@ -162,6 +174,7 @@ export default function ToolPage({
         <RelatedTools current={t} />
       </main>
       <Footer />
+      <MobileCTA />
     </>
   );
 }

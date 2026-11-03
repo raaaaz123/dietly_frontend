@@ -58,7 +58,7 @@ ${SITE_NAME} is built by Rexatech. ${TAGLINE}
 
 ## Pricing
 
-Free to start. ${SITE_NAME} Pro unlocks unlimited scans, the full weekly plan, unlimited logging and the AI coach, cancellable from Apple ID or Google Play settings. Current pricing is on the store listings linked below — it is deliberately not restated here, because a price copied into a second place is a price that goes stale in one of them.
+Free to download, with a 7-day free trial on the yearly plan. ${SITE_NAME} Pro unlocks unlimited scans, the full weekly plan, unlimited logging and the AI coach, cancellable from Apple ID or Google Play settings. Current pricing is on the store listings linked below — it is deliberately not restated here, because a price copied into a second place is a price that goes stale in one of them.
 
 ## Key facts
 
@@ -167,6 +167,6 @@ People who train, or intend to, and who want the next week decided for them by s
 
 **Is it just another calorie counter?** No. The training plan is the product and food logging supports it.
 
-**What does it cost?** Free to start; Pro unlocks unlimited scans, the full weekly plan, unlimited logging and the coach. Cancel any time from Apple ID or Google Play settings.
+**What does it cost?** Free to download, with a 7-day free trial on the yearly plan; Pro unlocks unlimited scans, the full weekly plan, unlimited logging and the coach. Cancel any time from Apple ID or Google Play settings.
 `;
 }

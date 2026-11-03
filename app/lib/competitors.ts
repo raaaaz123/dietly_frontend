@@ -106,7 +106,7 @@ const US = {
     v: "partial",
     note: "Enough to keep the plan honest. It is not a research-grade food database.",
   },
-  freeStart: { v: "yes", note: "Free to start; Pro is priced on the store listings." },
+  freeStart: { v: "partial", note: "7-day free trial on the yearly plan; Pro is priced on the store listings." },
 } as const satisfies Record<string, Cell>;
 
 export const COMPETITORS: Competitor[] = [
@@ -368,7 +368,7 @@ export const COMPETITORS: Competitor[] = [
       },
       {
         axis: "Published price",
-        us: { v: "partial", note: "Free to start; Pro pricing lives on the store listings, which stay current." },
+        us: { v: "partial", note: "7-day free trial on yearly; Pro pricing lives on the store listings, which stay current." },
         them: { v: "no", note: "No price published on the website; shown in-app." },
       },
       {

@@ -82,7 +82,7 @@ export default function Hero() {
               ))}
             </ul>
 
-            <div className="mt-6">
+            <div className="mt-6" data-placement="hero">
               <StoreButtons />
             </div>
           </div>

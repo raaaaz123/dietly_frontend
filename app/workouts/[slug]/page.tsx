@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import StoreButtons from "../../components/StoreButtons";
+import MobileCTA from "../../components/MobileCTA";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import Reveal from "../../components/Reveal";
@@ -192,9 +194,9 @@ export default async function Page({
                 week of training around it, from whatever equipment you actually
                 have.
               </p>
-              <Link href="/#get" className="btn btn-primary btn-sm mt-5">
-                Get the app
-              </Link>
+              <div data-placement="workout_card">
+                <StoreButtons className="mt-5" height={40} />
+              </div>
             </div>
 
             {w.related.length > 0 && (
@@ -234,6 +236,7 @@ export default async function Page({
         </article>
       </main>
       <Footer />
+      <MobileCTA />
     </>
   );
 }
