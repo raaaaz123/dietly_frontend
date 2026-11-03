@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import InstallCard from "../components/InstallCard";
+import MobileCTA from "../components/MobileCTA";
 import Reveal from "../components/Reveal";
 import MacroCalculator from "./MacroCalculator";
 import { JsonLdScript, ToolFaq, faqJsonLd } from "../components/tools/ToolPage";
@@ -105,6 +107,15 @@ export default function MacroCalculatorPage() {
           <MacroCalculator />
         </Reveal>
 
+        <div className="max-w-[800px] mx-auto px-6 md:px-12 mt-10">
+          <InstallCard
+            placement="tool_result"
+            title="Turn this number into a plan"
+            body="Dietly Fit logs every set, scores one photo a week out of 100, and builds the training week around the area holding you back."
+          />
+        </div>
+
+
         {/* SEO Content Section */}
         <section className="max-w-[800px] mx-auto px-6 md:px-12 mt-12 prose prose-invert prose-green">
           <Reveal>
@@ -164,6 +175,7 @@ export default function MacroCalculatorPage() {
       </main>
 
       <Footer />
+      <MobileCTA />
     </>
   );
 }
