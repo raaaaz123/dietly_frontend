@@ -77,6 +77,29 @@ In order of impact:
 - **Crawlers no longer fire analytics**: PlayStore-Google, Googlebot, Lighthouse, headless Chrome and similar.
 - Default PostHog host corrected to US (the project is on US Cloud); `.env.example` updated.
 
+## Done on 2026-11-03 (round 2)
+
+- **Live:** install cards and badges on all content pages; store attribution (Play UTMs, App Store `pt=128763369` + `ct=web-<page>` via `APP_STORE_PT` in Vercel); bot filtering; real trial wording; "Dietly AI" title and JSON-LD.
+- **`www.dietly.life` is now a 308 permanent redirect** (added as a redirect domain in Vercel). The 7 "Page with redirect" rows in Search Console are those `www` URLs. That is expected, not an error, so do not run "Validate fix".
+- **PostHog:** saved [human visit to store click](https://us.posthog.com/project/610394/insights/IrXI3gJM) and [store clicks by placement](https://us.posthog.com/project/610394/insights/1my0YYwm). Bot exclusions are on the insights, not project-wide, because the project also holds Android app events.
+- **4 new free tools:** `/weight-loss-calculator` (goal date), `/plate-calculator`, `/army-body-fat-calculator`, `/water-intake-calculator`. They are in the sitemap (now 81 URLs, resubmitted), the `/tools` hub and the footer.
+- **Fixed:** the button inside every calculator's result linked to `/#download` (no such anchor) and said "GET DIETLY FREE". It is now the store badges.
+- **Indexing requested (10, the daily limit):** the 4 new tools, `/tools`, tdee, calorie-deficit, protein, one-rep-max, bmi.
+- **Request tomorrow:** calories-burned, bmr, ffmi, lean-body-mass, ideal-weight, creatine, waist-to-height, food-scanner, `/guides`, `/workouts`. Already indexed: home, macro, body-fat, `/tools`.
+
+## Next free tools to build (by search demand and fit with a gym app)
+
+1. Heart rate zone calculator
+2. Body recomposition / muscle gain calculator
+3. Wilks / DOTS strength score calculator ("how strong am I")
+4. Running pace calculator
+5. Steps to calories calculator
+6. Keto / intermittent fasting macro calculator
+7. Calorie calculator for gaining weight (bulk)
+8. Pregnancy-safe TDEE, then age-specific pages (calorie calculator for women over 40, for teens)
+
+Each one is a single entry in `app/lib/tools.ts` plus a page, so they ship in an hour each.
+
 ## Plan
 
 ### This week (P0)
