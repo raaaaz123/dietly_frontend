@@ -1002,6 +1002,472 @@ export const COACHING: Record<string, Coaching> = {
       "Long strides that make the weights swing and pull you off balance. Take short, quick steps instead.",
     ],
   },
+
+  // Phase 2 batch (2026-11-05): lunges, hinge and hip thrust variants, rows,
+  // push-up variants, pulldown variants and two conditioning movements. Each
+  // one was checked for a working demo clip before it was written.
+
+  "dumbbell-lunge": {
+    overview:
+      "The dumbbell lunge is a forward step into a split stance with a dumbbell in each hand, training the quads and glutes of the front leg one side at a time. Because each leg works alone, it exposes and corrects strength differences between sides that a squat lets the stronger leg hide.",
+    instructions: [
+      "Stand tall with feet hip width, a dumbbell in each hand hanging at your sides.",
+      "Take a long step forward with one leg, landing heel first, and keep your torso upright.",
+      "Lower straight down until the back knee is just above the floor and the front thigh is about parallel to it.",
+      "Push through the front heel and midfoot to drive back up to the starting position.",
+      "Finish all reps on one leg, or alternate legs each rep, keeping the count equal on both sides.",
+    ],
+    cues: [
+      "Drop the back knee straight down, as if lowering it onto a cushion, rather than lurching forward.",
+      "Keep the front knee tracking over the middle toes, not caving inwards.",
+      "Stay tall; the dumbbells hang from straight arms and never swing.",
+    ],
+    mistakes: [
+      "Stepping too short, so the front knee shoots far past the toes and the heel lifts. Take a longer step so the shin stays closer to vertical.",
+      "Standing on a tightrope, with both feet on one line. Keep the feet roughly hip width apart side to side so you can balance under load.",
+      "Pushing off the back foot to stand up. The front leg should do the work; the back leg is mostly for balance.",
+    ],
+  },
+
+  "dumbbell-walking-lunge": {
+    overview:
+      "The dumbbell walking lunge chains lunges together so you travel forward with every rep, holding a dumbbell in each hand. It works the quads and glutes hard, adds a balance and conditioning demand, and is one of the most effective leg exercises you can do with only a pair of dumbbells and some floor space.",
+    instructions: [
+      "Stand at one end of a clear lane with a dumbbell in each hand at your sides.",
+      "Step forward into a lunge and lower until the back knee nearly touches the floor.",
+      "Drive through the front foot and bring the back leg straight through into the next step, without pausing with both feet together.",
+      "Keep walking, alternating legs, for the set number of steps or the length of the lane.",
+      "Turn around under control or set the weights down; do not rush the turn with heavy dumbbells.",
+    ],
+    cues: [
+      "Each step is a full lunge; let the back knee come close to the floor every time.",
+      "Keep your eyes forward and your chest up so the weights stay over your feet.",
+      "Move with a steady rhythm rather than racing to the end of the lane.",
+    ],
+    mistakes: [
+      "Shortening the steps as you tire, which turns the second half of the set into a quad-only shuffle. Keep the stride length the same from first rep to last.",
+      "Letting the torso fold forward. It shifts the load into the lower back; go lighter or slow down.",
+      "Using weights so heavy that grip fails before the legs do. Use straps or lighter dumbbells for more steps.",
+    ],
+  },
+
+  "reverse-lunge": {
+    overview:
+      "The reverse lunge is a lunge performed by stepping backwards instead of forwards, training the glutes and quads of the front leg with less stress on the knee. Stepping back keeps the working shin closer to vertical, which is why it is the lunge most coaches teach first and the one most people with sore knees tolerate best.",
+    instructions: [
+      "Stand tall with feet hip width and your hands on your hips or at your sides.",
+      "Step one foot straight back, landing on the ball of the foot.",
+      "Lower until the back knee is just above the floor, keeping most of your weight on the front foot.",
+      "Drive through the front heel to stand up and bring the back foot forward to meet it.",
+      "Repeat on the same leg for the set, then switch, or alternate legs each rep.",
+    ],
+    cues: [
+      "Think of the back leg as a kickstand: it touches down for balance, the front leg lifts you.",
+      "Lean the torso forward slightly to load the glutes more; stay upright to load the quads more.",
+      "Keep the hips square to the front rather than letting them twist open.",
+    ],
+    mistakes: [
+      "Stepping back too short, which crowds the front knee and makes the lunge awkward. Step far enough that both knees form roughly right angles at the bottom.",
+      "Pushing off the back toes to come up. If the back leg is doing the lifting, the front leg is not being trained.",
+      "Stepping back on a diagonal, which costs balance. Step straight back, with the feet still hip width apart.",
+    ],
+  },
+
+  "single-leg-hip-thrusts": {
+    overview:
+      "The single-leg hip thrust is a bodyweight hip thrust done on one leg, with the upper back on a bench and the other leg lifted. It trains the glute of the working leg through full hip extension and doubles the load on each side without adding any weight, which makes it the natural next step once a two-leg bodyweight thrust gets easy.",
+    instructions: [
+      "Sit on the floor with your upper back against the long edge of a bench, knees bent and feet flat.",
+      "Lift one foot off the floor and hold that knee bent, or the leg straight, for the whole set.",
+      "Drive through the heel of the planted foot and raise your hips until your torso and working thigh form a straight line.",
+      "Squeeze the glute at the top for one second.",
+      "Lower under control until your hips are just above the floor, then repeat before switching sides.",
+    ],
+    cues: [
+      "Keep the hips level; the lifted side should not drop as you rise.",
+      "Chin tucked, ribs down, so the range comes from the hip and not the lower back.",
+      "Push through the heel, not the toes.",
+    ],
+    mistakes: [
+      "Letting the pelvis tilt towards the lifted leg. It means the working glute is not stabilising; slow down and shorten the range until the hips stay level.",
+      "Arching the lower back at the top to fake height. Stop at a straight line from shoulders to knee.",
+      "Placing the foot too far out, so the hamstring cramps and takes over. Bring the foot closer until the shin is vertical at the top.",
+    ],
+  },
+
+  "dumbbell-romanian-deadlift": {
+    overview:
+      "The dumbbell Romanian deadlift is a hip hinge with a dumbbell in each hand, training the hamstrings and glutes through a long stretch while the knees stay softly bent. It teaches the same pattern as the barbell version with lighter, freer weights, which makes it the easiest way to learn the hinge and a strong hamstring builder in its own right.",
+    instructions: [
+      "Stand tall with feet hip width, holding a dumbbell in each hand in front of your thighs, palms facing you.",
+      "Soften the knees slightly and hold that bend for the whole set.",
+      "Push your hips back and let the dumbbells slide down the front of your legs, keeping your back flat.",
+      "Stop when you feel a strong stretch in the hamstrings, usually around mid-shin.",
+      "Drive the hips forward to stand back up, squeezing the glutes at the top.",
+    ],
+    cues: [
+      "Hips go back, chest comes forward; the dumbbells just follow.",
+      "Keep the dumbbells close enough to brush your legs on the way down.",
+      "Shoulders stay pulled back so the upper back does not round.",
+    ],
+    mistakes: [
+      "Bending the knees more and more as you go down, which turns the hinge into a squat. Set the knee angle at the start and keep it.",
+      "Letting the dumbbells hang away from the body. The further forward they drift, the more the lower back has to work.",
+      "Going lower than the hamstrings allow and rounding the back. Depth is set by your flexibility, not by how close the weights get to the floor.",
+    ],
+  },
+
+  "trap-bar-deadlift": {
+    overview:
+      "The trap bar deadlift is a deadlift with a hexagonal bar that you stand inside, so the load sits at your sides instead of in front of your shins. That keeps the torso more upright than a straight-bar deadlift, shares the work between the quads, glutes and back, and makes it the easiest heavy pull to learn safely.",
+    instructions: [
+      "Step into the centre of the trap bar with your feet about hip width apart.",
+      "Hinge at the hips and bend the knees to grip the handles in the middle, arms straight.",
+      "Flatten your back, lift your chest and brace your midsection hard.",
+      "Push the floor away and stand up tall, keeping the bar balanced over the middle of your feet.",
+      "Lower the bar back to the floor by pushing the hips back and bending the knees together.",
+    ],
+    cues: [
+      "Think about pushing the floor away, not pulling the bar up.",
+      "Big breath and brace before every rep, not just the first one.",
+      "Hips and shoulders rise at the same speed.",
+    ],
+    mistakes: [
+      "Standing off-centre in the bar, so it tips forward or back as you lift. Line the handles up with the middle of your feet before you grip.",
+      "Squatting the bar up with the hips too low and the chest too high. The trap bar is more upright than a deadlift, but it is still a hinge; let the hips sit back.",
+      "Dropping the bar from the top instead of lowering it. The way down is part of the rep, and a dropped trap bar bounces unpredictably.",
+    ],
+  },
+
+  "dumbbell-single-leg-deadlift": {
+    overview:
+      "The dumbbell single-leg deadlift is a hip hinge on one leg while the other leg reaches back, holding a dumbbell in one or both hands. It trains the hamstring and glute of the standing leg along with balance and hip control, and it is one of the best exercises for evening out a left to right difference in the posterior chain.",
+    instructions: [
+      "Stand on one leg with a soft bend in the knee, holding a dumbbell in the opposite hand.",
+      "Hinge forward at the hip, letting the free leg reach straight back as your torso lowers.",
+      "Keep your back flat and your hips square to the floor as the dumbbell travels towards the standing foot.",
+      "Lower until your torso and back leg are close to parallel with the floor, or until the hamstring stretch stops you.",
+      "Drive the standing hip forward to return upright, then repeat before switching sides.",
+    ],
+    cues: [
+      "Your torso and back leg move as one straight line, like a seesaw.",
+      "Point the toes of the back foot at the floor to keep the hips square.",
+      "Grip the floor with the standing foot to stay balanced.",
+    ],
+    mistakes: [
+      "Opening the hip so the back leg rotates out to the side. Keep the back toes pointing down and the hips level.",
+      "Bending the standing knee into a squat. The knee keeps one soft angle; the movement is at the hip.",
+      "Rushing to save balance. Slow down and use a light touch on a wall or rack if you need to; balance improves within a few sessions.",
+    ],
+  },
+
+  "smith-incline-bench-press": {
+    overview:
+      "The Smith machine incline bench press is an incline press performed on a bar fixed to vertical rails, set over a bench angled at about 30 degrees. It targets the upper chest and front deltoids, and the fixed path lets you press heavy with no spotter and no balancing, which makes it useful for pushing close to failure safely.",
+    instructions: [
+      "Set an adjustable bench to about 30 degrees and position it so the bar lowers onto your upper chest.",
+      "Lie back, set your feet flat and pull your shoulder blades together and down into the bench.",
+      "Grip the bar slightly wider than shoulder width, rotate it to unhook it from the safeties, and set the stops just above chest height.",
+      "Lower the bar under control until it touches your upper chest, just below the collarbones.",
+      "Press back up to straight arms, then rotate the bar to re-hook it when the set is done.",
+    ],
+    cues: [
+      "Keep the shoulder blades pinned back the whole set.",
+      "Elbows at roughly 45 degrees from your torso, slightly under the bar.",
+      "Lower slowly; the fixed bar makes it tempting to drop it fast.",
+    ],
+    mistakes: [
+      "Setting the bench in the wrong spot so the bar comes down on your neck or your stomach. Check the bar path with an empty bar before loading it.",
+      "Using too steep an incline. Past about 45 degrees it becomes a shoulder press; 30 degrees keeps the upper chest in charge.",
+      "Skipping the safety stops. The machine only protects you if the stops are set just above your chest.",
+    ],
+  },
+
+  "dumbbell-one-arm-bent-over-row": {
+    overview:
+      "The one-arm dumbbell row is a single-arm row with one hand and one knee braced on a bench, pulling a dumbbell from a hanging position up to the hip. It trains the lats, the middle back and the rear deltoids, and the braced position lets you row heavy with almost no strain on the lower back.",
+    instructions: [
+      "Place one knee and the hand on the same side on a flat bench, with the other foot on the floor.",
+      "Hold the dumbbell in your free hand, arm hanging straight below your shoulder, back flat.",
+      "Pull the dumbbell up and back towards your hip, leading with the elbow.",
+      "Stop when the elbow passes your torso and squeeze the shoulder blade towards your spine.",
+      "Lower the dumbbell until the arm is straight and you feel the lat stretch, then repeat before switching sides.",
+    ],
+    cues: [
+      "Pull the elbow towards your back pocket, not straight up to your armpit.",
+      "Keep your shoulders square to the floor; do not twist to lift the weight higher.",
+      "Let the shoulder blade move forward at the bottom for a full stretch.",
+    ],
+    mistakes: [
+      "Rotating the torso to heave the weight up. It makes the rep look bigger and shifts the work away from the back; use a weight you can row with square shoulders.",
+      "Shrugging the dumbbell up towards the ear, which trains the upper traps instead of the lats.",
+      "Cutting the range short at the bottom. The stretched position is a big part of what the row trains.",
+    ],
+  },
+
+  "dumbbell-bent-over-row": {
+    overview:
+      "The dumbbell bent-over row is a two-arm row performed standing in a hip hinge, pulling a dumbbell in each hand towards the hips. It trains the lats, rhomboids, middle traps and rear deltoids, and it builds the back thickness and posture that most pressing-heavy programmes leave behind.",
+    instructions: [
+      "Stand with feet hip width, a dumbbell in each hand, knees softly bent.",
+      "Hinge at the hips until your torso is around 45 degrees or lower, back flat, arms hanging straight.",
+      "Pull both dumbbells up towards your hips, driving the elbows back.",
+      "Squeeze the shoulder blades together at the top for a moment.",
+      "Lower the dumbbells under control to straight arms while holding the hinge.",
+    ],
+    cues: [
+      "Hold the torso still; only the arms and shoulder blades move.",
+      "Elbows travel back at about 30 to 45 degrees from the body.",
+      "Brace the midsection so the lower back does not round as you tire.",
+    ],
+    mistakes: [
+      "Standing up a little more with each rep until the row becomes a shrug. Keep the torso angle fixed for the whole set.",
+      "Jerking the weights with the hips. If you need momentum to get them up, they are too heavy.",
+      "Rounding the lower back to reach the weights. Keep the back flat and hinge only as far as your hamstrings allow.",
+    ],
+  },
+
+  "push-up-body-weight": {
+    overview:
+      "The push-up is a bodyweight press in which you lower your chest to the floor from a straight-arm plank and push back up. It trains the chest, front deltoids and triceps while the abs and glutes hold the body rigid, and it needs no equipment, which makes it the most practical upper-body strength exercise there is.",
+    instructions: [
+      "Start in a high plank with hands slightly wider than shoulder width, fingers pointing forward.",
+      "Squeeze your glutes and brace your abs so your body forms one straight line from head to heels.",
+      "Bend your elbows and lower your chest towards the floor, elbows angled about 45 degrees from your sides.",
+      "Lower until your chest is about a fist from the floor.",
+      "Push the floor away to straighten your arms, keeping the body in one line.",
+    ],
+    cues: [
+      "Move as a single plank; the hips rise and fall with the shoulders.",
+      "Screw your hands into the floor to keep the elbows from flaring.",
+      "At the top, push the floor away an extra inch to spread the shoulder blades.",
+    ],
+    mistakes: [
+      "Sagging hips, which puts the lower back under strain. Squeeze the glutes and shorten the set rather than letting the hips drop.",
+      "Flaring the elbows straight out to the sides, the usual cause of sore shoulders from push-ups. Keep them at about 45 degrees.",
+      "Half reps that stop a few inches down. Lower the chest close to the floor each time, or use an incline until you can.",
+    ],
+  },
+
+  "diamond-push-up": {
+    overview:
+      "The diamond push-up is a push-up with the hands together under the chest, thumbs and index fingers forming a diamond shape. The narrow hand position shifts much of the work from the chest to the triceps, which makes it one of the best triceps exercises you can do with bodyweight alone.",
+    instructions: [
+      "Kneel on the floor and place your hands together under your chest, thumbs and index fingers touching to form a diamond.",
+      "Step your feet back into a high plank, body straight from head to heels.",
+      "Lower your chest towards your hands, keeping the elbows close to your sides.",
+      "Go down until your chest is just above your hands.",
+      "Press back up to straight arms, squeezing the triceps at the top.",
+    ],
+    cues: [
+      "Elbows brush your ribs on the way down rather than pointing out.",
+      "Keep the hands under the lower chest, not under the face.",
+      "Brace the whole body; the plank still matters.",
+    ],
+    mistakes: [
+      "Placing the hands under the face, which pushes the load onto the wrists and shoulders. Keep them under the bottom of the breastbone.",
+      "Flaring the elbows wide, which turns it back into a regular push-up with an awkward wrist angle.",
+      "Attempting full reps before you are strong enough and doing half reps instead. Do them from the knees or on an incline first.",
+    ],
+  },
+
+  "incline-push-up": {
+    overview:
+      "The incline push-up is a push-up with the hands raised on a bench, box or wall, so you press a smaller share of your bodyweight. It trains the chest, shoulders and triceps with the same mechanics as a floor push-up, and it is the best way to build up to full push-ups because the difficulty adjusts with the height of the surface.",
+    instructions: [
+      "Place your hands on the edge of a sturdy bench or box, slightly wider than shoulder width.",
+      "Walk your feet back until your body forms a straight line from head to heels.",
+      "Lower your chest to the edge of the bench, elbows angled about 45 degrees from your sides.",
+      "Touch your chest lightly to the edge or come within an inch of it.",
+      "Push back to straight arms while holding the straight body line.",
+    ],
+    cues: [
+      "The higher the surface, the easier the rep; lower it as you get stronger.",
+      "Keep the glutes tight so the hips do not sag towards the bench.",
+      "Lead with the chest, not the chin.",
+    ],
+    mistakes: [
+      "Using a surface that can slide or tip. Brace a bench against a wall or use a fixed rail.",
+      "Staying at the same height for months. Once 15 clean reps are easy, move to a lower surface.",
+      "Poking the head forward to touch the bench, which shortens the range for the chest. Bring the chest down, not the face.",
+    ],
+  },
+
+  "decline-push-up": {
+    overview:
+      "The decline push-up is a push-up with the feet raised on a bench or step, which shifts more of your bodyweight onto your hands and angles the press upwards. It puts more load on the upper chest and front deltoids than a flat push-up, making it a harder progression for people who can already do 20 or more regular reps.",
+    instructions: [
+      "Place your feet on a bench or step behind you and your hands on the floor slightly wider than shoulder width.",
+      "Brace your abs and glutes so your body is straight from head to heels.",
+      "Lower your chest towards the floor with your elbows at about 45 degrees.",
+      "Go down until your chin or chest is close to the floor.",
+      "Press back up to straight arms without letting the hips pike up or sag.",
+    ],
+    cues: [
+      "Hands slightly forward of the shoulders, so you press upwards and outwards.",
+      "Keep the plank long; a higher foot position makes the hips want to sag.",
+      "Control the bottom; the extra load makes it easy to drop too fast.",
+    ],
+    mistakes: [
+      "Raising the feet too high before you are ready, which makes the rep a shoulder exercise you cannot control. Start with a low step.",
+      "Letting the hips sag towards the floor, which loads the lower back. Squeeze the glutes and stop the set when you cannot hold the line.",
+      "Bobbing the head down instead of the chest. Keep the neck neutral and lower the whole body.",
+    ],
+  },
+
+  "pike-push-up": {
+    overview:
+      "The pike push-up is a push-up done from an inverted V position, hips high, so you press your bodyweight more vertically. It shifts the work from the chest to the shoulders and triceps, and it is the standard bodyweight substitute for an overhead press and the first step towards a handstand push-up.",
+    instructions: [
+      "Start in a push-up position, then walk your feet in and lift your hips until your body forms an upside-down V.",
+      "Set your hands slightly wider than shoulder width, arms straight, head between your arms.",
+      "Bend your elbows and lower the top of your head towards the floor, slightly in front of your hands.",
+      "Stop just before your head touches the floor.",
+      "Press back up to straight arms, pushing your hips towards the ceiling.",
+    ],
+    cues: [
+      "Your head travels forward of your hands, forming a triangle with them.",
+      "Keep the hips high; the more vertical the torso, the harder it gets.",
+      "Elbows point back, not straight out to the sides.",
+    ],
+    mistakes: [
+      "Letting the hips drop so it becomes an ordinary push-up. Keep the V shape for every rep.",
+      "Lowering the head straight down between the hands, which jams the shoulders. Aim for a spot just in front of them.",
+      "Going too fast into the bottom. The head is close to the floor; control it.",
+    ],
+  },
+
+  "sled-hack-squat": {
+    overview:
+      "The sled hack squat is a squat performed on an angled machine with your back against a pad and shoulders under supports, so the weight moves along a fixed track. It trains the quads hard, with the glutes as secondary movers, and because the back is supported the legs can be pushed close to failure with little demand on the lower back.",
+    instructions: [
+      "Step onto the platform with your back flat against the pad and your shoulders under the supports.",
+      "Place your feet about shoulder width in the middle of the platform, toes turned out slightly.",
+      "Release the safety handles and lower yourself by bending your knees, keeping your back on the pad.",
+      "Descend until your thighs are at least parallel to the platform, or as deep as you can go with your heels down.",
+      "Press through the whole foot to straighten your legs, stopping just short of locking the knees, and re-engage the safeties when done.",
+    ],
+    cues: [
+      "Knees track over the toes and are allowed to travel forward; that is the point of the machine.",
+      "Keep your lower back pressed into the pad at the bottom.",
+      "Control the descent for two to three seconds.",
+    ],
+    mistakes: [
+      "Cutting depth to move more weight. A half-rep hack squat trains far less quad than a full one with less weight.",
+      "Lifting the heels at the bottom. Move the feet a little higher on the platform if your ankles limit you.",
+      "Slamming the knees into lockout at the top. Stop just short and keep tension on the quads.",
+    ],
+  },
+
+  "cable-underhand-pulldown": {
+    overview:
+      "The cable underhand pulldown is a lat pulldown with a shoulder-width, palms-facing-you grip. The supinated grip brings the biceps in and lets the elbows travel closer to the body, which many lifters find gives a stronger lat contraction and a heavier pull than the wide overhand version.",
+    instructions: [
+      "Sit at the pulldown station with your thighs locked under the pad.",
+      "Take the bar with an underhand grip at about shoulder width, arms straight overhead.",
+      "Lean back slightly, chest up, and pull the bar down towards your upper chest.",
+      "Drive the elbows down and back until the bar touches or nearly touches your chest.",
+      "Let the bar rise back up under control until your arms are straight and the lats are stretched.",
+    ],
+    cues: [
+      "Think of pulling your elbows into your back pockets.",
+      "Keep the chest up to meet the bar instead of curling forward.",
+      "Let the shoulders rise fully at the top for a full lat stretch.",
+    ],
+    mistakes: [
+      "Turning it into a biceps curl by bending the elbows without moving the shoulders. Start each rep by pulling the shoulder blades down.",
+      "Leaning far back and rowing the bar down with momentum. A slight lean is enough.",
+      "Gripping too wide with palms up, which strains the wrists and elbows. Keep the grip about shoulder width.",
+    ],
+  },
+
+  "close-grip-front-lat-pulldown": {
+    overview:
+      "The close-grip lat pulldown is a pulldown with the hands close together, usually on a V-handle or a narrow grip on the bar, pulled down to the upper chest. The narrow grip gives the longest range of motion of any pulldown and keeps the elbows in front of the body, which loads the lower lats and makes it a strong partner to wide-grip work.",
+    instructions: [
+      "Attach a V-handle or take a narrow grip on the bar, and sit with your thighs under the pad.",
+      "Start with your arms straight overhead, shoulders allowed to rise into a stretch.",
+      "Lean back slightly and pull the handle down towards your upper chest, elbows travelling down and close to your sides.",
+      "Squeeze the lats when the handle reaches your chest.",
+      "Let the handle rise slowly back to the stretched position.",
+    ],
+    cues: [
+      "Elbows drive down towards your hips.",
+      "Lift the chest towards the handle.",
+      "Use the full stretch at the top; that is where this grip earns its place.",
+    ],
+    mistakes: [
+      "Rounding forward to bring the handle down. Keep the chest up and the torso still.",
+      "Stopping the handle at the chin, which cuts off the strongest part of the contraction. Pull to the upper chest.",
+      "Letting the weight yank the arms up at the top. Control the return; that is half of the rep.",
+    ],
+  },
+
+  "cable-straight-arm-pulldown": {
+    overview:
+      "The cable straight-arm pulldown is a lat isolation exercise where you push a bar or rope down from shoulder height to your thighs while keeping your arms straight. With the elbows fixed, the biceps cannot help, so the lats do all the work, which makes it the clearest way to learn what a lat contraction feels like.",
+    instructions: [
+      "Set a high cable pulley and attach a straight bar or rope.",
+      "Stand facing the machine, feet hip width, and take the bar with a shoulder-width overhand grip.",
+      "Hinge forward slightly from the hips and hold your arms straight with a slight bend in the elbows.",
+      "Sweep the bar down in an arc until it touches the front of your thighs.",
+      "Let the bar rise back up under control until your arms are about level with your head.",
+    ],
+    cues: [
+      "Keep the elbow angle fixed; the arm moves as one lever from the shoulder.",
+      "Think of pushing the bar into your thighs with your armpits.",
+      "Keep the ribs down so the lower back does not arch as you finish.",
+    ],
+    mistakes: [
+      "Bending the elbows to push the bar down, which turns it into a triceps pushdown. Keep the arms long.",
+      "Using the torso to swing the weight. Hold the slight hinge still for the whole set.",
+      "Going too heavy. This is an isolation exercise; a weight you can control for 12 to 15 reps works the lats far better.",
+    ],
+  },
+
+  "kettlebell-swing": {
+    overview:
+      "The kettlebell swing is an explosive hip hinge that drives a kettlebell from between the legs to chest height using a powerful snap of the hips. It trains the glutes, hamstrings and lower back for power, and because it is fast and repeatable it doubles as one of the most effective conditioning exercises with a single piece of equipment.",
+    instructions: [
+      "Stand with feet a little wider than shoulder width, a kettlebell on the floor about a foot in front of you.",
+      "Hinge at the hips, grab the handle with both hands, and tilt the bell back towards you.",
+      "Hike the bell back between your legs, like a football snap, keeping your back flat.",
+      "Drive your hips forward hard and stand tall, letting the bell float up to chest height from the hip drive alone.",
+      "Let the bell fall back between your legs, hinge to meet it, and go straight into the next rep.",
+    ],
+    cues: [
+      "It is a hip snap, not a squat and not a front raise; the arms only guide the bell.",
+      "Finish each rep standing tall, glutes squeezed and abs braced, like a standing plank.",
+      "Wait for the bell to drop before you hinge; let it come to you.",
+    ],
+    mistakes: [
+      "Squatting the swing, with the knees bending deeply and the hips staying low. Push the hips back, keep the shins near vertical.",
+      "Lifting the bell with the arms and shoulders. If the bell is not floating up on its own, drive the hips harder.",
+      "Leaning back at the top to finish the rep. Stand straight; leaning back loads the lower back for no benefit.",
+    ],
+  },
+
+  "burpee": {
+    overview:
+      "The burpee is a full-body conditioning movement that chains a squat, a plank, a push-up and a jump into one continuous rep. It needs no equipment and raises the heart rate faster than almost any other bodyweight exercise, which is why it appears in so many circuits and home workouts.",
+    instructions: [
+      "Stand tall with your feet about shoulder width apart and arms by your sides.",
+      "Squat down and place your hands on the floor in front of your feet.",
+      "Jump or step your feet back into a high plank, and lower your chest to the floor if you are doing the push-up version.",
+      "Jump or step your feet back in towards your hands.",
+      "Stand up and jump, reaching your arms overhead, then land softly and go straight into the next rep.",
+    ],
+    cues: [
+      "Land the plank with a braced midsection so the hips do not crash down.",
+      "Land the jump softly through the balls of the feet, knees bent.",
+      "Pick a pace you can hold for the whole set rather than sprinting the first ten.",
+    ],
+    mistakes: [
+      "Letting the hips sag when you land in the plank, which jars the lower back. Brace before the feet hit the floor.",
+      "Rounding the back to reach the floor. Bend the knees and sit the hips down instead.",
+      "Treating every rep as a maximal effort and stopping after 30 seconds. Steady, continuous reps condition you far better; step back instead of jumping if you need to.",
+    ],
+  },
 };
 
 /** Slugs with authored coaching. Used only for tests and reporting. */

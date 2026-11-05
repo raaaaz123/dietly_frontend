@@ -238,6 +238,18 @@ export default function RoundupPage() {
               measurement tool. If you want your chest in centimetres, this is the
               wrong product and the next one is better.
             </P>
+            <P>
+              The full breakdown of what our scan measures, sample result screens and
+              how photos are handled is on the{" "}
+              <Link href="/ai-body-scan" className="underline hover:text-fg">
+                {SITE_NAME} AI body scan
+              </Link>{" "}
+              page, and you can try a single score with no account on the{" "}
+              <Link href="/physique-analyzer" className="underline hover:text-fg">
+                free physique analyzer
+              </Link>
+              .
+            </P>
 
             <H3>Bodygram — measurements, in volume</H3>
             <P>{bodygram.what}</P>

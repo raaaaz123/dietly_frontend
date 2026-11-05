@@ -19,11 +19,14 @@ export type MuscleCopy = {
   intro: string[];
   picks: { slug: string; why: string }[];
   faqs: { q: string; a: string }[];
+  /** One guide that goes deeper on the goal behind the hub, linked under the intro. */
+  guide?: { href: string; label: string };
 };
 
 export const MUSCLE_COPY: Record<string, MuscleCopy> = {
   Back: {
     keyword: "Back workout",
+    guide: { href: "/guides/v-taper", label: "Lats and the V-taper: how a wider back changes your proportions" },
     intro: [
       "Your back is two jobs: pulling down from overhead, which builds the width of the lats, and rowing towards your torso, which builds the thickness of the mid back, rhomboids and rear delts. A complete back workout has at least one of each, plus a hinge such as the deadlift for the spinal erectors.",
       "For most lifters, 10 to 20 hard sets a week across those patterns is the range that grows a back. Train it twice a week if you can, and add weight or reps every week you can do so with the same form.",
@@ -76,6 +79,7 @@ export const MUSCLE_COPY: Record<string, MuscleCopy> = {
 
   Shoulders: {
     keyword: "Shoulder workout",
+    guide: { href: "/guides/v-taper", label: "How to build a V-taper: the shoulder-to-waist ratio explained" },
     intro: [
       "The shoulder has three heads. Overhead pressing trains the front delts hard, lateral raises are the only practical way to train the side delts that make shoulders look wide, and rear-delt work such as face pulls balances all the pressing for joint health.",
       "Front delts already get plenty from chest pressing, so most lifters should spend their extra shoulder sets on side and rear delts: 8 to 16 sets a week of raises and face pulls on top of one press.",
@@ -154,6 +158,7 @@ export const MUSCLE_COPY: Record<string, MuscleCopy> = {
 
   Abs: {
     keyword: "Abs workout",
+    guide: { href: "/guides/how-to-get-abs", label: "How to get abs: the body fat they need and how long it takes" },
     intro: [
       "Abs show when two things are true: the muscles are developed and body fat is low enough to see them, usually around 10 to 15% for men and 18 to 22% for women. No abs workout spot-reduces fat, so the training below builds the muscle and the diet reveals it.",
       "Train abs like any other muscle: a few hard sets of loaded movements, 2 to 4 times a week. Pick one flexion exercise (crunch or leg raise), one anti-extension exercise (plank or rollout) and one rotation or anti-rotation exercise for the obliques.",

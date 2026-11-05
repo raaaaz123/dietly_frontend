@@ -133,7 +133,17 @@ export default async function Page({
             </h1>
             <div className="space-y-4 text-[17px] text-fg-muted max-w-[700px] leading-relaxed">
               {copy ? (
-                copy.intro.map((p) => <p key={p.slice(0, 24)}>{p}</p>)
+                <>
+                  {copy.intro.map((p) => <p key={p.slice(0, 24)}>{p}</p>)}
+                  {copy.guide ? (
+                    <p className="text-[15px]">
+                      Read next:{" "}
+                      <Link href={copy.guide.href} className="underline hover:text-fg">
+                        {copy.guide.label}
+                      </Link>
+                    </p>
+                  ) : null}
+                </>
               ) : (
                 <p>
                   {c.items.length} {lower} exercises from Dietly Fit&rsquo;s training catalogue, to

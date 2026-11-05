@@ -70,6 +70,7 @@ export default function Explore() {
           <Column
             title="Guides and comparisons"
             links={[
+              { href: "/ai-body-scan", label: "AI body scan" },
               ...GUIDES.map((g) => ({ href: `/guides/${g.slug}`, label: g.heading })),
               { href: "/best-ai-body-scan-apps", label: "Best AI body scan apps" },
               { href: "/best-workout-apps", label: "Best workout apps" },

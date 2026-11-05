@@ -105,6 +105,7 @@ ${COMPETITORS.map((c) => `- [${SITE_NAME} vs ${c.name}](${SITE_URL}/vs/${c.slug}
 ## Pages
 
 - [Home](${SITE_URL}) — What the scan is, how the plan follows from it, what is inside the app, FAQ, download links.
+- [AI body scan](${SITE_URL}/ai-body-scan) — What the scan measures (definition, leanness, symmetry, posture, a body fat estimate and the weak point), sample result screens, privacy, and how it compares with a tape measure, a smart scale and DEXA.
 - [Free tools](${SITE_URL}/tools) — Every calculator in one place.
 - [Guides](${SITE_URL}/guides) — Every guide in one place.
 - [Support](${SITE_URL}/support) — Contact and FAQ.

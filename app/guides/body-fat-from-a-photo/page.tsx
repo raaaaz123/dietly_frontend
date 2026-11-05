@@ -146,7 +146,19 @@ export default function Page() {
         <Link href="/guides/rate-my-physique" className={L}>
           rate my physique
         </Link>
-        .
+        , and what the{" "}
+        <Link href="/ai-body-scan" className={L}>
+          Dietly Fit AI body scan
+        </Link>{" "}
+        measures is on its own page. You can also get a{" "}
+        <Link href="/physique-analyzer" className={L}>
+          free physique score from a photo
+        </Link>{" "}
+        on the web. If your goal is visible abs, our guide on{" "}
+        <Link href="/guides/how-to-get-abs" className={L}>
+          how to get abs
+        </Link>{" "}
+        gives the body fat each stage needs and how long it takes.
       </p>
 
       <Sources

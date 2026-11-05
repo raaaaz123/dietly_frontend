@@ -155,6 +155,22 @@ export default function Page() {
         </Link>{" "}
         lists what each one measures and charges.
       </p>
+      <p>
+        To see a rating before installing anything, the{" "}
+        <Link href="/physique-analyzer" className={L}>
+          free AI physique analyzer
+        </Link>{" "}
+        scores one photo out of 100 and names the weak point, with no account. What the full{" "}
+        <Link href="/ai-body-scan" className={L}>
+          Dietly Fit AI body scan
+        </Link>{" "}
+        measures, and how it handles your photos, is on its own page. The proportions part of the score is
+        covered in depth in our guide to the{" "}
+        <Link href="/guides/v-taper" className={L}>
+          V-taper and shoulder-to-waist ratio
+        </Link>
+        .
+      </p>
 
       <Sources
         items={[

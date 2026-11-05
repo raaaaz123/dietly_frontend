@@ -27,15 +27,21 @@
   1. `/guides/rate-my-physique`, `/guides/body-fat-from-a-photo`, `/exercises/muscle/calves`, `/exercises/muscle/abs`, `/exercises/muscle/glutes`, `/macro-calculator`, `/exercises/muscle/back`, `/exercises/muscle/chest`, `/exercises/equipment/bodyweight`, `/exercises/pull-up`
   2. Next day: the other muscle hubs, then the new coached exercises
 
-## Phase 2: high impact (weeks 2 to 3)
+## Phase 2: high impact (weeks 2 to 3). Code done 2026-11-05, needs deploy
 
-1. **Own the AI physique query cluster.** Add three more pages, each its own intent:
-   - `/ai-body-scan` as a landing page: what the scan measures, sample results (real app captures), privacy, and how it compares. Link it from home, both new guides and `/best-ai-body-scan-apps`.
-   - `/guides/v-taper` (shoulder-to-waist ratio: what is good, how to measure, how to train it). It ties directly to the scan's proportions score.
-   - `/guides/how-to-get-abs` (body fat thresholds plus training), linking the abs hub and the body fat guide.
-2. **A free web tool for the segment.** A "physique score from a photo" demo on the web, using the Bedrock vision call the food scanner already uses, with the result gated behind the install. It is the one asset competitors cannot copy from a blog, and it is linkable. It needs a privacy note and rate limiting like `/api/food-scan`.
-3. **Coach 20 more exercises** (lunge, hip thrust variants, deadlift variants, incline bench, dumbbell row, push-up variants, hack squat, lat pulldown variants, kettlebell swing, burpee). Each one adds an indexable page with a video, and that compounds.
-4. **Re-test the macro calculator** on PageSpeed once the quota resets. If FCP is still above 3 s, look at the render-blocking CSS chunk on that route.
+- [x] **AI physique query cluster**
+  - [x] `/ai-body-scan` landing page: what the scan measures, three real app screens, how it works, privacy (matched to the privacy policy), comparison table vs tape, smart scale and DEXA, FAQ with FAQPage schema. Linked from the homepage Explore section, `/guides/rate-my-physique`, `/guides/body-fat-from-a-photo`, `/best-ai-body-scan-apps`, `llms.txt` and the sitemap (0.9).
+  - [x] `/guides/v-taper`: ratio bands for men and women, how to measure, side delt / lat / posture training, the fat loss lever. Linked from the shoulders and back hubs.
+  - [x] `/guides/how-to-get-abs`: body fat thresholds by sex, timeline maths, diet, training. Links the abs hub and the body fat guide; the abs hub links back.
+- [x] **Free web tool: `/physique-analyzer`** (in the tool registry, so sitemap, `/tools`, llms.txt and check-seo pick it up).
+  - `POST /api/physique-scan`: the rubric mirrored from `dietly_backend/app/services/body_scan.py`, on the same Bedrock Kimi call as `/api/food-scan`. 4 per IP per hour, 400 a day globally, 3 MB cap, 40 s timeout, `no-store`, the image is never logged or stored.
+  - Gate: the response carries only the overall score and the weak point. The four sub-scores and the body fat estimate are never sent to the browser; the panel lists them as "in the app" next to the store badges.
+  - Safety: 18+ and own-photo checkbox (enforced server-side); the prompt rejects possible minors, groups and non-body images.
+  - Tested locally against Bedrock: a body photo scored in about 6 s, a food photo was rejected with a usable message.
+  - Not embeddable (excluded from EmbedCode like the food scanner). **Watch Bedrock spend for the first weeks.**
+- [x] **Coached 21 more exercises** (44 to 65 indexable), each with a working demo clip checked on production: dumbbell lunge, dumbbell walking lunge, reverse lunge, single-leg hip thrust, dumbbell RDL, trap bar deadlift, dumbbell single-leg deadlift, Smith incline bench, one-arm dumbbell row, dumbbell bent-over row, push-up, diamond, incline, decline and pike push-ups, sled hack squat, underhand pulldown, close-grip pulldown, straight-arm pulldown, kettlebell swing, burpee.
+- [x] **Macro calculator re-test.** PSI quota was still exhausted, so local Lighthouse 12 (mobile) on production: performance 92, FCP 1.3 s, LCP 1.4 s, TBT 230 ms, CLS 0.001. The only render-blocking file is the site-wide CSS (13 KB brotli, about 150 ms), the same file every page loads; there is no route-specific chunk. No change needed.
+- [ ] After deploy: `npm run indexnow`, then request indexing for `/ai-body-scan`, `/physique-analyzer`, `/guides/v-taper`, `/guides/how-to-get-abs`, then the 21 new exercise pages.
 
 ## Phase 3: authority (month 2). This is what decides "first"
 

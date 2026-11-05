@@ -46,6 +46,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page("/vs", "2026-09-18", "monthly", 0.8),
     ...COMPETITORS.map((c) => page(`/vs/${c.slug}`, c.updated, "monthly", 0.8)),
     page("/best-ai-body-scan-apps", ROUNDUP_UPDATED, "monthly", 0.8),
+    // The product page for the segment query. Priority matches the tools.
+    page("/ai-body-scan", "2026-11-05", "monthly", 0.9),
     // "best workout apps" is the largest install-intent term in the Trends
     // export — bigger than the body-scan roundup this sits beside.
     page("/best-workout-apps", WORKOUT_APPS_CHECKED, "monthly", 0.9),

@@ -225,6 +225,25 @@ export const TOOLS: Tool[] = [
     related: ["macro-calculator", "protein-calculator", "calories-burned-calculator"],
   },
   {
+    // The segment's free tool. The only asset on the site a competitor's blog
+    // cannot copy, and the one the "rate my physique" searcher actually wants.
+    slug: "physique-analyzer",
+    name: "AI Physique Analyzer",
+    title: "AI Physique Analyzer: Free Score From a Photo",
+    description:
+      "Upload one upper-body photo and get a physique score out of 100 and the one area holding it back. Free, no signup, and your photo is never stored.",
+    blurb: "A physique score out of 100 from one photo, and the area holding it back.",
+    keywords: [
+      "ai physique analyzer",
+      "rate my physique ai",
+      "physique score",
+      "ai body rating",
+      "physique rating from photo",
+    ],
+    lastModified: "2026-11-05",
+    related: ["body-fat-calculator", "ffmi-calculator", "waist-to-height-ratio-calculator"],
+  },
+  {
     slug: "weight-loss-calculator",
     name: "Weight Loss Calculator",
     title: "Weight Loss Calculator: Goal Date and Daily Calories",

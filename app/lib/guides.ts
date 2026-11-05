@@ -200,6 +200,46 @@ export const GUIDES: Guide[] = [
     readingMinutes: 7,
     related: ["rate-my-physique", "skinny-fat"],
   },
+  {
+    // Ties straight to the scan's proportions reading, and "v taper" is a
+    // searched term the physique-app SERPs do not answer with numbers.
+    slug: "v-taper",
+    title: "V-Taper: Shoulder-to-Waist Ratio and How to Build It",
+    heading: "The V-taper: what a good shoulder-to-waist ratio is, and how to build one",
+    description:
+      "What a V-taper is, the shoulder-to-waist ratio that counts as good for men and women, how to measure yours, and the training and diet that widen it.",
+    blurb: "The shoulder-to-waist ratio, how to measure it, and how to train it.",
+    keywords: [
+      "v taper",
+      "shoulder to waist ratio",
+      "how to get a v taper",
+      "adonis index",
+      "v shape body",
+    ],
+    published: "2026-11-05",
+    updated: "2026-11-05",
+    readingMinutes: 7,
+    related: ["rate-my-physique", "training-around-a-weak-point"],
+  },
+  {
+    slug: "how-to-get-abs",
+    title: "How to Get Abs: Body Fat Thresholds and Training",
+    heading: "How to get abs: the body fat they need, and the training that helps",
+    description:
+      "The body fat percentage where abs show for men and women, why crunches alone will not reveal them, how long it takes, and a plan that works.",
+    blurb: "The body fat where abs appear, how long it takes, and what to train.",
+    keywords: [
+      "how to get abs",
+      "body fat percentage to see abs",
+      "how long to get abs",
+      "visible abs",
+      "how to get a six pack",
+    ],
+    published: "2026-11-05",
+    updated: "2026-11-05",
+    readingMinutes: 8,
+    related: ["body-fat-from-a-photo", "body-recomposition"],
+  },
 ];
 
 export const GUIDE_BY_SLUG = new Map(GUIDES.map((g) => [g.slug, g]));
