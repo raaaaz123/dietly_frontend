@@ -16,6 +16,10 @@ const columns = [
       { label: "How it works", href: "/#how" },
       { label: "Inside the app", href: "/#inside" },
       { label: "Get the app", href: "/#get" },
+      // The segment's two money pages, sitewide: Bing had crawled 17 URLs in
+      // three months, and a footer link is the cheapest crawl path there is.
+      { label: "AI body scan", href: "/ai-body-scan" },
+      { label: "Physique analyzer", href: "/physique-analyzer" },
       // The comparison cluster's only sitewide link. The nav above is
       // deliberately four items, so this is the route that keeps /vs and the
       // roundup from being orphans reachable only from each other.
@@ -47,6 +51,8 @@ const columns = [
     links: [
       { label: "Rate my physique", href: "/guides/rate-my-physique" },
       { label: "Body fat from a photo", href: "/guides/body-fat-from-a-photo" },
+      { label: "How to get abs", href: "/guides/how-to-get-abs" },
+      { label: "V-taper", href: "/guides/v-taper" },
       { label: "What is a physique score?", href: "/guides/what-is-a-physique-score" },
       { label: "Progress photos", href: "/guides/progress-photos-guide" },
       { label: "Body recomposition", href: "/guides/body-recomposition" },
@@ -54,8 +60,9 @@ const columns = [
     ],
   },
   {
-    title: "Legal",
+    title: "Company",
     links: [
+      { label: "About", href: "/about" },
       { label: "Privacy", href: "/privacy" },
       { label: "Terms", href: "/terms" },
       { label: "Support", href: "/support" },

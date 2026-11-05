@@ -38,7 +38,8 @@ const page = (
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
-    page("/", "2026-09-13", "weekly", 1.0),
+    page("/", "2026-11-05", "weekly", 1.0),
+    page("/about", "2026-11-05", "yearly", 0.5),
     page("/tools", "2026-09-15", "monthly", 0.8),
     ...TOOLS.map((t) => page(`/${t.slug}`, t.lastModified, "monthly", 0.9)),
     page("/guides", "2026-09-15", "monthly", 0.8),

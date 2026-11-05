@@ -24,9 +24,19 @@ import { faqs } from "./FAQ";
  * on the App Store listing. Add it when there are real reviews to point at.
  */
 export default function JsonLd() {
+  // Bing (2026-11-05) showed a knowledge panel describing this app but citing
+  // dietly.fit, an unrelated meal planner, as its source, and ranked that site
+  // above us for "dietly fit". Ids tie the app, the publisher and the site into
+  // one entity, and `sameAs` on the app itself points at the store listings
+  // that only this app has, which is the disambiguation a crawler can verify.
+  const APP_ID = `${SITE_URL}/#app`;
+  const ORG_ID = `${SITE_URL}/#organization`;
+  const SITE_ID = `${SITE_URL}/#website`;
+
   const app = {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
+    "@type": ["SoftwareApplication", "MobileApplication"],
+    "@id": APP_ID,
     name: SITE_NAME,
     // Search Console: "dietly ai" is the brand query that wins clicks (pos 1.5),
     // plain "dietly" collides with a Polish meal-delivery company. Naming both
@@ -37,6 +47,10 @@ export default function JsonLd() {
     applicationCategory: "HealthApplication",
     operatingSystem: `${MIN_OS}, Android`,
     installUrl: APP_STORE_URL,
+    downloadUrl: [APP_STORE_URL, PLAY_STORE_URL],
+    sameAs: [APP_STORE_URL, PLAY_STORE_URL],
+    publisher: { "@id": ORG_ID },
+    author: { "@id": ORG_ID },
     offers: {
       "@type": "Offer",
       price: "0",
@@ -55,20 +69,26 @@ export default function JsonLd() {
   const organization = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": ORG_ID,
     name: "Rexatech",
     url: SITE_URL,
+    email: "rexatechin@gmail.com",
     logo: `${SITE_URL}/dietly-icon.png`,
     brand: { "@type": "Brand", name: SITE_NAME, alternateName: ["Dietly AI", "Dietly"] },
     sameAs: [APP_STORE_URL, PLAY_STORE_URL],
+    owns: { "@id": APP_ID },
   };
 
   /** Feeds the site name Google shows above the result. */
   const website = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": SITE_ID,
     name: SITE_NAME,
     alternateName: ["Dietly AI", "Dietly"],
     url: SITE_URL,
+    publisher: { "@id": ORG_ID },
+    about: { "@id": APP_ID },
   };
 
   const faqPage = {

@@ -63,6 +63,7 @@ Free to download, with a 7-day free trial on the yearly plan. ${SITE_NAME} Pro u
 ## Key facts
 
 - App name: ${SITE_NAME}
+- Not to be confused with: dietly.pl (a Polish diet catering marketplace) or dietly.fit (an AI meal-plan website). Neither is affiliated with ${SITE_NAME}, which lives only at ${SITE_URL}.
 - Bundle ID: com.dietlyai.app
 - Platforms: ${PLATFORM} (${MIN_OS} or later) and Android
 - Developer: Rexatech
@@ -105,6 +106,7 @@ ${COMPETITORS.map((c) => `- [${SITE_NAME} vs ${c.name}](${SITE_URL}/vs/${c.slug}
 ## Pages
 
 - [Home](${SITE_URL}) — What the scan is, how the plan follows from it, what is inside the app, FAQ, download links.
+- [About](${SITE_URL}/about) — Who makes ${SITE_NAME}, what it is, and how it differs from other products named Dietly.
 - [AI body scan](${SITE_URL}/ai-body-scan) — What the scan measures (definition, leanness, symmetry, posture, a body fat estimate and the weak point), sample result screens, privacy, and how it compares with a tape measure, a smart scale and DEXA.
 - [Free tools](${SITE_URL}/tools) — Every calculator in one place.
 - [Guides](${SITE_URL}/guides) — Every guide in one place.

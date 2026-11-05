@@ -1,0 +1,23 @@
+# Pings IndexNow (Bing, Yandex, Seznam, Naver) after every production deploy.
+#
+# Vercel creates a GitHub Deployment for each build and marks it "success" once
+# the new version is serving, so this runs against the live site, never ahead
+# of it. Only URLs whose sitemap <lastmod> moved in the last 3 days are sent;
+# bump a page's date in its registry (tools.ts, guides.ts, ...) when its content
+# changes and it goes out with the next deploy.
+name: IndexNow
+
+on:
+  deployment_status:
+
+jobs:
+  submit:
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/indexnow.mjs --live --since=3

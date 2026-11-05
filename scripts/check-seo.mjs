@@ -47,6 +47,7 @@ const VS_SLUGS = readFileSync("app/lib/competitors.ts", "utf8")
 EXPECTED["vs"] = "/vs";
 EXPECTED["best-ai-body-scan-apps"] = "/best-ai-body-scan-apps";
 EXPECTED["ai-body-scan"] = "/ai-body-scan";
+EXPECTED["about"] = "/about";
 EXPECTED["best-workout-apps"] = "/best-workout-apps";
 for (const [, slug] of VS_SLUGS) EXPECTED[`vs/${slug}`] = `/vs/${slug}`;
 

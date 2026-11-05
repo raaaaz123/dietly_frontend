@@ -3,6 +3,13 @@
  *
  *   npm run indexnow          # submit every URL in the sitemap
  *   npm run indexnow -- /vs   # submit one path (and anything under it)
+ *   node scripts/indexnow.mjs --live --since=3
+ *                             # read the deployed sitemap, submit only URLs
+ *                             # whose <lastmod> is within the last 3 days
+ *
+ * `--live --since` is what `.github/workflows/indexnow.yml` runs after every
+ * production deploy: Bing had crawled 17 URLs in three months (Webmaster
+ * Tools, 2026-11-05), so pushing changes on deploy beats remembering to.
  *
  * Why this exists: Bing's index is what ChatGPT's search grounding leans on, so
  * being slow into Bing means being absent from a large share of the AI answers
@@ -34,19 +41,51 @@ if (!SITE_URL || !KEY) {
 const host = new URL(SITE_URL).host;
 
 // The sitemap is generated from the registries, so it is the one list that
-// cannot drift from what actually exists.
+// cannot drift from what actually exists. `--live` reads the deployed one, for
+// CI, where there is no local build.
+const args = process.argv.slice(2);
+const live = args.includes("--live");
+const sinceArg = args.find((a) => a.startsWith("--since="));
+const sinceDays = sinceArg ? Number(sinceArg.split("=")[1]) : null;
+const filter = args.find((a) => !a.startsWith("--"));
+
 const sitemapPath = ".next/server/app/sitemap.xml.body";
-let urls;
-try {
-  urls = [...readFileSync(sitemapPath, "utf8").matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-} catch {
-  console.error(`No built sitemap at ${sitemapPath}. Run \`npm run build\` first.`);
-  process.exit(1);
+let xml;
+if (live) {
+  const r = await fetch(`${SITE_URL}/sitemap.xml`);
+  if (!r.ok) {
+    console.error(`${SITE_URL}/sitemap.xml returned ${r.status}`);
+    process.exit(1);
+  }
+  xml = await r.text();
+} else {
+  try {
+    xml = readFileSync(sitemapPath, "utf8");
+  } catch {
+    console.error(`No built sitemap at ${sitemapPath}. Run \`npm run build\` first.`);
+    process.exit(1);
+  }
 }
 
-const filter = process.argv[2];
+let entries = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => ({
+  loc: m[1].match(/<loc>([^<]+)<\/loc>/)?.[1],
+  lastmod: m[1].match(/<lastmod>([^<]+)<\/lastmod>/)?.[1],
+})).filter((e) => e.loc);
+
+if (sinceDays !== null) {
+  // Resubmitting unchanged URLs on every deploy is the pattern IndexNow asks
+  // publishers not to follow; only what the sitemap says changed goes out.
+  const cutoff = Date.now() - sinceDays * 86_400_000;
+  entries = entries.filter((e) => e.lastmod && Date.parse(e.lastmod) >= cutoff);
+}
+
+let urls = entries.map((e) => e.loc);
 if (filter) urls = urls.filter((u) => new URL(u).pathname.startsWith(filter));
 if (!urls.length) {
+  if (sinceDays !== null) {
+    console.log(`IndexNow: nothing changed in the last ${sinceDays} days; nothing submitted.`);
+    process.exit(0);
+  }
   console.error(filter ? `No sitemap URLs start with "${filter}".` : "Sitemap is empty.");
   process.exit(1);
 }
