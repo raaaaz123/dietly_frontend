@@ -1,3 +1,4 @@
+import EmbedCode from "../components/tools/EmbedCode";
 import { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -206,6 +207,7 @@ export default function MacroCalculatorPage() {
             </article>
           </Reveal>
         </section>
+        <EmbedCode slug="macro-calculator" name="Macro Calculator" />
       </main>
 
       <Footer />

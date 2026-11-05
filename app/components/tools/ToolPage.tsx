@@ -1,3 +1,4 @@
+import EmbedCode from "./EmbedCode";
 import Link from "next/link";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
@@ -172,6 +173,9 @@ export default function ToolPage({
         </section>
 
         <RelatedTools current={t} />
+        {t.slug !== "food-scanner" && t.slug !== "physique-analyzer" && (
+          <EmbedCode slug={t.slug} name={t.name} />
+        )}
       </main>
       <Footer />
       <MobileCTA />

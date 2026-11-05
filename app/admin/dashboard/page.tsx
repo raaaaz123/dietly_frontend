@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { api } from "../../lib/api";
+import UserScansSection from "../components/UserScansSection";
 
 type Stats = {
   total_users: number;
@@ -81,7 +82,7 @@ export default function Dashboard() {
       </div>
 
       {/* Conversion funnel */}
-      <div className="bg-elevated border border-border rounded-2xl p-6">
+      <div className="bg-elevated border border-border rounded-2xl p-6 mb-8">
         <p className="text-xs font-bold text-muted tracking-widest mb-5">CONVERSION FUNNEL</p>
         <div className="space-y-4">
           {[
@@ -104,6 +105,9 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
+
+      {/* Users Scans Section */}
+      <UserScansSection />
     </div>
   );
 }

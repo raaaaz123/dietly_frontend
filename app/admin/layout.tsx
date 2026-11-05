@@ -7,6 +7,7 @@ import { useAuth } from "../lib/auth";
 const NAV = [
   { href: "/admin/dashboard", label: "Dashboard", icon: "◈" },
   { href: "/admin/users", label: "Users", icon: "○" },
+  { href: "/admin/scans", label: "Users scans", icon: "◱" },
   { href: "/admin/exercises", label: "Exercises", icon: "◐" },
   { href: "/admin/exercise-videos", label: "Exercise videos", icon: "▶" },
   { href: "/admin/push", label: "Push", icon: "◭" },

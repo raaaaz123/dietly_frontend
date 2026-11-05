@@ -41,13 +41,24 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "X-Frame-Options", value: "DENY" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+        ],
+      },
+      {
+        // Everything except the embeddable calculators refuses to be framed.
+        source: "/((?!embed/).*)",
+        headers: [
+          { key: "X-Frame-Options", value: "DENY" },
           // No sitewide "index, follow" X-Robots-Tag any more. It was sent on
           // /admin and on every noindex exercise page too, contradicting the
           // page's own robots meta. The root layout's `robots` metadata already
           // carries max-image-preview / max-snippet for indexable pages.
         ],
+      },
+      {
+        // The embed route exists to be framed by other sites.
+        source: "/embed/:tool*",
+        headers: [{ key: "Content-Security-Policy", value: "frame-ancestors *" }],
       },
       {
         // Not the exercise clip/poster proxies under /api: those are media the
