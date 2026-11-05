@@ -48,9 +48,9 @@
 Webmaster Tools (data imported from Search Console): 14 URLs indexed of 17 known, homepage last crawled Sep 28, 55 impressions in 3 months, 1 backlink. Bing is what ChatGPT and Copilot ground on, so this matters more than the traffic suggests.
 
 - [x] Sitemap submitted (it knew 77 URLs; the live one has 141).
-- [x] Brand mix-up: for "dietly fit", dietly.fit (an unrelated meal planner) ranked above us and Bing's knowledge panel described our app citing dietly.fit. Fixed what we control: an  entity graph with  store links on the app, a new  page that names the publisher and the other Dietlys, and the same note in . Plain "dietly" belongs to dietly.pl and is not winnable.
-- [x] Footer now links , , both new guides and  sitewide.
-- [x] IndexNow runs automatically after every Production deploy (, URLs whose sitemap lastmod moved in 3 days). Bump a page's date in its registry when its content changes.
+- [x] Brand mix-up: for "dietly fit", dietly.fit (an unrelated meal planner) ranked above us and Bing's knowledge panel described our app citing dietly.fit. Fixed what we control: an `@id` entity graph with `sameAs` store links on the app, a new `/about` page that names the publisher and the other Dietlys, and the same note in `llms.txt`. Plain "dietly" belongs to dietly.pl and is not winnable.
+- [x] Footer now links `/ai-body-scan`, `/physique-analyzer`, both new guides and `/about` sitewide.
+- [x] IndexNow runs automatically after every Production deploy (`.github/workflows/indexnow.yml`, URLs whose sitemap lastmod moved in 3 days). Bump a page's date in its registry when its content changes.
 - [x] Homepage reindex requested; 99 priority URLs submitted via URL Submission (daily quota 100).
 - [ ] Next day: URL Submission for the remaining ~40 exercise pages.
 - [ ] Phase 3 backlinks are the real lever on Bing too: it reports 1 backlink.
