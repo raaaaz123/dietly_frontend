@@ -6,6 +6,7 @@ import Ranks from "./components/Ranks";
 import Inside from "./components/Inside";
 import FAQ from "./components/FAQ";
 import Cta from "./components/Cta";
+import Explore from "./components/Explore";
 import Footer from "./components/Footer";
 import MobileCTA from "./components/MobileCTA";
 import JsonLd from "./components/JsonLd";
@@ -47,6 +48,7 @@ export default function Home() {
         <Ranks />
         <Inside />
         <FAQ />
+        <Explore />
         <Cta />
       </main>
       <Footer />

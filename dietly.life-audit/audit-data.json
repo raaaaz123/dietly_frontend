@@ -1,0 +1,78 @@
+{
+  "summary": {
+    "health_score": 58,
+    "health_score_after_fixes_est": 72,
+    "business_type": "Mobile app (fitness: AI body scan, workout log) with free-tools content site",
+    "top_findings": [
+      "Exercise catalogue snapshot covered A-C only (507/1886)",
+      "66/81 sitemap URLs discovered but not indexed",
+      "robots.txt bot groups bypassed private-route disallows",
+      "Exercise video/poster media blocked by robots.txt",
+      "Muscle hubs thin, alphabetical, named Waist/Hips"
+    ],
+    "quick_wins": [
+      "Homepage internal links to all clusters",
+      "robots.txt rebuilt",
+      "Macro calculator rebuild",
+      "Hub editorial + ranked picks + FAQ",
+      "28 coached exercise pages"
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 70
+    },
+    {
+      "name": "Content Quality",
+      "score": 55
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 60
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 80
+    },
+    {
+      "name": "Performance (CWV)",
+      "score": 75
+    },
+    {
+      "name": "AI Search Readiness",
+      "score": 70
+    },
+    {
+      "name": "Images",
+      "score": 50
+    }
+  ],
+  "search_console_90d": {
+    "clicks": 85,
+    "impressions": 2000,
+    "ctr": 0.042,
+    "avg_position": 11.8,
+    "indexed": 15,
+    "discovered_not_indexed": 66
+  },
+  "lighthouse_mobile": {
+    "/": {
+      "performance": 95,
+      "lcp_s": 1.7
+    },
+    "/exercises/barbell-squat": {
+      "performance": 95,
+      "lcp_s": 1.6
+    },
+    "/macro-calculator": {
+      "performance": 58,
+      "lcp_s": 7.5,
+      "accessibility": 91
+    }
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "screenshots_dir": "screenshots/"
+  }
+}

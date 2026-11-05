@@ -14,7 +14,7 @@ export default function ExerciseGrid({ items }: { items: readonly Exercise[] }) 
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`/api/exercise-poster/${e.slug}`}
-              alt=""
+              alt={`${e.name} demonstration`}
               loading="lazy"
               decoding="async"
               width={368}

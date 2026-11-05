@@ -32,7 +32,7 @@ export const GUIDES: Guide[] = [
     title: "What Is a Physique Score? How Photo Scoring Works",
     heading: "What is a physique score?",
     description:
-      "What a physique score measures, how photo-based scoring actually works, what it can and cannot tell you, and how it differs from BMI, body fat percentage and a DEXA scan.",
+      "What a physique score measures, how photo scoring works, what it cannot tell you, and how it compares with BMI, body fat percentage and a DEXA scan.",
     blurb:
       "What the number means, how it is produced, and the four things it cannot see.",
     keywords: [
@@ -51,7 +51,7 @@ export const GUIDES: Guide[] = [
     title: "How to Take Comparable Progress Photos",
     heading: "How to take progress photos worth comparing",
     description:
-      "Lighting, distance, pose, time of day and the small things that make two photos comparable. A repeatable setup so the difference you see is a real change, not a change in conditions.",
+      "Lighting, distance, pose and time of day: a repeatable progress photo setup, so the difference you see is real change, not a change in conditions.",
     blurb: "A repeatable setup, so week-to-week differences mean something.",
     keywords: [
       "progress photos",
@@ -69,7 +69,7 @@ export const GUIDES: Guide[] = [
     title: "Body Recomposition: Why the Scale Stops Being Useful",
     heading: "Body recomposition, and why the scale stops being useful",
     description:
-      "How losing fat and building muscle at the same time hides from a bathroom scale, who can actually recomp, how long it takes, and what to measure instead of bodyweight.",
+      "How to lose fat and build muscle at the same time, who it works for, why the scale hides it, and how to eat and train for body recomposition.",
     blurb: "Losing fat and gaining muscle at once — and why weight barely moves.",
     keywords: [
       "body recomposition",
@@ -87,7 +87,7 @@ export const GUIDES: Guide[] = [
     title: "How to Train Around a Weak Point",
     heading: "How to train around a weak point",
     description:
-      "How to find the lagging muscle group that is actually holding your physique back, how to prioritise it without losing everything else, and how long to give it before judging.",
+      "How to find the lagging muscle group holding your physique back, and how to train around it without wrecking the rest of your program.",
     blurb: "Finding the lagging area, and prioritising it without losing the rest.",
     keywords: [
       "lagging muscle group",
@@ -106,7 +106,7 @@ export const GUIDES: Guide[] = [
     title: "Skinny Fat: What It Is and How to Fix It",
     heading: "Skinny fat, and the only way out of it",
     description:
-      "Why you can be a normal weight with a high body fat percentage, why eating less makes it worse, and the one approach that actually changes the shape rather than the number.",
+      "Why you can be a normal weight with high body fat, why dieting makes skinny fat worse, and the training and eating plan that actually fixes it.",
     blurb:
       "Normal weight, soft shape. Why cutting harder is the wrong answer, and what works.",
     keywords: [
@@ -144,7 +144,7 @@ export const GUIDES: Guide[] = [
     title: "How Long Does It Take to Build Muscle?",
     heading: "How long it actually takes to build muscle",
     description:
-      "What the research says about realistic rates of muscle gain by training age, when you will see it in the mirror versus on the scale, and why the first visible change is usually fat loss.",
+      "How long it takes to build muscle: realistic monthly rates of muscle gain by training age, sex and age, and why the first year is so different.",
     blurb:
       "Realistic rates by training year, and when the mirror catches up with the work.",
     keywords: [
@@ -157,6 +157,48 @@ export const GUIDES: Guide[] = [
     updated: "2026-09-23",
     readingMinutes: 8,
     related: ["progressive-overload", "body-recomposition"],
+  },
+  {
+    // The segment's own query. Search results for "rate my physique" and "AI
+    // physique rating" are app-store listings and competitor blogs; nothing
+    // explains how the rating works and where it fails, which is the page
+    // worth being.
+    slug: "rate-my-physique",
+    title: "Rate My Physique: How AI Physique Ratings Work",
+    heading: "Rate my physique: how AI physique ratings work",
+    description:
+      "How AI apps rate a physique from a photo, what the score is made of, how accurate it is, and how to take a photo that gets an honest, repeatable rating.",
+    blurb: "What a physique rating measures, how accurate it is, and how to get an honest one.",
+    keywords: [
+      "rate my physique",
+      "ai physique rating",
+      "physique rating app",
+      "rate my body ai",
+      "physique analyzer",
+    ],
+    published: "2026-11-05",
+    updated: "2026-11-05",
+    readingMinutes: 7,
+    related: ["what-is-a-physique-score", "body-fat-from-a-photo"],
+  },
+  {
+    slug: "body-fat-from-a-photo",
+    title: "Body Fat From a Photo: What Each % Looks Like",
+    heading: "How to estimate body fat percentage from a photo",
+    description:
+      "What 10%, 15%, 20%, 25% and 30% body fat look like for men and women, how accurate a photo estimate is, and the methods that beat it.",
+    blurb: "What each body fat range looks like, and how far a photo estimate can be trusted.",
+    keywords: [
+      "body fat percentage pictures",
+      "body fat from photo",
+      "estimate body fat percentage",
+      "body fat percentage chart",
+      "what does 15 body fat look like",
+    ],
+    published: "2026-11-05",
+    updated: "2026-11-05",
+    readingMinutes: 7,
+    related: ["rate-my-physique", "skinny-fat"],
   },
 ];
 

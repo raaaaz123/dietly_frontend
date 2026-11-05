@@ -125,12 +125,24 @@ function rankOf(e: { slug: string; name: string; equipment: string }): number {
   return n;
 }
 
+/**
+ * The catalogue groups by anatomy ("Waist", "Hips"); people search by the
+ * names they use in a gym ("abs workout", "glute exercises"). The hub's URL,
+ * H1 and title all come from this name, so it has to be the searched one.
+ * /exercises/muscle/waist and /hips redirect permanently (next.config.ts).
+ */
+const CATEGORY_NAME: Record<string, string> = {
+  Waist: "Abs",
+  Hips: "Glutes",
+};
+
 export const EXERCISES: Exercise[] = (data.exercises as Omit<Exercise, "mistakes">[]).map((e) => {
   const c = COACHING[e.slug];
   const name = tidyName(e.name);
   return {
     ...e,
     name,
+    category: CATEGORY_NAME[e.category] ?? e.category,
     title: tidyName(e.title || e.name),
     overview: c?.overview || e.overview,
     instructions: c?.instructions ?? e.instructions,

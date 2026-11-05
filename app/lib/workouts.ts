@@ -104,7 +104,7 @@ export const WORKOUTS: Workout[] = [
           { name: "Push-up", slug: "chest-tap-push-up", sets: "4", reps: "8–15", rest: "90s", note: "Elevate your hands on a table if you cannot reach 8; lower the surface as you get stronger." },
           { name: "Archer push-up", slug: "archer-push-up", sets: "3", reps: "5–8 each side", rest: "90s", note: "The step between a push-up and a one-arm push-up." },
           { name: "Bench dip, knees bent", slug: "bench-dip-knees-bent", sets: "3", reps: "10–15", rest: "60s", note: "Straighten your legs to make it harder." },
-          { name: "Pike push-up", slug: null, sets: "3", reps: "6–12", rest: "60s", note: "Hips high, head towards the floor. This is your overhead press at home." },
+          { name: "Pike push-up", slug: "pike-push-up", sets: "3", reps: "6–12", rest: "60s", note: "Hips high, head towards the floor. This is your overhead press at home." },
           { name: "Cobra push-up", slug: "cobra-push-up", sets: "2", reps: "10–12", rest: "45s" },
         ],
       },
@@ -112,10 +112,10 @@ export const WORKOUTS: Workout[] = [
         day: "Day 2",
         focus: "Legs — quads, hamstrings, glutes, calves",
         blocks: [
-          { name: "Bodyweight squat", slug: "bodyweight-overhead-squat", sets: "4", reps: "15–25", rest: "90s", note: "Hold the bottom for a second if the reps get easy." },
+          { name: "Bodyweight squat", slug: "squat", sets: "4", reps: "15–25", rest: "90s", note: "Hold the bottom for a second if the reps get easy." },
           { name: "Bulgarian split squat", slug: "bulgarian-split-squat", sets: "3", reps: "8–12 each leg", rest: "90s", note: "Back foot on a chair. The hardest leg movement you can do without weights." },
           { name: "Bodyweight rear lunge", slug: "bodyweight-rear-lunge", sets: "3", reps: "10–12 each leg", rest: "60s" },
-          { name: "Glute bridge", slug: "bridge-hip-abduction", sets: "3", reps: "15–20", rest: "45s", note: "Squeeze hard at the top; the range comes from the hips." },
+          { name: "Glute bridge", slug: "glute-bridge-two-legs-on-floor", sets: "3", reps: "15–20", rest: "45s", note: "Squeeze hard at the top; the range comes from the hips." },
           { name: "Standing calf raise", slug: "bodyweight-standing-calf-raise", sets: "3", reps: "15–25", rest: "45s", note: "Off a step for more range." },
         ],
       },
@@ -127,7 +127,7 @@ export const WORKOUTS: Workout[] = [
           { name: "Kneeling push-up to row", slug: "bodyweight-kneeling-push-up-row", sets: "3", reps: "8–12", rest: "60s" },
           { name: "Alternating superman", slug: "alternating-superman", sets: "3", reps: "12–15", rest: "45s", note: "For the lower back and rear shoulders, which bodyweight training otherwise misses." },
           { name: "Around-the-world superman hold", slug: "around-the-world-superman-hold", sets: "2", reps: "20–30s", rest: "45s" },
-          { name: "Pull-up, if you have a bar", slug: "archer-pull-up", sets: "3", reps: "As many as possible", rest: "120s", note: "Optional. Nothing else at home replaces it — a doorway bar is the one purchase worth making." },
+          { name: "Pull-up, if you have a bar", slug: "pull-up", sets: "3", reps: "As many as possible", rest: "120s", note: "Optional. Nothing else at home replaces it — a doorway bar is the one purchase worth making." },
         ],
       },
       {
@@ -180,8 +180,8 @@ export const WORKOUTS: Workout[] = [
         focus: "Three rounds, 60s rest between rounds",
         blocks: [
           { name: "Bodyweight rear lunge", slug: "bodyweight-rear-lunge", sets: "3 rounds", reps: "12 each leg", rest: "—" },
-          { name: "Pike push-up", slug: null, sets: "3 rounds", reps: "8–12", rest: "—", note: "Your shoulder work. Walk your feet closer to your hands to make it harder." },
-          { name: "Glute bridge", slug: "bridge-hip-abduction", sets: "3 rounds", reps: "20", rest: "60s after the round" },
+          { name: "Pike push-up", slug: "pike-push-up", sets: "3 rounds", reps: "8–12", rest: "—", note: "Your shoulder work. Walk your feet closer to your hands to make it harder." },
+          { name: "Glute bridge", slug: "glute-bridge-two-legs-on-floor", sets: "3 rounds", reps: "20", rest: "60s after the round" },
         ],
       },
       {
@@ -202,7 +202,7 @@ export const WORKOUTS: Workout[] = [
     name: "Calisthenics Plan",
     title: "Calisthenics Workout Plan — Beginner to Advanced",
     description:
-      "A calisthenics programme built on the six fundamental bodyweight patterns, with the progression ladder that takes each one from a scaled version to the full movement.",
+      "A calisthenics workout plan built on six bodyweight patterns, with a progression for each one from beginner to advanced. Free, no equipment.",
     blurb: "Six patterns, and the ladder that takes each from scaled to full.",
     keywords: [
       "calisthenics workout plan",
@@ -222,7 +222,7 @@ export const WORKOUTS: Workout[] = [
         day: "Session A",
         focus: "Upper body push and pull",
         blocks: [
-          { name: "Pull-up", slug: "archer-pull-up", sets: "4", reps: "3–8", rest: "150s", note: "Progression: dead hang → negatives → band-assisted → full → archer." },
+          { name: "Pull-up", slug: "pull-up", sets: "4", reps: "3–8", rest: "150s", note: "Progression: dead hang → negatives → band-assisted → full → archer." },
           { name: "Push-up progression", slug: "archer-push-up", sets: "4", reps: "5–12", rest: "120s", note: "Progression: incline → full → diamond → archer → one-arm." },
           { name: "Chest dip", slug: "chest-dip", sets: "3", reps: "6–12", rest: "120s", note: "The heaviest push most people can load at home." },
           { name: "Commando pull-up", slug: "commando-pull-up", sets: "2", reps: "4–6 each side", rest: "90s" },
@@ -289,7 +289,7 @@ export const WORKOUTS: Workout[] = [
         focus: "Back, rear delts, biceps — heavy",
         blocks: [
           { name: "Barbell bent over row", slug: "barbell-bent-over-row", sets: "4", reps: "6–10", rest: "180s", note: "The horizontal counterweight to Push A's bench press." },
-          { name: "Pull-up", slug: "archer-pull-up", sets: "3", reps: "6–10", rest: "150s", note: "Add weight once you clear 10 clean reps." },
+          { name: "Pull-up", slug: "pull-up", sets: "3", reps: "6–10", rest: "150s", note: "Add weight once you clear 10 clean reps." },
           { name: "Cable front seated row", slug: "cable-front-seated-row", sets: "3", reps: "10–12", rest: "90s" },
           { name: "Barbell shrug", slug: "barbell-shrug", sets: "3", reps: "12–15", rest: "60s" },
           { name: "Barbell curl", slug: "barbell-curl", sets: "3", reps: "8–12", rest: "60s" },
@@ -302,8 +302,8 @@ export const WORKOUTS: Workout[] = [
           { name: "Barbell squat", slug: "barbell-squat", sets: "4", reps: "5–8", rest: "180s" },
           { name: "Barbell Romanian deadlift", slug: "barbell-romanian-deadlift", sets: "3", reps: "8–12", rest: "150s", note: "Hamstrings need a hinge, not just a squat. Do not skip this for more quad work." },
           { name: "Bulgarian split squat", slug: "bulgarian-split-squat", sets: "3", reps: "8–12 each leg", rest: "90s" },
-          { name: "Leg curl", slug: "cable-assisted-inverse-leg-curl", sets: "3", reps: "12–15", rest: "60s" },
-          { name: "Standing calf raise", slug: "barbell-standing-calf-raise", sets: "4", reps: "12–20", rest: "45s" },
+          { name: "Leg curl", slug: "lever-seated-leg-curl", sets: "3", reps: "12–15", rest: "60s" },
+          { name: "Standing calf raise", slug: "standing-calf-raise", sets: "4", reps: "12–20", rest: "45s" },
         ],
       },
       {
@@ -312,7 +312,7 @@ export const WORKOUTS: Workout[] = [
         blocks: [
           { name: "Barbell incline bench press", slug: "barbell-incline-bench-press", sets: "4", reps: "8–12", rest: "150s", note: "Incline leads today; the flat press led on Push A." },
           { name: "Chest dip", slug: "chest-dip", sets: "3", reps: "8–12", rest: "120s", note: "Lean forward to bias the chest, stay upright for triceps." },
-          { name: "Chest fly", slug: "band-chest-fly", sets: "3", reps: "12–15", rest: "60s" },
+          { name: "Chest fly", slug: "cable-standing-fly", sets: "3", reps: "12–15", rest: "60s" },
           { name: "Cable lateral raise", slug: "cable-lateral-raise", sets: "4", reps: "12–20", rest: "45s" },
           { name: "Triceps extension", slug: "alternate-triceps-extension", sets: "3", reps: "12–15", rest: "60s" },
         ],
@@ -335,8 +335,8 @@ export const WORKOUTS: Workout[] = [
           { name: "Barbell deadlift", slug: "barbell-deadlift", sets: "3", reps: "3–6", rest: "240s", note: "Heavy and low-rep. Deadlifts cost more recovery than any other lift here." },
           { name: "Barbell front squat", slug: "barbell-front-squat", sets: "3", reps: "8–12", rest: "150s" },
           { name: "Barbell hip thrust", slug: "barbell-hip-thrust", sets: "3", reps: "10–15", rest: "90s" },
-          { name: "Leg extension", slug: "band-seated-leg-extension", sets: "3", reps: "12–15", rest: "60s" },
-          { name: "Standing calf raise", slug: "barbell-standing-calf-raise", sets: "4", reps: "12–20", rest: "45s" },
+          { name: "Leg extension", slug: "lever-leg-extension", sets: "3", reps: "12–15", rest: "60s" },
+          { name: "Standing calf raise", slug: "standing-calf-raise", sets: "4", reps: "12–20", rest: "45s" },
         ],
       },
     ],
@@ -383,8 +383,8 @@ export const WORKOUTS: Workout[] = [
           { name: "Barbell squat", slug: "barbell-squat", sets: "4", reps: "5–8", rest: "180s" },
           { name: "Barbell Romanian deadlift", slug: "barbell-romanian-deadlift", sets: "3", reps: "8–12", rest: "150s" },
           { name: "Bulgarian split squat", slug: "bulgarian-split-squat", sets: "3", reps: "10 each leg", rest: "90s" },
-          { name: "Leg curl", slug: "cable-assisted-inverse-leg-curl", sets: "3", reps: "12–15", rest: "60s" },
-          { name: "Standing calf raise", slug: "barbell-standing-calf-raise", sets: "4", reps: "12–20", rest: "45s" },
+          { name: "Leg curl", slug: "lever-seated-leg-curl", sets: "3", reps: "12–15", rest: "60s" },
+          { name: "Standing calf raise", slug: "standing-calf-raise", sets: "4", reps: "12–20", rest: "45s" },
         ],
       },
       {
@@ -392,7 +392,7 @@ export const WORKOUTS: Workout[] = [
         focus: "Vertical press and pull led",
         blocks: [
           { name: "Barbell seated overhead press", slug: "barbell-seated-overhead-press", sets: "4", reps: "5–8", rest: "180s" },
-          { name: "Pull-up", slug: "archer-pull-up", sets: "4", reps: "6–10", rest: "150s" },
+          { name: "Pull-up", slug: "pull-up", sets: "4", reps: "6–10", rest: "150s" },
           { name: "Barbell incline bench press", slug: "barbell-incline-bench-press", sets: "3", reps: "8–12", rest: "120s" },
           { name: "Cable front seated row", slug: "cable-front-seated-row", sets: "3", reps: "10–12", rest: "90s" },
           { name: "Cable lateral raise", slug: "cable-lateral-raise", sets: "3", reps: "12–20", rest: "45s" },
@@ -406,7 +406,7 @@ export const WORKOUTS: Workout[] = [
           { name: "Barbell deadlift", slug: "barbell-deadlift", sets: "3", reps: "3–6", rest: "240s" },
           { name: "Barbell front squat", slug: "barbell-front-squat", sets: "3", reps: "8–12", rest: "150s" },
           { name: "Barbell hip thrust", slug: "barbell-hip-thrust", sets: "3", reps: "10–15", rest: "90s" },
-          { name: "Leg extension", slug: "band-seated-leg-extension", sets: "3", reps: "12–15", rest: "60s" },
+          { name: "Leg extension", slug: "lever-leg-extension", sets: "3", reps: "12–15", rest: "60s" },
           { name: "Body-saw plank", slug: "body-saw-plank", sets: "3", reps: "10–12", rest: "45s" },
         ],
       },
@@ -454,7 +454,7 @@ export const WORKOUTS: Workout[] = [
           { name: "Barbell seated overhead press", slug: "barbell-seated-overhead-press", sets: "3", reps: "5", rest: "180s" },
           { name: "Cable pulldown", slug: "cable-pulldown", sets: "3", reps: "10", rest: "120s", note: "Builds towards a pull-up. Reduce the weight as you get stronger, not the reps." },
           { name: "Barbell curl", slug: "barbell-curl", sets: "2", reps: "10–12", rest: "60s" },
-          { name: "Standing calf raise", slug: "barbell-standing-calf-raise", sets: "2", reps: "15", rest: "45s" },
+          { name: "Standing calf raise", slug: "standing-calf-raise", sets: "2", reps: "15", rest: "45s" },
         ],
       },
       {

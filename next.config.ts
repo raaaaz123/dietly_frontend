@@ -27,6 +27,14 @@ const nextConfig: NextConfig = {
     // design: it appears in every campaign link Apple generates.
     APP_STORE_PT: process.env.APP_STORE_PT,
   },
+  async redirects() {
+    return [
+      // Hubs renamed to the words people search ("abs workout", "glute
+      // exercises") instead of the catalogue's anatomy terms.
+      { source: "/exercises/muscle/waist", destination: "/exercises/muscle/abs", permanent: true },
+      { source: "/exercises/muscle/hips", destination: "/exercises/muscle/glutes", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {
@@ -35,8 +43,21 @@ const nextConfig: NextConfig = {
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "X-Frame-Options", value: "DENY" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "X-Robots-Tag", value: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+          // No sitewide "index, follow" X-Robots-Tag any more. It was sent on
+          // /admin and on every noindex exercise page too, contradicting the
+          // page's own robots meta. The root layout's `robots` metadata already
+          // carries max-image-preview / max-snippet for indexable pages.
         ],
+      },
+      {
+        // Not the exercise clip/poster proxies under /api: those are media the
+        // exercise pages' VideoObject markup points crawlers at.
+        source: "/:dir(admin|influencer|invite|f)/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      {
+        source: "/api/:route((?!exercise-clip|exercise-poster).*)",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
       },
       {
         // The app-association file, served the way Apple insists on reading it.

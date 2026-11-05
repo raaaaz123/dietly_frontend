@@ -6,7 +6,7 @@ import Reveal from "../../../components/Reveal";
 import ExerciseGrid from "../../../components/exercises/ExerciseGrid";
 import { JsonLdScript } from "../../../components/tools/ToolPage";
 import { SITE_URL } from "../../../lib/site";
-import { KIT, kit, sortItems } from "../../../lib/exercises";
+import { KIT, CATEGORIES, kit, sortItems } from "../../../lib/exercises";
 
 /**
  * "Bodyweight exercises", "home workout with dumbbells" — the other axis people
@@ -44,8 +44,16 @@ export async function generateMetadata({
   // searches "bodyweight exercises" anywhere near as often as they search
   // "calisthenics" or "home workout", and the page serves all three intents
   // identically.
-  const title = `${c.name} Workout — ${c.items.length} Exercises`;
-  const description = `${c.items.length} ${c.name.toLowerCase()} exercises you can train with — ${c.blurb.toLowerCase()} Each one carries a demo clip, the muscle it targets and a starting set and rep scheme.`;
+  // Titled for the query, not the tier name: /bodyweight already shows at
+  // position ~5 in Search Console, for "bodyweight exercises" style searches.
+  const n = c.items.length;
+  const TITLES: Record<string, string> = {
+    bodyweight: `Bodyweight Exercises: ${n} No-Equipment Moves With Demos`,
+    minimal: `Dumbbell & Band Exercises: ${n} Home Workout Moves`,
+    gym: `Gym Exercises: ${n} Barbell, Cable & Machine Moves`,
+  };
+  const title = TITLES[c.slug] ?? `${c.name} Exercises: ${n} Moves With Demos`;
+  const description = `${n} ${c.name.toLowerCase()} exercises, most useful first. ${c.blurb} Each has a demo clip, the target muscle and a starting set and rep scheme.`;
   return {
     title: { absolute: title },
     description,
@@ -66,7 +74,16 @@ export default async function Page({
 }) {
   const { kit: slug } = await params;
   const c = kit(slug)!;
-  const items = sortItems(c.items, "name");
+  // Most useful first, not alphabetical, and capped. With the full catalogue
+  // the gym hub alone ran past 1,000 image cards. Every movement is still one
+  // click away through the per-muscle links below, which also point at the
+  // hubs that carry the editorial copy.
+  const items = sortItems(c.items, "popular");
+  const cards = items.slice(0, 36);
+  const byMuscle = CATEGORIES.map((m) => ({
+    ...m,
+    n: c.items.filter((e) => e.category === m.name).length,
+  })).filter((m) => m.n > 0);
   const others = KIT.filter((x) => x.slug !== c.slug);
 
   return (
@@ -122,7 +139,27 @@ export default async function Page({
           </Reveal>
 
           <Reveal delay={120}>
-            <ExerciseGrid items={items} />
+            <h2 className="mt-12 text-[24px] font-bold text-fg font-body tracking-tight">
+              The most useful {c.name.toLowerCase()} exercises
+            </h2>
+            <ExerciseGrid items={cards} />
+
+            <section className="mt-14">
+              <h2 className="text-[20px] font-bold text-fg font-body tracking-tight mb-5">
+                {c.name} exercises by muscle
+              </h2>
+              <div className="flex flex-wrap gap-2.5">
+                {byMuscle.map((m) => (
+                  <Link
+                    key={m.slug}
+                    href={`/exercises/muscle/${m.slug}`}
+                    className="rounded-full border border-border px-4 py-2 text-[14px] font-semibold text-fg-muted hover:text-fg hover:border-border-strong transition-colors"
+                  >
+                    {m.name} ({m.n})
+                  </Link>
+                ))}
+              </div>
+            </section>
 
             <section className="mt-14">
               <h2 className="text-[20px] font-bold text-fg font-body tracking-tight mb-5">
@@ -143,7 +180,7 @@ export default async function Page({
 
             <p className="mt-12 text-[12px] leading-relaxed text-fg-faint border border-border rounded-xl p-5">
               Exercise demonstrations courtesy of Gym Visual. Set and rep
-              schemes are a starting point, not a prescription — see a
+              schemes are a starting point, not a prescription. See a
               qualified professional before starting a new exercise program.
             </p>
           </Reveal>

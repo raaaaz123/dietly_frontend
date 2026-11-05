@@ -99,7 +99,7 @@ export const TOOLS: Tool[] = [
     name: "Lean Body Mass Calculator",
     title: "Lean Body Mass Calculator",
     description:
-      "Calculate lean body mass from your weight and body fat percentage, or estimate it from height with the Boer formula. See what your scale weight is actually made of.",
+      "Calculate lean body mass from your weight and body fat percentage, or from height and weight with the Boer formula. See what your weight is made of.",
     blurb: "What your scale weight is actually made of.",
     keywords: ["lean body mass calculator", "lbm calculator", "fat free mass"],
     lastModified: "2026-09-15",
@@ -121,7 +121,7 @@ export const TOOLS: Tool[] = [
     name: "Ideal Weight Calculator",
     title: "Ideal Weight Calculator — Four Formulas Compared",
     description:
-      "See your 'ideal' weight by the Devine, Robinson, Miller and Hamwi formulas, the healthy BMI range for your height, and why none of them know anything about your build.",
+      "See your ideal weight by the Devine, Robinson, Miller and Hamwi formulas, and why for anyone who lifts, body fat matters more than the scale.",
     blurb: "Four classic formulas, compared — and why they disagree with each other.",
     keywords: ["ideal weight calculator", "ideal body weight", "healthy weight for height"],
     lastModified: "2026-09-15",
@@ -229,7 +229,7 @@ export const TOOLS: Tool[] = [
     name: "Weight Loss Calculator",
     title: "Weight Loss Calculator: Goal Date and Daily Calories",
     description:
-      "Enter your weight, goal and pace to see the date you will reach it, the calories to eat each day, and how that target changes as you get lighter. Free, no signup.",
+      "Enter your weight, goal and pace to see the date you reach it, the calories to eat each day, and how the target changes as you get lighter.",
     blurb: "The date you hit your goal weight, and the calories that get you there.",
     keywords: [
       "weight loss calculator",

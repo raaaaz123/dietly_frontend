@@ -115,7 +115,7 @@ export const COMPETITORS: Competitor[] = [
     name: "Fitbod",
     title: "Dietly Fit vs Fitbod: Body Scan vs Workout Generator",
     description:
-      "Fitbod builds each workout from your lifting history; Dietly Fit builds the week from a photo of your physique. What each one measures, what they cost, and which to pick.",
+      "Fitbod builds each workout from your lifting history; Dietly Fit builds your week from a weekly body scan. How the two compare on plans, logging and price.",
     blurb: "The best-known AI workout generator. It plans from your logs; we plan from your body.",
     keywords: ["dietly vs fitbod", "fitbod alternative", "ai workout app comparison"],
     checked: "2026-09-18",
@@ -183,7 +183,7 @@ export const COMPETITORS: Competitor[] = [
     name: "MacroFactor",
     title: "Dietly Fit vs MacroFactor: Scan-Led Plan vs Adaptive Macros",
     description:
-      "MacroFactor's algorithm adapts your calorie targets from your own logging; Dietly Fit scores a weekly photo and builds training around it. Prices, features and which fits.",
+      "MacroFactor adapts calorie targets from your logged weight; Dietly Fit builds training from a weekly body scan. Which one fits your goal, compared.",
     blurb: "The serious tracker's tracker. Its maths is better than ours; it cannot see you.",
     keywords: [
       "dietly vs macrofactor",
@@ -260,7 +260,7 @@ export const COMPETITORS: Competitor[] = [
     name: "MyFitnessPal",
     title: "Dietly Fit vs MyFitnessPal: Training Plan vs Food Diary",
     description:
-      "MyFitnessPal is the biggest food database in the category; Dietly Fit is a training app that scores a weekly photo. What each does, current pricing, and which one you need.",
+      "MyFitnessPal has the biggest food database; Dietly Fit is a training app with food logging built in. Features, scanning and price compared.",
     blurb: "The default food diary. Enormous database, no opinion about your training.",
     keywords: [
       "dietly vs myfitnesspal",
@@ -334,7 +334,7 @@ export const COMPETITORS: Competitor[] = [
     name: "Cal AI",
     title: "Dietly Fit vs Cal AI: Physique Scan vs Photo Calorie Count",
     description:
-      "Both point a camera at something and return a number — but Cal AI photographs your dinner and Dietly Fit photographs you. What each measures, what is free, and which you want.",
+      "Cal AI photographs your food; Dietly Fit photographs your physique and builds training around it. Two camera-first apps, compared honestly.",
     blurb: "Photograph your dinner, or photograph yourself. Two different products.",
     keywords: ["dietly vs cal ai", "cal ai alternative", "ai calorie counter app"],
     checked: "2026-09-18",
@@ -399,7 +399,7 @@ export const COMPETITORS: Competitor[] = [
     name: "Bodygram",
     title: "Dietly Fit vs Bodygram: Physique Score vs Body Measurements",
     description:
-      "Bodygram turns a phone scan into 35 body measurements and a composition estimate. Dietly Fit turns a photo into a score and a training week. What each is actually for.",
+      "Bodygram turns a phone scan into 35 body measurements; Dietly Fit scores your physique and builds the training week around it. Compared.",
     blurb: "Measurements and composition from a phone scan — but no plan attached to them.",
     keywords: [
       "dietly vs bodygram",

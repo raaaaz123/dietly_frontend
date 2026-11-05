@@ -36,6 +36,22 @@ const FAQS = [
     a: "They can be, but they do not need to be. Calorie cycling \u2014 more carbs on training days, fewer on rest days \u2014 works if the weekly total is unchanged, and it is one more thing to get wrong. Hold one set of numbers every day until the weekly trend tells you to change them.",
   },
   {
+    q: "Is a macro calculator different for women?",
+    a: "The maths is the same, but the inputs are not. Mifflin-St Jeor subtracts 161 calories for women instead of adding 5, so the same height, weight and age gives a lower maintenance figure, and the safety floor is 1,200 calories rather than 1,500. Protein is set per kilo of bodyweight for everyone, so a 60 kg woman cutting gets about 130 g a day.",
+  },
+  {
+    q: "How do I split my macros per meal?",
+    a: "Divide the daily total by the number of meals you actually eat. Protein is the one worth spreading evenly, at roughly 25 to 40 g a sitting, because muscle protein synthesis responds per meal. Carbs and fat can be lopsided, for example more carbs around training, as long as the day adds up.",
+  },
+  {
+    q: "What is the best macro split for fat loss?",
+    a: "There is no single ratio. For fat loss the evidence supports high protein (about 2 g per kg of bodyweight), at least 20 to 25% of calories from fat for hormones, and carbs filling the rest. Low carb and keto lose fat at the same rate when calories and protein are matched; pick the style you can keep up.",
+  },
+  {
+    q: "Is this an AI macro calculator?",
+    a: "The calculator on this page uses a published equation, not a model, so the same inputs always give the same answer. The Dietly Fit app is where the AI comes in: it logs a meal from a photo, a sentence or your voice, and adjusts your targets as your weekly weight trend comes in.",
+  },
+  {
     q: "How long before I change these numbers?",
     a: "Two weeks. Bodyweight swings with water, salt and glycogen by a kilo or more day to day, so a single weigh-in tells you nothing. Take the two-week average against the previous two-week average, and only adjust if the trend disagrees with the goal.",
   },
@@ -45,13 +61,13 @@ export const metadata: Metadata = {
   // No "| Dietly Fit" suffix here: the root layout's title template already appends
   // it, so writing it again rendered "... | Dietly Fit | Dietly Fit" and spent the
   // characters that get truncated in a result page on the brand twice.
-  title: "Macro Calculator — TDEE & Macros for Your Goal",
-  description: "Work out your daily calories and your protein, carb and fat split for fat loss, muscle gain or maintenance. Free, no signup, Mifflin-St Jeor.",
-  keywords: ["macro calculator", "tdee calculator", "calorie calculator", "ai macro planner", "diet tracker"],
+  title: { absolute: "Macro Calculator: Daily & Per-Meal Macros for Women and Men" },
+  description: "Free macro calculator in lb or kg: calories plus protein, carbs and fat for fat loss, maintenance or muscle gain, per day and per meal. Keto and low carb too.",
+  keywords: ["macro calculator", "macro calculator for women", "macros per meal", "macro split calculator", "keto macro calculator", "ai macro calculator"],
   alternates: { canonical: "/macro-calculator" },
   openGraph: {
-    title: "Macro Calculator — TDEE & Macros for Your Goal",
-    description: "Work out your daily calories and your protein, carb and fat split for fat loss, muscle gain or maintenance.",
+    title: "Macro Calculator: Daily & Per-Meal Macros for Women and Men",
+    description: "Calories plus protein, carbs and fat for your goal, per day and per meal. Free, lb or kg.",
     url: "/macro-calculator",
     type: "website",
   }
@@ -93,12 +109,12 @@ export default function MacroCalculatorPage() {
       <main className="pt-32 pb-24 overflow-hidden">
         <div className="max-w-[1000px] mx-auto px-6 md:px-12 text-center">
           <Reveal>
-            <span className="text-[11px] font-bold tracking-[3px] text-accent uppercase mb-6 block">Free Tool — No Signup</span>
+            <span className="text-[11px] font-bold tracking-[3px] text-accent uppercase mb-6 block">Free tool · No signup</span>
             <h1 className="text-[clamp(40px,6vw,72px)] font-bold leading-[1.05] tracking-[-2px] text-fg font-body mb-6">
-              AI Macro <span className="font-display italic text-accent font-light">&</span> TDEE Calculator
+              Macro Calculator
             </h1>
-            <p className="text-[16px] md:text-[20px] text-fg-muted max-w-[600px] mx-auto leading-relaxed">
-              Discover exactly how many calories and macros you need to reach your goals. Powered by the Mifflin-St Jeor equation.
+            <p className="text-[16px] md:text-[20px] text-fg-muted max-w-[620px] mx-auto leading-relaxed">
+              Your daily calories, then protein, carbs and fat for fat loss, maintenance or muscle gain, split into meals. Pounds or kilos, for women and men.
             </p>
           </Reveal>
         </div>
@@ -121,38 +137,56 @@ export default function MacroCalculatorPage() {
           <Reveal>
             <article className="text-fg-muted leading-relaxed space-y-8">
               <div>
-                <h2 className="text-[28px] font-bold text-fg font-body tracking-tight mb-4">What is a Macro Calculator?</h2>
+                <h2 className="text-[28px] font-bold text-fg font-body tracking-tight mb-4">How this macro calculator works</h2>
                 <p>
-                  A macronutrient (macro) calculator determines the optimal ratio of proteins, carbohydrates, and fats you should consume daily to reach a specific health or physique goal. Unlike simple calorie counting, tracking macros ensures that the weight you lose is fat (not muscle) and the weight you gain is muscle (not fat).
+                  A macro calculator turns your body and your goal into a daily calorie target, then splits it into protein, carbohydrate and fat. This one works in three steps.
+                </p>
+                <ol className="mt-4 list-decimal pl-6 space-y-2">
+                  <li><strong>Maintenance calories.</strong> Your basal metabolic rate from the Mifflin-St Jeor equation, multiplied by your activity level. That is your TDEE, the calories that hold your weight steady.</li>
+                  <li><strong>Goal adjustment.</strong> 20% below maintenance to lose fat (about 0.5 to 1% of bodyweight a week), 10% above it to build muscle with little fat gain, or none to maintain.</li>
+                  <li><strong>The split.</strong> Protein is set from bodyweight: 2.2 g per kg (1 g per lb) on a cut, 1.8 g per kg otherwise. Fat takes its share of calories for the diet style you pick, and carbohydrate fills what is left.</li>
+                </ol>
+              </div>
+
+              <div>
+                <h2 className="text-[28px] font-bold text-fg font-body tracking-tight mb-4">Macro splits by goal</h2>
+                <p>Typical results for a 75 kg (165 lb) lifter training four times a week, on the balanced setting:</p>
+                <div className="mt-4 overflow-x-auto">
+                  <table className="w-full text-left text-[15px]">
+                    <thead className="text-fg">
+                      <tr className="border-b border-border"><th className="py-2 pr-4">Goal</th><th className="py-2 pr-4">Protein</th><th className="py-2 pr-4">Fat</th><th className="py-2">Carbs</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b border-border"><td className="py-2 pr-4">Lose fat</td><td className="py-2 pr-4">~30%</td><td className="py-2 pr-4">30%</td><td className="py-2">~40%</td></tr>
+                      <tr className="border-b border-border"><td className="py-2 pr-4">Maintain</td><td className="py-2 pr-4">~20%</td><td className="py-2 pr-4">30%</td><td className="py-2">~50%</td></tr>
+                      <tr><td className="py-2 pr-4">Build muscle</td><td className="py-2 pr-4">~20%</td><td className="py-2 pr-4">30%</td><td className="py-2">~50%</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p className="mt-4">
+                  Percentages move with bodyweight because protein is fixed in grams, not as a share. That is deliberate: a fixed 40/30/30 split gives a 55 kg woman and a 100 kg man the same proportions, which under-feeds protein for one and over-feeds it for the other.
                 </p>
               </div>
 
               <div>
-                <h2 className="text-[28px] font-bold text-fg font-body tracking-tight mb-4">How does the TDEE Calculator work?</h2>
+                <h2 className="text-[28px] font-bold text-fg font-body tracking-tight mb-4">Macro calculator for women</h2>
                 <p>
-                  Total Daily Energy Expenditure (TDEE) represents the total number of calories your body burns in a 24-hour period. Our calculator uses the highly regarded <strong>Mifflin-St Jeor equation</strong> to first calculate your Basal Metabolic Rate (BMR) — the calories you burn simply by existing.
-                </p>
-                <p className="mt-4">
-                  We then multiply your BMR by an activity multiplier to account for your lifestyle and exercise habits. Finally, we adjust the total based on whether you want to lose fat (-500 calories) or build muscle (+500 calories).
+                  Women get a lower maintenance figure at the same size, because the equation subtracts 161 calories instead of adding 5, and the calculator never sets a target under 1,200 calories. Protein needs are the same per kilo, which surprises most people: a 60 kg woman cutting should aim for around 130 g a day. If your cycle moves your scale weight, compare the same week of each month rather than week to week.
                 </p>
               </div>
 
-              <div className="glass-card p-8 rounded-2xl border-l-4 !border-l-accent bg-bg-elevated/30 my-10">
-                <h3 className="text-[20px] font-bold text-fg mb-4">Why track macros instead of just calories?</h3>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <span className="text-accent">✓</span>
-                    <span><strong>Protein</strong> builds and preserves muscle mass, keeping you full and boosting metabolism.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-accent">✓</span>
-                    <span><strong>Carbohydrates</strong> provide the primary energy source for high-intensity workouts and brain function.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-accent">✓</span>
-                    <span><strong>Fats</strong> are essential for hormone regulation, nutrient absorption, and joint health.</span>
-                  </li>
-                </ul>
+              <div>
+                <h2 className="text-[28px] font-bold text-fg font-body tracking-tight mb-4">Macros per meal</h2>
+                <p>
+                  Pick 3, 4 or 5 meals and the result divides your day evenly. Even protein matters most: about 0.4 g per kg per meal (25 to 40 g for most adults) gives the best muscle-building response each time you eat. Carbs are worth moving towards the meal before and after training. Fat can sit wherever it is easiest.
+                </p>
+              </div>
+
+              <div>
+                <h2 className="text-[28px] font-bold text-fg font-body tracking-tight mb-4">Keto and low-carb macros</h2>
+                <p>
+                  The <strong>keto</strong> setting caps carbs at 30 g a day and moves the rest of the calories to fat. That stays under the 50 g most people need to stay in ketosis. <strong>Low carb</strong> caps carbs at 100 g. <strong>High protein</strong> adds 20% more protein, for anyone who finds a cut easier when they are fuller. Matched for calories and protein, all four styles lose fat at the same rate.
+                </p>
               </div>
 
               {/* This section used to pitch the calorie-counting app Dietly Fit was before

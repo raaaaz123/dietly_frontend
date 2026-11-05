@@ -55,9 +55,12 @@ for (const [, slug] of VS_SLUGS) EXPECTED[`vs/${slug}`] = `/vs/${slug}`;
 // asserting a canonical on 507 of them would assert the opposite of the design.
 const EX = JSON.parse(readFileSync("app/lib/exercises.generated.json", "utf8"));
 const exSlugify = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-const exCategories = [...new Set(EX.exercises.map((e) => e.category))]
+// Mirrors CATEGORY_NAME in lib/exercises.ts: the hubs are named for the
+// searched word, so "Waist" is built at /muscle/abs and "Hips" at /glutes.
+const EX_RENAME = { Waist: "Abs", Hips: "Glutes" };
+const exCategories = [...new Set(EX.exercises.map((e) => EX_RENAME[e.category] ?? e.category))]
   .filter(Boolean)
-  .filter((n) => EX.exercises.filter((e) => e.category === n).length >= 8);
+  .filter((n) => EX.exercises.filter((e) => (EX_RENAME[e.category] ?? e.category) === n).length >= 8);
 // The workout cluster. Registered from the source file so a new plan is
 // covered by the canonical, title-length and og:image guards automatically —
 // the same reason the tool and guide registries are read rather than listed.

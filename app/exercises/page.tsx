@@ -8,9 +8,10 @@ import { SITE_NAME, SITE_URL } from "../lib/site";
 import BodyMap, { BarbellIcon, KitIcon, regionFor } from "../components/exercises/BodyMap";
 import { EXERCISES, CATEGORIES, KIT, INDEXABLE } from "../lib/exercises";
 
-const TITLE = "Exercise Library — 500+ Movements With Demos";
-const DESCRIPTION =
-  "Every movement in Dietly Fit's training catalogue, grouped by the muscle it works and the equipment it needs, each with a demo clip, a target muscle and a starting set and rep scheme.";
+// Rounded down to the hundred so the title does not change on every refresh.
+const COUNT = `${(Math.floor(EXERCISES.length / 100) * 100).toLocaleString("en-US")}+`;
+const TITLE = `Exercise Library: ${COUNT} Gym & Home Exercises With Demos`;
+const DESCRIPTION = `${COUNT} exercises grouped by muscle and equipment, each with a demo clip, the target muscle and a starting set and rep scheme. Free, no signup.`;
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -119,7 +120,7 @@ export default function ExercisesHub() {
             </section>
 
             {/* Honest about the state of the library rather than quiet about it.
-                507 movements have a clip; the written coaching is being filled
+                Every movement has a clip; the written coaching is being filled
                 in, and until a movement has it its own page stays out of the
                 index — see `isIndexable` in lib/exercises. */}
             <p className="mt-14 text-[13px] leading-relaxed text-fg-faint border border-border rounded-xl p-5">

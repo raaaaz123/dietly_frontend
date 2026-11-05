@@ -45,6 +45,8 @@ const columns = [
   {
     title: "Guides",
     links: [
+      { label: "Rate my physique", href: "/guides/rate-my-physique" },
+      { label: "Body fat from a photo", href: "/guides/body-fat-from-a-photo" },
       { label: "What is a physique score?", href: "/guides/what-is-a-physique-score" },
       { label: "Progress photos", href: "/guides/progress-photos-guide" },
       { label: "Body recomposition", href: "/guides/body-recomposition" },

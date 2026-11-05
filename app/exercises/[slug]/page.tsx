@@ -51,15 +51,21 @@ export async function generateMetadata({
   const e = exercise(slug);
   if (!e) return {};
   const muscle = e.target || e.primaryMuscles[0] || e.category;
-  const title = `${e.name} — How to Do It`;
+  const long = `${e.name}: How to Do It, Form Cues & Mistakes`;
+  const title = long.length <= 60 ? long : `${e.name}: How to Do It`;
+  // Cut at a word boundary. `slice(0, 155)` ended snippets mid-word.
+  const clip = (t: string) => (t.length <= 155 ? t : `${t.slice(0, 152).replace(/\s+\S*$/, "")}...`);
   const description = e.overview
-    ? e.overview.slice(0, 155)
+    ? clip(e.overview)
     : `${e.name}: a ${DIFFICULTY_LABEL[e.difficulty]?.toLowerCase() ?? e.difficulty} ${e.category.toLowerCase()} movement targeting the ${muscle.toLowerCase()}. Demo clip, equipment needed, and a starting set and rep scheme.`;
   return {
     title: { absolute: title.length > 62 ? e.name : title },
     description,
     alternates: { canonical: `/exercises/${e.slug}` },
-    robots: isIndexable(e) ? undefined : { index: false, follow: true },
+    // Omitted, not `undefined`, on indexable pages: an explicit undefined
+    // replaced the root layout's robots (and its max-image-preview:large)
+    // with no robots meta at all.
+    ...(isIndexable(e) ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
       title,
       description,
@@ -117,7 +123,7 @@ export default async function Page({
           "@context": "https://schema.org",
           "@type": "VideoObject",
           name: `${e.name} — demonstration`,
-          description: `A demonstration of the ${e.name.toLowerCase()}, a ${e.category.toLowerCase()} movement targeting the ${muscle.toLowerCase()}.`,
+          description: `A demonstration of the ${e.name.toLowerCase()}, a movement for the ${e.category.toLowerCase()} that targets the ${muscle.toLowerCase()}.`,
           contentUrl: clipAbs,
           embedUrl: clipAbs,
           thumbnailUrl: [posterAbs],

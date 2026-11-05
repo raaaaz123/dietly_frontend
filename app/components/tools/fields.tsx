@@ -1,7 +1,15 @@
 "use client";
 
 import StoreButtons from "../StoreButtons";
-import { ReactNode } from "react";
+import { ReactNode, createContext, useContext, useId } from "react";
+
+/**
+ * The id of the control inside the current `Field`, so its `<label>` can name
+ * it. Without this every calculator rendered labels that pointed at nothing:
+ * Lighthouse flagged "Select elements do not have associated label elements",
+ * and a screen reader announced each input as just "edit text".
+ */
+const FieldId = createContext<string | undefined>(undefined);
 
 /**
  * The form furniture every calculator shares.
@@ -22,12 +30,13 @@ export function Field({
   hint?: string;
   children: ReactNode;
 }) {
+  const id = useId();
   return (
     <div>
-      <label className="block text-[12px] font-bold tracking-[1px] text-fg-muted mb-2 uppercase">
+      <label id={`${id}-label`} htmlFor={id} className="block text-[12px] font-bold tracking-[1px] text-fg-muted mb-2 uppercase">
         {label}
       </label>
-      {children}
+      <FieldId.Provider value={id}>{children}</FieldId.Provider>
       {hint ? <p className="mt-1.5 text-[12px] text-fg-faint">{hint}</p> : null}
     </div>
   );
@@ -55,9 +64,11 @@ export function NumberInput({
   required?: boolean;
   suffix?: string;
 }) {
+  const id = useContext(FieldId);
   return (
     <div className="relative">
       <input
+        id={id}
         type="number"
         inputMode="decimal"
         required={required}
@@ -89,8 +100,12 @@ export function Segmented<T extends string>({
   onChange: (v: T) => void;
   columns?: number;
 }) {
+  // A row of buttons is not labelable, so the Field's label names the group.
+  const id = useContext(FieldId);
   return (
     <div
+      role="group"
+      aria-labelledby={id ? `${id}-label` : undefined}
       className="grid gap-3"
       style={{ gridTemplateColumns: `repeat(${columns ?? options.length}, minmax(0, 1fr))` }}
     >
@@ -124,8 +139,10 @@ export function Select<T extends string | number>({
   value: T;
   onChange: (v: T) => void;
 }) {
+  const id = useContext(FieldId);
   return (
     <select
+      id={id}
       value={value}
       onChange={(e) => {
         const raw = e.target.value;
