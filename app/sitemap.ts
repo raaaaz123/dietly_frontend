@@ -6,6 +6,7 @@ import { COMPETITORS, ROUNDUP_UPDATED } from "./lib/competitors";
 import { CATEGORIES, KIT, INDEXABLE, CATALOGUE_FETCHED } from "./lib/exercises";
 import { WORKOUTS, WORKOUTS_UPDATED } from "./lib/workouts";
 import { ROUNDUP_CHECKED as WORKOUT_APPS_CHECKED } from "./lib/workoutApps";
+import { LANDINGS, LANDING_UPDATED } from "./lib/landing";
 
 /**
  * Generated from the tool registry plus a short list of fixed pages.
@@ -40,6 +41,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     page("/", "2026-11-05", "weekly", 1.0),
     page("/about", "2026-11-05", "yearly", 0.5),
+    // One landing page per app language; each App Store locale links to its own.
+    ...LANDINGS.map((l) => page(`/${l.slug}`, LANDING_UPDATED, "monthly", 0.9)),
     page("/tools", "2026-09-15", "monthly", 0.8),
     ...TOOLS.map((t) => page(`/${t.slug}`, t.lastModified, "monthly", 0.9)),
     page("/guides", "2026-09-15", "monthly", 0.8),
