@@ -3,8 +3,8 @@ import Link from "next/link";
 import LegalShell, { Card, PEPTIDE_LOG } from "./LegalShell";
 
 export const metadata: Metadata = {
-  title: { absolute: "Peptide Log: Dose Tracker & Shot Reminder" },
-  description: "Peptide Log is a calm, private tracker for your peptide, GLP-1 and injection schedule. No account, no ads, data stays on your iPhone.",
+  title: { absolute: "PepTree: Peptide Tracker & Shot Reminder" },
+  description: "PepTree is a calm, private tracker for your peptide, GLP-1 and injection schedule. No account, no ads, data stays on your iPhone.",
   alternates: { canonical: PEPTIDE_LOG.base },
 };
 

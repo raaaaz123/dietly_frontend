@@ -2,20 +2,20 @@ import type { Metadata } from "next";
 import LegalShell, { Card, PEPTIDE_LOG } from "../LegalShell";
 
 export const metadata: Metadata = {
-  title: { absolute: "Support | Peptide Log" },
-  description: "Get help with Peptide Log: reminders, backups, moving to a new iPhone and deleting your data.",
+  title: { absolute: "Support | PepTree" },
+  description: "Get help with PepTree: reminders, backups, moving to a new iPhone and deleting your data.",
   alternates: { canonical: `${PEPTIDE_LOG.base}/support` },
 };
 
 const faqs: [string, string][] = [
-  ["I'm not getting reminders.", "Open iPhone Settings, then Notifications, then Peptide Log, and make sure Allow Notifications is on. In the app, open the protocol and check that Remind me is on and the protocol is not paused. Focus modes can also hide reminders."],
+  ["I'm not getting reminders.", "Open iPhone Settings, then Notifications, then PepTree, and make sure Allow Notifications is on. In the app, open the protocol and check that Remind me is on and the protocol is not paused. Focus modes can also hide reminders."],
   ["How do I log a dose?", "On Today, tap the circle next to the dose. Tap the dose itself to change the time, pick an injection site, or add a note. You can also tap Log dose on the reminder."],
   ["I forgot to log yesterday.", "Open History, tap the day, then tap the dose to log it. Or use the missed doses banner on Today, which saves them at their planned time."],
   ["Where does the units number come from?", "You enter it yourself when you add a protocol: it is the number you draw on your syringe. The app never calculates doses."],
   ["How do I move my data to a new iPhone?", "On the old phone: Settings, then Export full backup, and save the file (for example to iCloud Drive). On the new phone: Settings, then Restore from backup, and pick that file."],
   ["Is there an account? How do I sign out?", "There is no account and nothing to sign out of. Your data lives only on your iPhone."],
   ["How do I delete my data?", "In the app, go to Settings, then Delete all my data. It erases every protocol, log and backup on your iPhone. Deleting the app also removes it."],
-  ["Does it cost anything?", "Peptide Log is currently free, with no ads."],
+  ["Does it cost anything?", "PepTree is currently free, with no ads."],
 ];
 
 export default function PeptideLogSupport() {

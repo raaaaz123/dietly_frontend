@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const PEPTIDE_LOG = {
-  name: "Peptide Log",
+  name: "PepTree",
   company: "Rexatech",
   email: "rexatechin@gmail.com",
   base: "https://dietly.life/peptide-log",
@@ -14,7 +14,7 @@ const links = [
   { href: "/peptide-log/terms", label: "Terms" },
 ];
 
-/** Calm cream-and-lavender page shell for the Peptide Log app's public pages. */
+/** Calm cream-and-lavender page shell for the PepTree app's public pages. */
 export default function LegalShell({
   title,
   subtitle,
