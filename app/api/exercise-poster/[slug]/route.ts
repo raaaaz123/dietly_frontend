@@ -36,7 +36,11 @@ export async function GET(
 
   const url = row.thumbnail_url || row.demo_video_url;
   if (!url) return new NextResponse("No poster for this movement", { status: 404 });
-  return NextResponse.redirect(url, { status: 302, headers: NO_STORE });
+  // The target carries an edge token valid until the end of tomorrow (24-48 h),
+  // so the browser may reuse this redirect for 6 hours. Private, so no shared
+  // cache skips the guard above. Before this, every visit re-requested every
+  // thumbnail on a hub page.
+  return NextResponse.redirect(url, { status: 302, headers: { "Cache-Control": "private, max-age=21600" } });
 }
 
 /** Tries the watermarked route, then the clean one.
