@@ -92,6 +92,8 @@ ${WORKOUTS.map((w) => `- [${w.name}](${SITE_URL}/workouts/${w.slug}) — ${w.blu
 ${EXERCISES.length} movements, each with a demonstration clip, the muscle it targets, the equipment it needs and a starting set and rep scheme. Browse by muscle or by the equipment available. Demonstrations are licensed from Gym Visual.
 
 - [Exercise library](${SITE_URL}/exercises) — All ${EXERCISES.length} movements, by muscle and by equipment.
+- [Exercise catalogue as JSON](${SITE_URL}/exercises.json): Every movement with target and secondary muscles, equipment, difficulty, a starting set, rep and rest scheme, and step-by-step coaching where written. Free to read and cite with a link to the exercise page.
+- [Exercise search](${SITE_URL}/exercises?q=squat): Add ?q=, ?muscle= (e.g. Chest) or ?kit= (none, basic, full) to /exercises to open a filtered list.
 ${CATEGORIES.map((c) => `- [${c.name} exercises](${SITE_URL}/exercises/muscle/${c.slug}) — ${c.items.length} movements that train the ${c.name.toLowerCase()}.`).join("\n")}
 ${KIT.map((k) => `- [${k.name} exercises](${SITE_URL}/exercises/equipment/${k.slug}) — ${k.items.length} movements. ${k.blurb}`).join("\n")}
 

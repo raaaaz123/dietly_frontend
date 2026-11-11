@@ -170,9 +170,9 @@ export default async function Page({
         }}
       />
       <Navbar />
-      <main className="pt-32 pb-24">
-        <article className="max-w-[820px] mx-auto px-6 md:px-12">
-          <Reveal>
+      <main className="pt-24 md:pt-32 pb-24">
+        <article className="max-w-[820px] mx-auto px-4 sm:px-6 md:px-12">
+          <div>
             <nav aria-label="Breadcrumb" className="mb-7 text-[13px] text-fg-faint">
               <Link href="/" className="hover:text-fg transition-colors">Home</Link>
               <span className="mx-2">/</span>
@@ -186,11 +186,6 @@ export default async function Page({
             <h1 className="text-[clamp(30px,5vw,46px)] font-bold leading-[1.06] tracking-[-1.5px] text-fg font-body mb-5">
               {e.name}
             </h1>
-            <p className="text-[17px] md:text-[19px] leading-relaxed text-fg-muted">
-              {e.overview ||
-                `A ${DIFFICULTY_LABEL[e.difficulty]?.toLowerCase() ?? e.difficulty} ${e.category.toLowerCase()} movement targeting the ${muscle.toLowerCase()}${e.equipmentNames.length ? `, using ${e.equipmentNames.join(" and ").toLowerCase()}` : ""}.`}
-            </p>
-
             {/* A looping demo, not a video player.
                 
                 `autoPlay` only works alongside `muted` and `playsInline` — every
@@ -210,9 +205,9 @@ export default async function Page({
                 Data Saver, a reduced-motion preference and low battery all
                 refuse it, and those visitors see the still rather than a black
                 rectangle. */}
-            <div className="mt-8 mx-auto max-w-[420px] overflow-hidden rounded-2xl border border-border bg-bg-elevated">
+            <div className="mb-6 mx-auto max-w-[460px] overflow-hidden rounded-2xl border border-border bg-white aspect-[4/3]">
               <video
-                className="w-full pointer-events-none"
+                className="h-full w-full object-contain pointer-events-none"
                 autoPlay
                 loop
                 muted
@@ -225,7 +220,11 @@ export default async function Page({
                 aria-label={`${e.name} demonstration, looping`}
               />
             </div>
-          </Reveal>
+            <p className="text-[17px] md:text-[19px] leading-relaxed text-fg-muted">
+              {e.overview ||
+                `A ${DIFFICULTY_LABEL[e.difficulty]?.toLowerCase() ?? e.difficulty} ${e.category.toLowerCase()} movement targeting the ${muscle.toLowerCase()}${e.equipmentNames.length ? `, using ${e.equipmentNames.join(" and ").toLowerCase()}` : ""}.`}
+            </p>
+          </div>
 
           <Reveal delay={120}>
             <dl className="mt-10">

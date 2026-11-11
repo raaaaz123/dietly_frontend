@@ -119,8 +119,8 @@ export default async function Page({
         }}
       />
       <Navbar />
-      <main className="pt-32 pb-24">
-        <div className="max-w-[1000px] mx-auto px-6 md:px-12">
+      <main className="relative pt-24 md:pt-32 pb-24">
+        <div className="max-w-[1120px] mx-auto px-4 sm:px-6 md:px-10">
           <Reveal>
             <nav aria-label="Breadcrumb" className="mb-7 text-[13px] text-fg-faint">
               <Link href="/" className="hover:text-fg transition-colors">Home</Link>
@@ -142,7 +142,13 @@ export default async function Page({
             <h2 className="mt-12 text-[24px] font-bold text-fg font-body tracking-tight">
               The most useful {c.name.toLowerCase()} exercises
             </h2>
-            <ExerciseGrid items={cards} />
+            <ExerciseGrid items={cards} eagerFirst={2} />
+            <a
+              href={`/exercises?kit=${c.key}`}
+              className="mt-6 inline-flex items-center gap-2 rounded-xl border border-border px-5 py-3 text-[14px] font-semibold text-fg hover:border-[var(--signal)] transition-colors"
+            >
+              Search all {items.length} {c.name.toLowerCase()} exercises <span aria-hidden>→</span>
+            </a>
 
             <section className="mt-14">
               <h2 className="text-[20px] font-bold text-fg font-body tracking-tight mb-5">

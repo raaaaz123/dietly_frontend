@@ -6,6 +6,7 @@ import Reveal from "../../../components/Reveal";
 import InstallCard from "../../../components/InstallCard";
 import MobileCTA from "../../../components/MobileCTA";
 import ExerciseGrid from "../../../components/exercises/ExerciseGrid";
+import HubFilter from "../../../components/exercises/HubFilter";
 import { JsonLdScript, faqJsonLd } from "../../../components/tools/ToolPage";
 import { SITE_URL } from "../../../lib/site";
 import { CATEGORIES, category, exercise, sortItems, type Exercise } from "../../../lib/exercises";
@@ -120,8 +121,8 @@ export default async function Page({
       />
       {copy?.faqs.length ? <JsonLdScript data={faqJsonLd(copy.faqs)} /> : null}
       <Navbar />
-      <main className="pt-32 pb-24">
-        <div className="max-w-[1000px] mx-auto px-6 md:px-12">
+      <main className="relative pt-24 md:pt-32 pb-24">
+        <div className="max-w-[1120px] mx-auto px-4 sm:px-6 md:px-10">
           <Reveal>
             <nav aria-label="Breadcrumb" className="mb-7 text-[13px] text-fg-faint">
               <Link href="/" className="hover:text-fg transition-colors">Home</Link>
@@ -177,7 +178,7 @@ export default async function Page({
                         decoding="async"
                         width={120}
                         height={68}
-                        className="hidden sm:block w-[120px] aspect-video shrink-0 rounded-lg bg-bg object-contain"
+                        className="w-[72px] sm:w-[120px] aspect-[4/3] sm:aspect-video shrink-0 rounded-lg bg-white object-contain"
                       />
                       <span className="min-w-0">
                         <span className="block text-[16px] font-bold text-fg group-hover:text-accent transition-colors">
@@ -199,23 +200,34 @@ export default async function Page({
             <h2 className="text-[24px] font-bold text-fg font-body tracking-tight">
               {picks.length ? `More ${lower} exercises` : `${c.name} exercises`}
             </h2>
-            <ExerciseGrid items={cards} />
+            <HubFilter target="hub-list" />
+            <div id="hub-list">
+            <div data-ex-section="">
+              <ExerciseGrid items={cards} eagerFirst={2} />
+            </div>
             {rest.length > 0 && (
-              <>
+              <div data-ex-section="">
                 <h3 className="mt-10 text-[17px] font-bold text-fg">
                   All other {lower} exercises, A to Z ({rest.length})
                 </h3>
                 <ul className="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3 text-[14px]">
                   {rest.map((e) => (
-                    <li key={e.slug}>
+                    <li
+                      key={e.slug}
+                      data-ex=""
+                      data-name={`${e.name} ${e.target}`.toLowerCase()}
+                      data-diff={e.difficulty}
+                      data-kit={e.equipment}
+                    >
                       <Link href={`/exercises/${e.slug}`} className="text-fg-muted hover:text-accent transition-colors">
                         {e.name}
                       </Link>
                     </li>
                   ))}
                 </ul>
-              </>
+              </div>
             )}
+            </div>
           </section>
 
           <div className="mt-14">
