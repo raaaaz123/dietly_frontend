@@ -107,11 +107,12 @@ export default function MacroCalculatorPage() {
       <JsonLdScript data={faqJsonLd(FAQS)} />
       <Navbar />
 
-      <main className="pt-32 pb-24 overflow-hidden">
+      <main className="relative pt-24 md:pt-32 pb-24 overflow-hidden">
+        <div className="hero-glow" />
         <div className="max-w-[1000px] mx-auto px-6 md:px-12 text-center">
           <Reveal>
-            <span className="text-[11px] font-bold tracking-[3px] text-accent uppercase mb-6 block">Free tool · No signup</span>
-            <h1 className="text-[clamp(40px,6vw,72px)] font-bold leading-[1.05] tracking-[-2px] text-fg font-body mb-6">
+            <span className="tool-eyebrow">Free tool · No signup · Instant result</span>
+            <h1 className="mt-5 text-[clamp(32px,6vw,64px)] font-bold leading-[1.05] tracking-[-1.5px] text-fg font-body mb-4">
               Macro Calculator
             </h1>
             <p className="text-[16px] md:text-[20px] text-fg-muted max-w-[620px] mx-auto leading-relaxed">
@@ -120,23 +121,13 @@ export default function MacroCalculatorPage() {
           </Reveal>
         </div>
 
-        <Reveal delay={200}>
-          <MacroCalculator />
-        </Reveal>
-
-        <div className="max-w-[800px] mx-auto px-6 md:px-12 mt-10">
-          <InstallCard
-            placement="tool_result"
-            title="Turn this number into a plan"
-            body="Dietly Fit logs every set, scores one photo a week out of 100, and builds the training week around the area holding you back."
-          />
-        </div>
+        <MacroCalculator />
 
 
         {/* SEO Content Section */}
         <section className="max-w-[800px] mx-auto px-6 md:px-12 mt-12 prose prose-invert prose-green">
           <Reveal>
-            <article className="text-fg-muted leading-relaxed space-y-8">
+            <article className="tool-prose text-fg-muted leading-relaxed space-y-8">
               <div>
                 <h2 className="text-[28px] font-bold text-fg font-body tracking-tight mb-4">How this macro calculator works</h2>
                 <p>
@@ -208,6 +199,13 @@ export default function MacroCalculatorPage() {
           </Reveal>
         </section>
         <EmbedCode slug="macro-calculator" name="Macro Calculator" />
+        <div className="max-w-[800px] mx-auto px-6 md:px-12 mt-12">
+          <InstallCard
+            placement="tool_article_end"
+            title="Turn this number into a plan"
+            body="Dietly Fit logs every set, scores one photo a week out of 100, and builds the training week around the area holding you back."
+          />
+        </div>
       </main>
 
       <Footer />

@@ -66,9 +66,9 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <Link href="/#get" className="btn btn-primary btn-sm">
+          <a href="/get?from=nav" className="btn btn-primary btn-sm">
             Get the app
-          </Link>
+          </a>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}

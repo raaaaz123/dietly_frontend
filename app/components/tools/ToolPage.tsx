@@ -136,41 +136,41 @@ export default function ToolPage({
   return (
     <>
       <Navbar />
-      <main className="pt-32 pb-24 overflow-hidden">
-        <div className="max-w-[1000px] mx-auto px-6 md:px-12 text-center">
+      <main className="relative pt-24 md:pt-32 pb-24 overflow-hidden">
+        <div className="hero-glow" />
+        <div className="relative max-w-[1000px] mx-auto px-5 md:px-12 text-center">
           <Reveal>
-            <span className="text-[11px] font-bold tracking-[3px] text-accent uppercase mb-6 block">
-              Free Tool — No Signup
-            </span>
-            <h1 className="text-[clamp(36px,6vw,64px)] font-bold leading-[1.05] tracking-[-2px] text-fg font-body mb-6">
+            <span className="tool-eyebrow mb-5">Free tool · No signup · Instant result</span>
+            <h1 className="mt-5 text-[clamp(32px,6vw,60px)] font-bold leading-[1.05] tracking-[-1.5px] text-fg font-body mb-4">
               {h1}
             </h1>
-            <p className="text-[16px] md:text-[19px] text-fg-muted max-w-[620px] mx-auto leading-relaxed">
+            <p className="text-[16px] md:text-[18px] text-fg-muted max-w-[600px] mx-auto leading-relaxed">
               {intro}
             </p>
           </Reveal>
         </div>
 
-        <Reveal delay={200}>{widget}</Reveal>
-
-        {/* Straight under the result: the visitor has just got a number and
-            this is the moment they care most about acting on it. */}
-        <div className="max-w-[800px] mx-auto px-6 md:px-12 mt-10">
-          <InstallCard
-            placement="tool_result"
-            title="Turn this number into a plan"
-            body="Dietly Fit logs every set, scores one photo a week out of 100, and builds the training week around the area holding you back."
-          />
-        </div>
+        {/* No Reveal wrapper: the widget is the reason the visitor came, so it
+            is never hidden, not even for an entrance animation. */}
+        {widget}
 
         <section className="max-w-[800px] mx-auto px-6 md:px-12 mt-12">
           <Reveal>
-            <article className="text-fg-muted leading-relaxed space-y-8">
+            <article className="tool-prose text-fg-muted leading-relaxed space-y-8">
               {children}
             </article>
-            <Disclaimer />
           </Reveal>
         </section>
+
+        {/* After the explanation, for readers who scrolled past the result. */}
+        <div className="max-w-[800px] mx-auto px-6 md:px-12 mt-12">
+          <InstallCard
+            placement="tool_article_end"
+            title="Turn this number into a plan"
+            body="Dietly Fit logs every set, scores one photo a week out of 100, and builds the training week around the area holding you back."
+          />
+          <Disclaimer />
+        </div>
 
         <RelatedTools current={t} />
         {t.slug !== "food-scanner" && t.slug !== "physique-analyzer" && (

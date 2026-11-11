@@ -1,7 +1,8 @@
 "use client";
 
-import StoreButtons from "../StoreButtons";
-import { ReactNode, createContext, useContext, useId } from "react";
+import { InstallSteps } from "../GetApp";
+import { track } from "../../lib/analytics";
+import { ReactNode, createContext, useContext, useId, useRef } from "react";
 
 /**
  * The id of the control inside the current `Field`, so its `<label>` can name
@@ -181,19 +182,49 @@ export function ResultPanel({
   empty: string;
   children: ReactNode | null;
 }) {
+  const filled = children !== null && children !== undefined && children !== false;
   return (
-    <div className="bg-surface rounded-2xl p-8 flex flex-col justify-center relative border border-border">
-      {children ?? (
-        <div className="text-center opacity-50 flex flex-col items-center justify-center h-full min-h-[300px]">
-          <span className="text-[40px] mb-4">✨</span>
-          <p className="text-[16px] text-fg-muted font-medium max-w-[220px]">{empty}</p>
+    <div
+      data-result={filled ? "filled" : "empty"}
+      className={`result-anchor rounded-2xl p-4 sm:p-6 md:p-8 flex flex-col justify-center relative border ${
+        filled ? "bg-surface border-[rgba(200,245,96,0.28)]" : "bg-surface/60 border-dashed border-border"
+      }`}
+    >
+      {filled ? (
+        children
+      ) : (
+        <div className="text-center flex flex-col items-center justify-center h-full min-h-[220px] md:min-h-[300px]">
+          <svg viewBox="0 0 64 64" width="56" height="56" aria-hidden className="mb-4 opacity-70">
+            <circle cx="32" cy="32" r="26" fill="none" stroke="var(--border)" strokeWidth="6" />
+            <circle cx="32" cy="32" r="26" fill="none" stroke="var(--signal)" strokeWidth="6" strokeLinecap="round"
+              strokeDasharray="163" strokeDashoffset="110" transform="rotate(-90 32 32)" />
+          </svg>
+          <p className="text-[15px] text-fg-muted font-medium max-w-[240px] leading-relaxed">{empty}</p>
         </div>
       )}
     </div>
   );
 }
 
-/** The shell: form on the left, results on the right, glass card around both. */
+/**
+ * Brings a fresh result into view. On phones the result panel sits under the
+ * form, so before this a visitor tapped "Calculate", saw nothing change, and
+ * often left (seen in session replays). Desktop shows both columns already.
+ */
+export function revealResult(root: HTMLElement | null) {
+  if (!root) return;
+  window.setTimeout(() => {
+    const panel = root.querySelector<HTMLElement>('[data-result="filled"]');
+    if (!panel) return;
+    track("tool_result_shown");
+    panel.classList.remove("result-flash");
+    void panel.offsetWidth;
+    panel.classList.add("result-flash");
+    if (window.innerWidth < 768) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 60);
+}
+
+/** The shell: form on the left, results on the right (below on phones). */
 export function CalculatorFrame({
   onSubmit,
   formTitle,
@@ -205,22 +236,85 @@ export function CalculatorFrame({
   form: ReactNode;
   results: ReactNode;
 }) {
+  const root = useRef<HTMLDivElement>(null);
   return (
-    <div className="w-full max-w-[900px] mx-auto mt-12 mb-16 px-6 md:px-0">
-      <div className="glass-card rounded-3xl p-6 md:p-10 border border-border bg-bg-elevated/50 shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent/[0.05] rounded-full blur-[100px] pointer-events-none" />
-        <div className="grid md:grid-cols-2 gap-12 relative z-10">
+    <div ref={root} className="w-full max-w-[960px] mx-auto mt-10 mb-12 px-4 sm:px-6 md:px-0">
+      <div className="rounded-3xl p-4 sm:p-6 md:p-10 border border-border bg-bg-elevated relative overflow-hidden">
+        <div className="absolute -top-24 -right-24 w-[360px] h-[360px] bg-[rgba(200,245,96,0.06)] rounded-full blur-[90px] pointer-events-none" />
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 relative z-10">
           <div>
-            <h2 className="text-[24px] font-bold text-fg mb-6 font-display italic">
+            <h2 className="text-[20px] md:text-[22px] font-bold text-fg mb-5 tracking-tight">
               {formTitle}
             </h2>
-            <form onSubmit={onSubmit} className="space-y-6">
+            <form
+              onSubmit={(e) => {
+                onSubmit(e);
+                revealResult(root.current);
+              }}
+              className="space-y-5"
+            >
               {form}
             </form>
           </div>
-          {results}
+          <div className="md:sticky md:top-24 self-start w-full">{results}</div>
         </div>
       </div>
+    </div>
+  );
+}
+
+/** A horizontal stacked bar for a macro split. */
+export function MacroBar({ protein, carbs, fat }: { protein: number; carbs: number; fat: number }) {
+  const kcal = protein * 4 + carbs * 4 + fat * 9 || 1;
+  const parts = [
+    { k: "Protein", g: protein, pct: (protein * 4) / kcal, c: "var(--data-protein)" },
+    { k: "Carbs", g: carbs, pct: (carbs * 4) / kcal, c: "var(--data-carbs)" },
+    { k: "Fat", g: fat, pct: (fat * 9) / kcal, c: "var(--data-fat)" },
+  ];
+  return (
+    <div className="my-5">
+      <div className="flex h-3 w-full overflow-hidden rounded-full bg-border/40" role="img"
+        aria-label={parts.map((p) => `${p.k} ${Math.round(p.pct * 100)}%`).join(", ")}>
+        {parts.map((p) => (
+          <div key={p.k} style={{ width: `${p.pct * 100}%`, background: p.c }} className="h-full first:rounded-l-full last:rounded-r-full" />
+        ))}
+      </div>
+      <div className="mt-4 grid grid-cols-3 gap-2">
+        {parts.map((p) => (
+          <div key={p.k} className="rounded-xl border border-border bg-bg/40 px-3 py-3">
+            <span className="flex items-center gap-1.5 text-[12px] text-fg-muted">
+              <span className="h-2 w-2 rounded-full" style={{ background: p.c }} />
+              {p.k}
+            </span>
+            <span className="mt-1 block text-[22px] font-bold text-fg tabular-nums leading-none">
+              {p.g}
+              <span className="text-[13px] font-medium text-fg-muted ml-0.5">g</span>
+            </span>
+            <span className="mt-1 block text-[11px] text-fg-faint tabular-nums">{Math.round(p.pct * 100)}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** A circular 0-100 gauge. */
+export function ScoreRing({ value, max = 100, size = 148, label }: { value: number; max?: number; size?: number; label?: string }) {
+  const r = 52;
+  const c = 2 * Math.PI * r;
+  const pct = Math.max(0, Math.min(1, value / max));
+  return (
+    <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
+      <svg viewBox="0 0 120 120" width={size} height={size} aria-hidden>
+        <circle cx="60" cy="60" r={r} fill="none" stroke="var(--border)" strokeWidth="10" />
+        <circle cx="60" cy="60" r={r} fill="none" stroke="var(--signal)" strokeWidth="10" strokeLinecap="round"
+          strokeDasharray={c} strokeDashoffset={c * (1 - pct)} transform="rotate(-90 60 60)"
+          style={{ transition: "stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1)" }} />
+      </svg>
+      <span className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-[44px] font-bold text-fg leading-none tabular-nums">{value}</span>
+        <span className="text-[12px] text-fg-muted mt-1">{label ?? `out of ${max}`}</span>
+      </span>
     </div>
   );
 }
@@ -252,18 +346,17 @@ export function Stat({
   );
 }
 
-/** The store CTA that closes every results panel. */
-export function ToolCta({ children }: { children: ReactNode }) {
+/** The install step-by-step that closes every results panel. */
+export function ToolCta({ children, payoff = "Get your plan built around this number" }: { children: ReactNode; payoff?: string }) {
   return (
-    <div className="mt-8 pt-6 border-t border-border">
-      <p className="text-[13px] text-fg-muted leading-relaxed mb-4">{children}</p>
-      {/* Was a "GET DIETLY FREE" link to /#download, an anchor the homepage
-          does not have, so it dropped people at the top of the homepage. The
-          app is also not free past the trial. The store badges go straight
-          to the listing. */}
-      <div data-placement="tool_result_panel">
-        <StoreButtons height={36} />
-      </div>
+    <div className="mt-7">
+      <InstallSteps
+        compact
+        placement="tool_result_panel"
+        title="Turn this into a plan"
+        body={children}
+        payoff={payoff}
+      />
     </div>
   );
 }

@@ -38,7 +38,7 @@ export const TOOLS: Tool[] = [
     blurb: "Daily calories plus a protein, carb and fat split built from your bodyweight.",
     keywords: ["macro calculator", "tdee calculator", "calorie calculator", "macro split"],
     lastModified: "2026-09-15",
-    related: ["tdee-calculator", "protein-calculator", "calorie-deficit-calculator"],
+    related: ["keto-calculator", "cutting-calculator", "bulking-calculator"],
   },
   {
     slug: "tdee-calculator",
@@ -306,6 +306,39 @@ export const TOOLS: Tool[] = [
     ],
     lastModified: "2026-11-03",
     related: ["protein-calculator", "creatine-calculator", "calories-burned-calculator"],
+  },
+  {
+    slug: "keto-calculator",
+    name: "Keto Macro Calculator",
+    title: "Keto Macro Calculator: Net Carbs, Protein and Fat",
+    description:
+      "Free keto calculator in lb or kg. Get daily calories, a 30 g carb cap, protein set from your bodyweight and the fat that fills the rest, per day and per meal.",
+    blurb: "Keto calories and macros with a 30 g carb cap and protein from bodyweight.",
+    keywords: ["keto calculator", "keto macro calculator", "keto macros", "how many carbs on keto"],
+    lastModified: "2026-11-11",
+    related: ["macro-calculator", "cutting-calculator", "protein-calculator"],
+  },
+  {
+    slug: "cutting-calculator",
+    name: "Cutting Calculator",
+    title: "Cutting Calculator: Calories and Macros for a Cut",
+    description:
+      "Work out your cutting calories and macros: a 20% deficit, high protein to keep muscle, and per-meal targets. Pounds or kilos, free and no signup.",
+    blurb: "Cutting calories and high-protein macros that protect muscle.",
+    keywords: ["cutting calculator", "cutting macros", "cutting calories", "how many calories to cut"],
+    lastModified: "2026-11-11",
+    related: ["calorie-deficit-calculator", "bulking-calculator", "protein-calculator"],
+  },
+  {
+    slug: "bulking-calculator",
+    name: "Lean Bulk Calculator",
+    title: "Lean Bulk Calculator: Bulking Calories and Macros",
+    description:
+      "Find your lean bulk calories and macros: a 10% surplus, protein from bodyweight and a sensible rate of gain. Pounds or kilos, free and no signup.",
+    blurb: "Lean bulk calories and macros, with a rate of gain that stays lean.",
+    keywords: ["bulking calculator", "lean bulk calculator", "bulking macros", "calories to build muscle"],
+    lastModified: "2026-11-11",
+    related: ["cutting-calculator", "ffmi-calculator", "macro-calculator"],
   },
 ];
 

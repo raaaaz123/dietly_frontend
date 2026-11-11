@@ -1,4 +1,7 @@
+"use client";
+
 import { APP_STORE_URL, PLAY_STORE_URL } from "../lib/site";
+import { usePlatform } from "../lib/usePlatform";
 
 /* Re-exported so the existing importers (MobileCTA) keep working while the
    URLs themselves live in one place. The App Store link used to be the old
@@ -51,6 +54,10 @@ export default function StoreButtons({
   className = "",
 }: Props) {
   const style = { "--badge-h": `${height}px` } as React.CSSProperties;
+  // A phone only sees its own store (both until hydration, and on computers).
+  const p = usePlatform();
+  const showApple = p !== "android";
+  const showGoogle = p !== "ios";
 
   return (
     <div
@@ -59,7 +66,7 @@ export default function StoreButtons({
       } ${className}`}
       style={style}
     >
-      <a
+      {showApple && <a
         href={APP_STORE_URL}
         className="store-badge"
         aria-label="Download Dietly Fit on the App Store"
@@ -75,8 +82,8 @@ export default function StoreButtons({
           width={Math.round(height * APPLE_RATIO)}
           height={height}
         />
-      </a>
-      <a
+      </a>}
+      {showGoogle && <a
         href={PLAY_STORE_URL}
         className="store-badge"
         aria-label="Get Dietly Fit on Google Play"
@@ -88,7 +95,7 @@ export default function StoreButtons({
           width={Math.round(height * GOOGLE_RATIO)}
           height={height}
         />
-      </a>
+      </a>}
     </div>
   );
 }

@@ -5,6 +5,7 @@ import {
   CalculatorFrame,
   Field,
   NumberInput,
+  MacroBar,
   ResultPanel,
   Segmented,
   Select,
@@ -62,7 +63,15 @@ type Result = {
   fat: number;
 };
 
-export default function MacroCalculator() {
+export default function MacroCalculator({
+  initialGoal = "cut",
+  initialDiet = "balanced",
+  cta = "Dietly Fit sets these targets for you, logs a meal from a photo or a sentence, and builds the training week around them.",
+}: {
+  initialGoal?: Goal;
+  initialDiet?: Diet;
+  cta?: string;
+} = {}) {
   const [units, setUnits] = useState<Units>("imperial");
   const [sex, setSex] = useState<Sex>("male");
   const [age, setAge] = useState<number | "">("");
@@ -71,8 +80,8 @@ export default function MacroCalculator() {
   const [feet, setFeet] = useState<number | "">("");
   const [inches, setInches] = useState<number | "">("");
   const [activity, setActivity] = useState<number>(1.55);
-  const [goal, setGoal] = useState<Goal>("cut");
-  const [diet, setDiet] = useState<Diet>("balanced");
+  const [goal, setGoal] = useState<Goal>(initialGoal);
+  const [diet, setDiet] = useState<Diet>(initialDiet);
   const [meals, setMeals] = useState<"3" | "4" | "5">("4");
   const [result, setResult] = useState<Result | null>(null);
 
@@ -115,9 +124,6 @@ export default function MacroCalculator() {
   };
 
   const n = Number(meals);
-  const pct = (g: number, kcalPerG: number) =>
-    result ? Math.round(((g * kcalPerG) / result.calories) * 100) : 0;
-
   return (
     <CalculatorFrame
       onSubmit={calculate}
@@ -217,14 +223,12 @@ export default function MacroCalculator() {
                 Your daily target
               </span>
               <div className="flex items-end gap-2 mb-6">
-                <span className="text-[56px] font-bold font-body leading-none text-fg tracking-tight tabular-nums">
+                <span className="text-[52px] md:text-[56px] font-bold font-body leading-none text-[var(--signal)] tracking-tight tabular-nums">
                   {result.calories.toLocaleString()}
                 </span>
                 <span className="text-[18px] text-fg-muted font-medium mb-2">kcal</span>
               </div>
-              <Stat label={`Protein (${pct(result.protein, 4)}%)`} value={result.protein} unit="g" tone="accent" />
-              <Stat label={`Carbs (${pct(result.carbs, 4)}%)`} value={result.carbs} unit="g" />
-              <Stat label={`Fat (${pct(result.fat, 9)}%)`} value={result.fat} unit="g" />
+              <MacroBar protein={result.protein} carbs={result.carbs} fat={result.fat} />
               <Stat label="Maintenance (TDEE)" value={result.tdee.toLocaleString()} unit="kcal" />
 
               <p className="mt-6 text-[11px] font-bold tracking-[2px] text-fg-faint uppercase">
@@ -235,9 +239,7 @@ export default function MacroCalculator() {
               <Stat label="Carbs" value={Math.round(result.carbs / n)} unit="g" />
               <Stat label="Fat" value={Math.round(result.fat / n)} unit="g" />
 
-              <ToolCta>
-                Dietly Fit sets these targets for you, logs a meal from a photo or a sentence, and builds the training week around them.
-              </ToolCta>
+              <ToolCta payoff="Log your first meal against these macros">{cta}</ToolCta>
             </div>
           ) : null}
         </ResultPanel>

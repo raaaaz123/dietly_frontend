@@ -581,3 +581,85 @@ p { text-wrap: pretty; }
     margin: 14mm;
   }
 }
+
+/* ═══════════════════════════════════════════════
+   SIGNAL COLOUR (2026-11-11)
+   The monochrome palette above stays for the page. One signal colour, the
+   app's lime, is now allowed in exactly three places: the install button,
+   scores/gauges, and data charts. Visitors could not tell where to act on
+   tool pages; the lime marks "this is the result" and "this is the next step".
+   Anything sitting on lime takes ink, per rule 1 above.
+   ═══════════════════════════════════════════════ */
+:root {
+  --signal: #C8F560;
+  --signal-soft: rgba(200, 245, 96, 0.12);
+  --signal-ink: #0D0D0D;
+  --data-protein: #C8F560;
+  --data-carbs: #7CC4FF;
+  --data-fat: #FFB86B;
+}
+
+.get-app-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  background: var(--signal); color: var(--signal-ink);
+  font-weight: 700; font-size: 15px; letter-spacing: -0.1px;
+  padding: 13px 20px; border-radius: 14px;
+  box-shadow: 0 10px 30px -12px rgba(200, 245, 96, 0.55), inset 0 -2px 0 rgba(0,0,0,0.12);
+  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+}
+.get-app-btn:hover { filter: brightness(1.05); box-shadow: 0 14px 36px -12px rgba(200, 245, 96, 0.7); }
+.get-app-btn:active { transform: scale(0.985); }
+.get-app-btn-lg { font-size: 16px; padding: 17px 22px; border-radius: 16px; }
+.get-app-arrow { transition: transform .2s ease; }
+.get-app-btn:hover .get-app-arrow { transform: translateX(3px); }
+
+.install-card {
+  position: relative; overflow: hidden; text-align: left;
+  border-radius: 24px; border: 1px solid rgba(200, 245, 96, 0.22);
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgba(200, 245, 96, 0.10), transparent 60%),
+    var(--bg-elevated);
+}
+.install-pill {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--signal); background: var(--signal-soft);
+  padding: 4px 10px; border-radius: 999px;
+}
+.step-dot {
+  flex: none; width: 26px; height: 26px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  border: 1px solid var(--border); color: var(--fg-muted);
+}
+.step-dot-on { background: var(--signal); border-color: var(--signal); color: var(--signal-ink); }
+
+/* A result that just appeared: one soft lime pulse so the eye lands on it. */
+@keyframes result-in {
+  0% { box-shadow: 0 0 0 0 rgba(200, 245, 96, 0.0); transform: translateY(6px); opacity: .6; }
+  40% { box-shadow: 0 0 0 4px rgba(200, 245, 96, 0.35); transform: none; opacity: 1; }
+  100% { box-shadow: 0 0 0 0 rgba(200, 245, 96, 0); }
+}
+.result-flash { animation: result-in 1.1s ease-out; }
+.result-anchor { scroll-margin-top: 84px; }
+
+.tool-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 700; letter-spacing: .5px;
+  color: var(--signal); background: var(--signal-soft);
+  border: 1px solid rgba(200, 245, 96, 0.25);
+  padding: 6px 12px; border-radius: 999px;
+}
+.tool-eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 99px; background: var(--signal); box-shadow: 0 0 10px var(--signal); }
+
+.hero-glow { position: absolute; inset: -120px 0 auto 0; height: 420px; pointer-events: none;
+  background: radial-gradient(50% 60% at 50% 30%, rgba(200,245,96,0.10), transparent 70%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .result-flash { animation: none; }
+}
+
+/* Tool article prose: paragraphs and lists inside a section had no spacing. */
+.tool-prose p + p, .tool-prose p + ul, .tool-prose ul + p, .tool-prose p + ol, .tool-prose ol + p { margin-top: 1em; }
+.tool-prose ul { list-style: disc; padding-left: 1.25em; }
+.tool-prose ol { list-style: decimal; padding-left: 1.25em; }
+.tool-prose li + li { margin-top: .4em; }

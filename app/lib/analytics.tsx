@@ -145,3 +145,16 @@ export default function Analytics() {
 
   return null;
 }
+
+/**
+ * Fire a product event from a tool (result shown, scan rejected...). A no-op
+ * until PostHog has loaded, and with no key at all.
+ */
+export function track(event: string, props: Record<string, unknown> = {}) {
+  if (!KEY || typeof window === "undefined") return;
+  import("posthog-js").then(({ default: posthog }) => {
+    if ((posthog as unknown as { __loaded?: boolean }).__loaded) {
+      posthog.capture(event, { path: window.location.pathname, ...props });
+    }
+  });
+}
